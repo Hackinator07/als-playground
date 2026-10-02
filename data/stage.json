@@ -11,6 +11,7 @@
   "display_time_zone": "America/Chicago",
   "display_time_zone_label": "US Central time (CT)",
   "rows_before_show_all": 100,
-  "submissions_open": false,
+  "turnstile_site_key": "0x4AAAAAAFMX9eSoVIaX81zp",
+  "submit_url": "",
   "repo_url": "https://github.com/Hackinator07/als-playground"
 }

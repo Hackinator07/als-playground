@@ -126,6 +126,60 @@ export function checkStoredRun(run, carIds, stage) {
   return null;
 }
 
+/**
+ * Check a submission exactly as typed on the form. Used by the submit page
+ * (live, before sending) and again by the Worker (before saving).
+ *
+ * input:   { driver, car_id, cp1, cp2, finish, consent }  (times as typed)
+ * context: { stage, cars: cars.json, existing: published runs (optional) }
+ * Returns  { errors: [{ field, message }], value } where value is the cleaned
+ *          run (driver, car_id, car_name, *_ms, entered) when errors is empty.
+ */
+export function validateSubmission(input, { stage, cars, existing = [] }) {
+  const errors = [];
+  const add = (field, message) => errors.push({ field, message });
+  const src = input || {};
+
+  const driver = cleanName(src.driver);
+  const driverErr = validateDriver(driver);
+  if (driverErr) add('driver', driverErr);
+
+  const car = (cars?.cars || []).find((c) => c.id === src.car_id && c.active !== false);
+  if (!car) add('car', 'Choose a car from the list.');
+
+  const times = {};
+  for (const field of ['cp1', 'cp2', 'finish']) {
+    const p = parseTime(src[field]);
+    if (p.ok) times[field] = p.ms;
+    else add(field, p.error);
+  }
+  if ('cp1' in times && 'cp2' in times && 'finish' in times) {
+    for (const e of checkTimes({ cp1_ms: times.cp1, cp2_ms: times.cp2, finish_ms: times.finish }, stage)) add(e.field, e.message);
+  }
+
+  if (src.consent !== true) add('consent', 'Tick the box to agree your name and screenshot are shown publicly.');
+
+  if (!errors.length) {
+    const key = driverKey(driver);
+    const dup = existing.some((r) => driverKey(r.driver) === key && r.car_id === car.id && r.finish_ms === times.finish);
+    if (dup) add('finish', 'This time is already on the board.');
+  }
+
+  if (errors.length) return { errors, value: null };
+  return {
+    errors,
+    value: {
+      driver,
+      car_id: car.id,
+      car_name: car.name,
+      cp1_ms: times.cp1,
+      cp2_ms: times.cp2,
+      finish_ms: times.finish,
+      entered: { cp1: String(src.cp1).trim(), cp2: String(src.cp2).trim(), finish: String(src.finish).trim() },
+    },
+  };
+}
+
 // ---------------------------------------------------------------- ranking
 
 function byFinishThenUpload(a, b) {

@@ -4,27 +4,111 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Submit a time · Al's Playground stage times</title>
+  <meta name="description" content="Post your Al's Playground checkpoint and finish times to the stage board.">
   <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
   <header class="titlebar">
     <div class="wrap titlebar-inner">
-      <span class="titlebar-name">Al's Playground stage times</span>
+      <a class="titlebar-name titlebar-link" href="../">Al's Playground stage times</a>
       <span class="titlebar-game">Richard Burns Rally</span>
     </div>
   </header>
+
   <main class="wrap">
-    <section class="board">
-      <div class="band"><h1>Submit a time</h1></div>
-      <table class="results"><tbody>
-        <tr class="msg-row"><td>
-          <strong>Submissions open soon.</strong>
-          The form for posting your checkpoint and finish times is on its way.<br>
-          <a class="btn-plain" href="../" style="display:inline-block;text-decoration:none">Back to the stage times</a>
-        </td></tr>
-      </tbody></table>
+    <section class="board" aria-labelledby="page-title">
+      <div class="band"><h1 id="page-title">Submit a time</h1></div>
+      <p class="stage-meta" id="stage-meta">Al's Playground · LSPR 2024 SS1 · 12.5 km · Gravel</p>
+
+      <div class="form-body">
+        <p id="mode-note" class="mode-note" hidden></p>
+
+        <div class="howto">
+          <h2>How to enter your times</h2>
+          <p>Type them exactly as the game shows them at the end of the stage: <strong>minutes:seconds.thousandths</strong>.</p>
+          <table class="howto-table">
+            <tr><td>Checkpoint 1</td><td><code>2:21.402</code></td></tr>
+            <tr><td>Checkpoint 2</td><td><code>4:40.118</code></td></tr>
+            <tr><td>Finish</td><td><code>6:48.034</code></td></tr>
+          </table>
+          <p class="hint">Checkpoint times are the time from the start, not the time between checkpoints. A comma instead of the dot is fine, and fewer decimals are fine (<code>6:48.5</code>).</p>
+        </div>
+
+        <form id="submit-form" novalidate>
+          <div class="field">
+            <label for="f-driver">Driver name</label>
+            <input id="f-driver" name="driver" type="text" maxlength="40" autocomplete="nickname" spellcheck="false" aria-describedby="h-driver e-driver">
+            <p class="hint" id="h-driver">As you want it on the board. Use the same name every time so your runs stay together.</p>
+            <p class="error" id="e-driver" aria-live="polite"></p>
+          </div>
+
+          <div class="field">
+            <label for="f-car">Car</label>
+            <select id="f-car" name="car" aria-describedby="h-car e-car"><option value="">Choose a car…</option></select>
+            <p class="hint" id="h-car">Grouped by class, as in the RSF launcher. Car missing? <a id="car-missing" href="https://github.com/Hackinator07/als-playground/issues/new?title=Car%20missing">Tell us</a>.</p>
+            <p class="error" id="e-car" aria-live="polite"></p>
+          </div>
+
+          <div class="time-grid">
+            <div class="field">
+              <label for="f-cp1">Checkpoint 1</label>
+              <input id="f-cp1" name="cp1" type="text" inputmode="text" placeholder="2:21.402" autocomplete="off" spellcheck="false" aria-describedby="r-cp1 e-cp1">
+              <p class="readback" id="r-cp1" aria-live="polite"></p>
+              <p class="error" id="e-cp1" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-cp2">Checkpoint 2</label>
+              <input id="f-cp2" name="cp2" type="text" inputmode="text" placeholder="4:40.118" autocomplete="off" spellcheck="false" aria-describedby="r-cp2 e-cp2">
+              <p class="readback" id="r-cp2" aria-live="polite"></p>
+              <p class="error" id="e-cp2" aria-live="polite"></p>
+            </div>
+            <div class="field">
+              <label for="f-finish">Finish</label>
+              <input id="f-finish" name="finish" type="text" inputmode="text" placeholder="6:48.034" autocomplete="off" spellcheck="false" aria-describedby="r-finish e-finish">
+              <p class="readback" id="r-finish" aria-live="polite"></p>
+              <p class="error" id="e-finish" aria-live="polite"></p>
+            </div>
+          </div>
+
+          <div class="field">
+            <label for="f-shot">Screenshot <span class="optional">optional</span></label>
+            <input id="f-shot" name="screenshot" type="file" accept="image/png,image/jpeg,image/webp" aria-describedby="h-shot e-shot">
+            <p class="hint" id="h-shot">A picture of the end-of-stage screen backs up your time. Crop out anything private first (notifications, usernames). It's resized before upload.</p>
+            <div class="shot-preview" id="shot-preview" hidden>
+              <img id="shot-img" alt="Your screenshot">
+              <div><span id="shot-info"></span> <button type="button" class="btn-link" id="shot-remove">Remove</button></div>
+            </div>
+            <p class="error" id="e-shot" aria-live="polite"></p>
+          </div>
+
+          <div class="field field-hp" aria-hidden="true">
+            <label for="f-website">Leave this empty</label>
+            <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
+          </div>
+
+          <div class="field">
+            <label class="check"><input id="f-consent" name="consent" type="checkbox" aria-describedby="e-consent"> My name, and my screenshot if I add one, will be shown publicly on this board.</label>
+            <p class="error" id="e-consent" aria-live="polite"></p>
+          </div>
+
+          <div class="field" id="ts-field">
+            <div id="turnstile"></div>
+            <p class="error" id="e-turnstile" aria-live="polite"></p>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn-submit btn-big" id="send">Submit time</button>
+            <a href="../" class="btn-link-plain">Back to the stage times</a>
+          </div>
+          <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="result" id="result" hidden tabindex="-1"></div>
+      </div>
     </section>
   </main>
+
+  <script type="module" src="../assets/js/submit.js"></script>
 </body>
 </html>

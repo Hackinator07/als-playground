@@ -81,6 +81,7 @@ node --test tests/*.test.mjs   # unit tests
 node scripts/build.mjs         # builds _site/
 node scripts/serve.mjs         # http://localhost:8080/  (add ?sample=many etc.)
 node scripts/make-samples.mjs  # regenerates the fictional sample data
+node scripts/build-worker.mjs  # rebuilds worker/dist/worker.js after changing the Worker or shared/rules.js
 ```
 
 ## Layout
@@ -95,6 +96,8 @@ data/stage.json       stage details and plausibility bounds
 data/cars.json        the car list and groups
 data/submissions/     one JSON file per run
 screenshots/          optional screenshots
-scripts/              build, local server, sample generator
+worker/src/index.js   the submissions Worker (Cloudflare)
+worker/dist/worker.js the same Worker bundled into one file for the Cloudflare editor
+scripts/              build, Worker bundle, local server, sample generator
 tests/                node:test unit tests
 ```

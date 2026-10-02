@@ -23,6 +23,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Worker bundle is up to date
+        run: node scripts/build-worker.mjs --check
       - name: Unit tests
         run: node --test tests/*.test.mjs
       - name: Build results.json and the site
