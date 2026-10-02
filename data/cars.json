@@ -22,7 +22,8 @@
     { "name": "Rally 5", "tag": "Rally5" },
     { "name": "Rally 4", "tag": "Rally4" },
     { "name": "Rally 3", "tag": "Rally3" },
-    { "name": "Rally 2", "tag": "Rally2" }
+    { "name": "Rally 2", "tag": "Rally2" },
+    { "name": "Original", "tag": "Original" }
   ],
   "cars": [
     { "id": "citroen-c3-wrc-2017", "name": "Citroen C3 WRC 2017", "group": "WRC 1.6", "active": true },
@@ -126,6 +127,14 @@
     { "id": "ford-fiesta-rally2", "name": "Ford Fiesta Rally2", "group": "Rally 2", "active": true },
     { "id": "hyundai-i20-n-rally2", "name": "Hyundai i20 N Rally2", "group": "Rally 2", "active": true },
     { "id": "skoda-fabia-rs-rally2", "name": "Skoda Fabia RS Rally2", "group": "Rally 2", "active": true },
-    { "id": "toyota-gr-yaris-rally2", "name": "Toyota GR Yaris Rally2", "group": "Rally 2", "active": true }
+    { "id": "toyota-gr-yaris-rally2", "name": "Toyota GR Yaris Rally2", "group": "Rally 2", "active": true },
+    { "id": "citroen-xsara-original", "name": "Citroen Xsara", "group": "Original", "active": true },
+    { "id": "hyundai-accent-original", "name": "Hyundai Accent", "group": "Original", "active": true },
+    { "id": "mg-zr-super-1600-original", "name": "MG ZR Super 1600", "group": "Original", "active": true },
+    { "id": "mitsubishi-lancer-evo-vii-original", "name": "Mitsubishi Lancer Evo VII", "group": "Original", "active": true },
+    { "id": "peugeot-206-original", "name": "Peugeot 206", "group": "Original", "active": true },
+    { "id": "subaru-impreza-2000-original", "name": "Subaru Impreza 2000", "group": "Original", "active": true },
+    { "id": "subaru-impreza-2003-original", "name": "Subaru Impreza 2003", "group": "Original", "active": true },
+    { "id": "toyota-corolla-original", "name": "Toyota Corolla", "group": "Original", "active": true }
   ]
 }

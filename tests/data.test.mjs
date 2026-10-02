@@ -7,8 +7,8 @@ const stage = JSON.parse(fs.readFileSync(new URL('../data/stage.json', import.me
 const cars = JSON.parse(fs.readFileSync(new URL('../data/cars.json', import.meta.url)));
 const carIds = new Set(cars.cars.map((c) => c.id));
 
-test('cars.json: 102 cars, unique ids, every car in a listed group', () => {
-  assert.equal(cars.cars.length, 102);
+test('cars.json: 110 cars, unique ids, every car in a listed group', () => {
+  assert.equal(cars.cars.length, 110);
   assert.equal(carIds.size, cars.cars.length);
   const groups = new Set(cars.groups.map((g) => g.name));
   for (const c of cars.cars) assert.ok(groups.has(c.group), `${c.name} has unknown group ${c.group}`);
