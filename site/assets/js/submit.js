@@ -59,7 +59,7 @@ async function init() {
     showMode('<strong>Test mode.</strong> Submissions aren’t open yet. Try the form as much as you like: it checks everything, but nothing is saved.');
   } else {
     try {
-      const status = await getJson(`${s.submit_url.replace(/\/+$/, '')}/status`);
+      const status = await getJson(`${workerBase()}/status`);
       state.open = status.open !== false;
     } catch { /* if the status check fails, let the submit itself report the problem */ }
     if (!state.open) {
@@ -69,6 +69,9 @@ async function init() {
   }
   loadTurnstile();
 }
+
+// stage.json's submit_url is the Worker's address, e.g. https://als-playground-submit.hack-jason.workers.dev
+const workerBase = () => state.stage.submit_url.replace(/\/+$/, '').replace(/\/submit$/, '');
 
 function showMode(html) {
   const el = $('mode-note');
@@ -287,7 +290,7 @@ $('submit-form').addEventListener('submit', async (e) => {
   $('send').disabled = true;
   $('form-status').textContent = 'Sending…';
   try {
-    const res = await fetch(state.stage.submit_url, {
+    const res = await fetch(`${workerBase()}/submit`, {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({

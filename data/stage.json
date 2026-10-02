@@ -12,6 +12,6 @@
   "display_time_zone_label": "US Central time (CT)",
   "rows_before_show_all": 100,
   "turnstile_site_key": "0x4AAAAAAFMX9eSoVIaX81zp",
-  "submit_url": "",
+  "submit_url": "https://als-playground-submit.hack-jason.workers.dev",
   "repo_url": "https://github.com/Hackinator07/als-playground"
 }
