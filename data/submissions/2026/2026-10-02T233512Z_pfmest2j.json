@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "pfmest2j",
+  "stage": "als-playground",
+  "driver": "Test Run",
+  "car_id": "citroen-c4-wrc-2008",
+  "car_name": "Citroen C4 WRC 2008",
+  "cp1_ms": 150000,
+  "cp2_ms": 300000,
+  "finish_ms": 450000,
+  "entered": {
+    "cp1": "2:30.000",
+    "cp2": "5:00.000",
+    "finish": "7:30.000"
+  },
+  "uploaded_at": "2026-10-02T23:35:12.283Z",
+  "screenshot": "screenshots/2026/pfmest2j.webp",
+  "status": "published"
+}
