@@ -98,24 +98,14 @@ function renderStage() {
   }
 }
 
-// Every class is listed, in cars.json order, with how many drivers have a time
-// in it ("Group A8 · 11 drivers"); classes nobody has driven yet say "no times".
 function renderClassOptions() {
-  const driversIn = new Map();
-  for (const r of state.runs) {
-    const g = state.carGroup.get(r.car_id);
-    if (!g) continue;
-    if (!driversIn.has(g)) driversIn.set(g, new Set());
-    driversIn.get(g).add(driverKey(r.driver));
-  }
+  const used = new Set(state.runs.map((r) => state.carGroup.get(r.car_id)).filter(Boolean));
   const sel = $('f-class');
   const keep = state.group;
-  sel.innerHTML = '<option value="">All classes</option>' + state.groups.map((g) => {
-    const n = driversIn.get(g.name)?.size || 0;
-    const note = n === 0 ? 'no times' : `${n} ${n === 1 ? 'driver' : 'drivers'}`;
-    return `<option value="${esc(g.name)}">${esc(g.name)} · ${note}</option>`;
-  }).join('');
-  sel.value = state.groups.some((g) => g.name === keep) ? keep : '';
+  sel.innerHTML = '<option value="">All classes</option>' + state.groups
+    .filter((g) => used.has(g.name))
+    .map((g) => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
+  sel.value = used.has(keep) ? keep : '';
   state.group = sel.value;
 }
 
