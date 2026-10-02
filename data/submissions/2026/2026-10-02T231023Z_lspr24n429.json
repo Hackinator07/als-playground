@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n429",
+  "stage": "als-playground",
+  "driver": "Scott Crouch",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 179300,
+  "cp2_ms": 407400,
+  "finish_ms": 518700,
+  "entered": {
+    "cp1": "2:59.3",
+    "cp2": "6:47.4",
+    "finish": "8:38.7"
+  },
+  "uploaded_at": "2026-10-02T23:10:23.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #429, 2002 Subaru WRX, co-driver Elizabeth Crouch"
+}

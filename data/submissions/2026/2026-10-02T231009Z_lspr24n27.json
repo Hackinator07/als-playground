@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n27",
+  "stage": "als-playground",
+  "driver": "Sumit Panjabi",
+  "car_id": "mitsubishi-lancer-evo-x-r4",
+  "car_name": "Mitsubishi Lancer Evo X R4",
+  "cp1_ms": 168500,
+  "cp2_ms": 388200,
+  "finish_ms": 490900,
+  "entered": {
+    "cp1": "2:48.5",
+    "cp2": "6:28.2",
+    "finish": "8:10.9"
+  },
+  "uploaded_at": "2026-10-02T23:10:09.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #27, 2008 Mitsubishi Lancer, co-driver Zachary Goldstein"
+}

@@ -61,6 +61,7 @@ If a file you edit has a mistake, the build skips that one file and shows a warn
 - `id` is 4–16 lowercase letters and digits, unique.
 - `uploaded_at` is UTC. The page shows it in US Central time.
 - `screenshot` is `null` or a path such as `screenshots/2026/k7f3q9.webp`.
+- Optional: `label` (up to 20 characters, shown as a tag beside the name, e.g. "LSPR 2024") and `note` (up to 200 characters, shown when the row is opened).
 
 ## Rules the page follows
 

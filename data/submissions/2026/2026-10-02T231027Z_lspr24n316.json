@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n316",
+  "stage": "als-playground",
+  "driver": "Sean Costello",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 185900,
+  "cp2_ms": 426400,
+  "finish_ms": 535100,
+  "entered": {
+    "cp1": "3:05.9",
+    "cp2": "7:06.4",
+    "finish": "8:55.1"
+  },
+  "uploaded_at": "2026-10-02T23:10:27.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #316, 2000 Subaru Impreza 2.5 RS, co-driver Steven Blomquist-Scanlan"
+}

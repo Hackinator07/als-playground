@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n262",
+  "stage": "als-playground",
+  "driver": "Camden Sheridan",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 179100,
+  "cp2_ms": 401300,
+  "finish_ms": 510600,
+  "entered": {
+    "cp1": "2:59.1",
+    "cp2": "6:41.3",
+    "finish": "8:30.6"
+  },
+  "uploaded_at": "2026-10-02T23:10:17.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #262, 1999 Subaru Impreza, co-driver Jeremy Frey"
+}

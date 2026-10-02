@@ -176,7 +176,7 @@ function rowHtml(row, i, ctx) {
     : '';
   const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
     <td class="c-pos">${pos}</td>
-    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span><span class="car-sub">${esc(run.car_name)}</span></td>
+    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${run.label ? ` <span class="label">${esc(run.label)}</span>` : ''}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car">${esc(run.car_name)}${tag}</td>
     <td class="c-time${fast1}">${formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${formatTime(run.cp2_ms)}</td>
@@ -211,6 +211,7 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     <div class="only-phone"><h3>Diff. Prev</h3><div class="val">${formatDiff(diffPrev)}</div></div>
     <div><h3>Uploaded</h3><div class="val">${up.date} ${up.time} ${up.zone}<span class="gap">${up.utc}</span></div></div>
     ${runsNote}
+    ${run.note ? `<div class="detail-note"><h3>Note</h3><div class="val">${esc(run.note)}</div></div>` : ''}
     ${shot}
   </div></td></tr>`;
 }

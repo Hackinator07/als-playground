@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n86",
+  "stage": "als-playground",
+  "driver": "Tevfik Peker",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 196000,
+  "cp2_ms": 442900,
+  "finish_ms": 563800,
+  "entered": {
+    "cp1": "3:16.0",
+    "cp2": "7:22.9",
+    "finish": "9:23.8"
+  },
+  "uploaded_at": "2026-10-02T23:10:38.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #86, 2019 Ford Fiesta, co-driver Jamie Beliveau"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n708",
+  "stage": "als-playground",
+  "driver": "Brian Atwood",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 194600,
+  "cp2_ms": 438800,
+  "finish_ms": 556800,
+  "entered": {
+    "cp1": "3:14.6",
+    "cp2": "7:18.8",
+    "finish": "9:16.8"
+  },
+  "uploaded_at": "2026-10-02T23:10:36.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #708, 2002 Subaru Impreza, co-driver Kenny Michels"
+}

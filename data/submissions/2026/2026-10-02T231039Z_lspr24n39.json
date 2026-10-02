@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n39",
+  "stage": "als-playground",
+  "driver": "Jonathon Nagel",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 202100,
+  "cp2_ms": 447700,
+  "finish_ms": 566100,
+  "entered": {
+    "cp1": "3:22.1",
+    "cp2": "7:27.7",
+    "finish": "9:26.1"
+  },
+  "uploaded_at": "2026-10-02T23:10:39.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #39, 2002 Subaru Impreza, co-driver Max Sutton"
+}

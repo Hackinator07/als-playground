@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n135",
+  "stage": "als-playground",
+  "driver": "Roberto Yglesias",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 166700,
+  "cp2_ms": 385000,
+  "finish_ms": 487400,
+  "entered": {
+    "cp1": "2:46.7",
+    "cp2": "6:25.0",
+    "finish": "8:07.4"
+  },
+  "uploaded_at": "2026-10-02T23:10:05.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #135, 2017 Ford Fiesta ST, co-driver Sara Nonack"
+}

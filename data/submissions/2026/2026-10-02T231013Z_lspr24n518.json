@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n518",
+  "stage": "als-playground",
+  "driver": "Andrew Williamson",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 175900,
+  "cp2_ms": 394700,
+  "finish_ms": 499100,
+  "entered": {
+    "cp1": "2:55.9",
+    "cp2": "6:34.7",
+    "finish": "8:19.1"
+  },
+  "uploaded_at": "2026-10-02T23:10:13.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #518, 1993 Subaru Impreza, co-driver Julia Stewart"
+}

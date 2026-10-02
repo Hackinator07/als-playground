@@ -121,6 +121,8 @@ export function checkStoredRun(run, carIds, stage) {
   if (typeof run.uploaded_at !== 'string' || Number.isNaN(Date.parse(run.uploaded_at))) return 'bad uploaded_at';
   if (run.screenshot !== null && run.screenshot !== undefined && typeof run.screenshot !== 'string') return 'bad screenshot';
   if (!['published', 'hidden'].includes(run.status)) return 'status must be "published" or "hidden"';
+  if (run.label !== undefined && (typeof run.label !== 'string' || run.label.length > 20)) return 'label must be text, 20 characters at most';
+  if (run.note !== undefined && (typeof run.note !== 'string' || run.note.length > 200)) return 'note must be text, 200 characters at most';
   return null;
 }
 

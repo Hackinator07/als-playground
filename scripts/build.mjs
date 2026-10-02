@@ -90,6 +90,8 @@ for (const file of listJson(path.join(root, 'data/submissions'))) {
     finish_ms: run.finish_ms,
     uploaded_at: run.uploaded_at,
     screenshot: run.screenshot || null,
+    ...(run.label ? { label: run.label } : {}),
+    ...(run.note ? { note: run.note } : {}),
   });
 }
 runs.sort((a, b) => a.finish_ms - b.finish_ms || Date.parse(a.uploaded_at) - Date.parse(b.uploaded_at));

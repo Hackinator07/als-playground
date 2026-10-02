@@ -45,4 +45,7 @@ test('stored run: each kind of damage is caught', () => {
   assert.match(checkStoredRun({ ...good, driver: 'x' }, carIds, stage), /driver/);
   assert.match(checkStoredRun({ ...good, id: '../x' }, carIds, stage), /id/);
   assert.match(checkStoredRun(null, carIds, stage), /object/);
+  assert.equal(checkStoredRun({ ...good, label: 'LSPR 2024', note: 'Real stage time' }, carIds, stage), null);
+  assert.match(checkStoredRun({ ...good, label: 'x'.repeat(21) }, carIds, stage), /label/);
+  assert.match(checkStoredRun({ ...good, note: 5 }, carIds, stage), /note/);
 });

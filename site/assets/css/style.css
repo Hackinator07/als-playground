@@ -116,6 +116,11 @@ select { padding-right: 24px; }
   display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid #B9C4B2; border-radius: 3px;
   font-size: 11px; line-height: 16px; color: var(--spruce); white-space: nowrap; vertical-align: 1px;
 }
+.label {
+  display: inline-block; padding: 0 5px; border-radius: 3px; background: var(--row-mine); color: #7A3A0E;
+  font-size: 11px; line-height: 16px; font-weight: 600; white-space: nowrap; vertical-align: 1px;
+}
+.detail-note { grid-column: span 2; }
 .finish { font-weight: 700; color: var(--spruce); }
 .fastest { color: var(--fastest); font-weight: 700; }
 .up-date, .up-time { display: block; }
@@ -181,4 +186,5 @@ select { padding-right: 24px; }
   .detail td { padding: 10px 8px 12px 12px; }
   .detail .only-phone { display: block; }
   .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .label { font-size: 10px; padding: 0 3px; }
 }

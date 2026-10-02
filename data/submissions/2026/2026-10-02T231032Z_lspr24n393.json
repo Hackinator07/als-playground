@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n393",
+  "stage": "als-playground",
+  "driver": "Adam Brock",
+  "car_id": "volvo-240-turbo-grpa",
+  "car_name": "Volvo 240 Turbo GrpA",
+  "cp1_ms": 189200,
+  "cp2_ms": 426100,
+  "finish_ms": 542000,
+  "entered": {
+    "cp1": "3:09.2",
+    "cp2": "7:06.1",
+    "finish": "9:02.0"
+  },
+  "uploaded_at": "2026-10-02T23:10:32.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #393, 1989 Volvo 244, co-driver Shanti Witt"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n255",
+  "stage": "als-playground",
+  "driver": "Gary Klein",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 228400,
+  "cp2_ms": 510100,
+  "finish_ms": 654200,
+  "entered": {
+    "cp1": "3:48.4",
+    "cp2": "8:30.1",
+    "finish": "10:54.2"
+  },
+  "uploaded_at": "2026-10-02T23:10:46.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #255, 2013 Ford Fiesta R2, co-driver Michelle Rogers"
+}

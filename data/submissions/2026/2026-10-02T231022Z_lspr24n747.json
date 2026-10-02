@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n747",
+  "stage": "als-playground",
+  "driver": "Andy Didorosi",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 182400,
+  "cp2_ms": 408500,
+  "finish_ms": 517000,
+  "entered": {
+    "cp1": "3:02.4",
+    "cp2": "6:48.5",
+    "finish": "8:37.0"
+  },
+  "uploaded_at": "2026-10-02T23:10:22.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #747, 1998 Subaru Impreza, co-driver Jamie Willetts"
+}
