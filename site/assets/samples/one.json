@@ -1,0 +1,17 @@
+{
+ "generated_at": "2026-10-02T22:00:00.000Z",
+ "sample": "one",
+ "runs": [
+  {
+   "id": "aaaaa1",
+   "driver": "Jane Driver",
+   "car_id": "subaru-impreza-gc8-555-grpa",
+   "car_name": "Subaru Impreza GC8 555 GrpA",
+   "cp1_ms": 138938,
+   "cp2_ms": 278396,
+   "finish_ms": 408034,
+   "uploaded_at": "2026-10-14T00:02:11.000Z",
+   "screenshot": "assets/samples/sample-screenshot.webp"
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Al's Playground stage times</title>
+  <meta name="description" content="Stage times for Al's Playground, the LSPR 2024 SS1 stage for Richard Burns Rally. Submit your time and see the board.">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+  <header class="titlebar">
+    <div class="wrap titlebar-inner">
+      <span class="titlebar-name">Al's Playground stage times</span>
+      <span class="titlebar-game">Richard Burns Rally</span>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div id="sample-bar" class="sample-bar" hidden></div>
+
+    <section class="board" aria-labelledby="stage-name">
+      <div class="band">
+        <h1 id="stage-name">Al's Playground</h1>
+      </div>
+      <p class="stage-meta" id="stage-meta">LSPR 2024 SS1 · Marquette County, Michigan · 12.5 km · Gravel</p>
+
+      <div class="controls">
+        <a class="btn-submit" href="submit/">Submit a time</a>
+        <label class="control">
+          <span class="control-label">Class</span>
+          <select id="f-class"><option value="">All classes</option></select>
+        </label>
+        <div class="seg" role="group" aria-label="Which runs to show">
+          <button type="button" data-view="best" aria-pressed="true">Best per driver</button>
+          <button type="button" data-view="all" aria-pressed="false">All runs</button>
+        </div>
+        <label class="control control-search">
+          <span class="visually-hidden">Find a driver</span>
+          <input id="f-search" type="search" placeholder="Find a driver" autocomplete="off">
+        </label>
+      </div>
+
+      <p id="summary" class="summary" role="status" aria-live="polite"></p>
+
+      <div class="table-wrap">
+        <table class="results" id="results">
+          <thead>
+            <tr>
+              <th class="c-pos" scope="col">Pos</th>
+              <th class="c-driver" scope="col">Driver</th>
+              <th class="c-car" scope="col">Car</th>
+              <th class="c-time" scope="col"><span class="long">Chkpoint 1 Time</span><span class="short">Chkpt 1</span></th>
+              <th class="c-time" scope="col"><span class="long">Chkpoint 2 Time</span><span class="short">Chkpt 2</span></th>
+              <th class="c-time c-finish" scope="col"><span class="long">Finish Time</span><span class="short">Finish</span></th>
+              <th class="c-diff c-prev" scope="col">Diff. Prev</th>
+              <th class="c-diff" scope="col">Diff. First</th>
+              <th class="c-up" scope="col">Uploaded</th>
+              <th class="c-shot" scope="col"><span class="visually-hidden">Screenshot</span></th>
+            </tr>
+          </thead>
+          <tbody id="rows">
+            <tr class="msg-row"><td colspan="10">Loading times…</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="show-all" id="show-all-wrap" hidden>
+        <button type="button" id="show-all" class="btn-plain"></button>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p>Times are entered by drivers. They're checked for format and plausibility, not verified. A <svg class="icon-inline" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-camera"/></svg> means the driver added a screenshot.</p>
+      <p>Uploaded times are US Central time (CT). Purple marks the fastest time at each checkpoint. Click a row for sector times.</p>
+      <p><span id="updated"></span> <a id="repo-link" href="https://github.com/Hackinator07/als-playground">Source and data on GitHub</a></p>
+    </footer>
+  </main>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
+  </svg>
+
+  <script type="module" src="assets/js/results.js"></script>
+</body>
+</html>

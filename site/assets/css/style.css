@@ -1,0 +1,184 @@
+/* Al's Playground stage times — spruce and maple.
+   Every colour is defined once here; change a value and the whole site follows. */
+:root {
+  --spruce: #1F3B2D;          /* title bar, column headers, finish time */
+  --spruce-text: #F1EEE4;     /* text on spruce */
+  --maple: #C8641E;           /* stage band */
+  --maple-text: #FFF6EC;      /* text on the band (keep it 18 px+ bold) */
+  --maple-dark: #A9521A;      /* submit button, links */
+  --row: #FFFFFF;
+  --row-alt: #EEF1EA;         /* sage zebra row */
+  --row-hover: #F7EDE2;
+  --row-open: #FBF6EF;        /* expanded detail */
+  --row-mine: #FBE9DA;        /* the driver's own highlighted row */
+  --text: #1C1C1A;
+  --muted: #5F5E5A;           /* car names, diffs, timestamps */
+  --line: #D9DDD3;
+  --fastest: #6B3FA0;         /* fastest checkpoint / sector */
+  --page: #F6F4EE;
+  --focus: #A9521A;
+  --font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--page);
+  color: var(--text);
+  font: 14px/1.4 var(--font);
+}
+a { color: var(--maple-dark); }
+a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible, tr:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+}
+.visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+
+/* ---------- title bar */
+.titlebar { background: var(--spruce); color: var(--spruce-text); }
+.titlebar-inner { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 10px; }
+.titlebar-name { font-size: 18px; font-weight: 700; letter-spacing: 0.2px; }
+.titlebar-game { font-size: 12px; opacity: 0.85; }
+
+/* ---------- sample notice */
+.sample-bar {
+  margin: 14px 0 0; padding: 8px 12px; background: #FFF8E6; border: 1px solid #E8D6A8;
+  border-radius: 4px; font-size: 13px; color: #5A4710;
+}
+.sample-bar a { color: #7A4A0E; margin-left: 2px; }
+.sample-bar a[aria-current="true"] { font-weight: 700; color: var(--text); text-decoration: none; }
+
+/* ---------- board */
+.board { margin: 16px 0 0; background: var(--row); border: 1px solid var(--line); border-radius: 4px; overflow: hidden; }
+.band { background: var(--maple); color: var(--maple-text); text-align: center; padding: 8px 12px; }
+.band h1 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.25; }
+.stage-meta { margin: 0; padding: 7px 12px; text-align: center; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line); }
+
+.controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px; border-bottom: 1px solid var(--line); }
+.btn-submit {
+  display: inline-block; background: var(--maple-dark); color: #fff; text-decoration: none;
+  font-weight: 700; font-size: 14px; padding: 8px 16px; border-radius: 4px; white-space: nowrap;
+}
+.btn-submit:hover { background: #8E4415; }
+.control { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+select, input[type="search"] {
+  font: inherit; font-size: 14px; color: var(--text); background: #fff;
+  border: 1px solid #B9C0B2; border-radius: 4px; padding: 6px 8px; min-height: 34px;
+}
+select { padding-right: 24px; }
+.control-search { margin-left: auto; }
+.control-search input { width: 190px; }
+.seg { display: inline-flex; border: 1px solid var(--spruce); border-radius: 4px; overflow: hidden; }
+.seg button {
+  font: inherit; font-size: 13px; border: 0; background: #fff; color: var(--spruce);
+  padding: 7px 12px; cursor: pointer; min-height: 34px;
+}
+.seg button + button { border-left: 1px solid var(--spruce); }
+.seg button[aria-pressed="true"] { background: var(--spruce); color: var(--spruce-text); font-weight: 600; }
+
+.summary { margin: 0; padding: 7px 12px; font-size: 12.5px; color: var(--muted); min-height: 1.4em; }
+.summary .pending { color: var(--maple-dark); font-weight: 600; }
+
+/* ---------- table */
+.table-wrap { width: 100%; }
+.results { width: 100%; border-collapse: collapse; font-size: 13px; font-variant-numeric: tabular-nums; }
+.results th {
+  background: var(--spruce); color: var(--spruce-text); font-weight: 600; font-size: 12px;
+  line-height: 1.2; padding: 7px 6px; text-align: center; vertical-align: middle;
+  border-right: 1px solid rgba(241, 238, 228, 0.18);
+}
+.results th:last-child { border-right: 0; }
+.results th .short { display: none; }
+.results td { padding: 5px 6px; vertical-align: middle; border-bottom: 1px solid #E6E9E1; }
+.results tbody tr.run { cursor: pointer; }
+.results tbody tr.run.odd { background: var(--row); }
+.results tbody tr.run.even { background: var(--row-alt); }
+.results tbody tr.run:hover { background: var(--row-hover); }
+.results tbody tr.run.mine { background: var(--row-mine); box-shadow: inset 4px 0 0 var(--maple); }
+.results tbody tr.run[aria-expanded="true"] { background: var(--row-open); }
+
+.c-pos { width: 44px; text-align: center; font-weight: 600; }
+.c-driver { min-width: 150px; }
+.c-time { width: 92px; text-align: right; white-space: nowrap; }
+.c-diff { width: 78px; text-align: right; white-space: nowrap; color: var(--muted); }
+.c-up { width: 92px; text-align: center; white-space: nowrap; color: var(--muted); font-size: 12px; line-height: 1.25; }
+.c-shot { width: 34px; text-align: center; }
+.results th.c-time, .results th.c-diff { text-align: center; }
+
+.driver-name { font-weight: 700; overflow-wrap: anywhere; }
+.car-sub { display: none; color: var(--muted); font-size: 12px; }
+.tag {
+  display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid #B9C4B2; border-radius: 3px;
+  font-size: 11px; line-height: 16px; color: var(--spruce); white-space: nowrap; vertical-align: 1px;
+}
+.finish { font-weight: 700; color: var(--spruce); }
+.fastest { color: var(--fastest); font-weight: 700; }
+.up-date, .up-time { display: block; }
+
+.shot-link { display: inline-flex; color: var(--spruce); padding: 4px; border-radius: 3px; }
+.shot-link:hover { color: var(--maple-dark); }
+.shot-link svg { width: 18px; height: 18px; }
+.icon-inline { width: 15px; height: 15px; vertical-align: -3px; color: var(--spruce); }
+
+.msg-row td { text-align: center; padding: 28px 12px; color: var(--muted); font-size: 14px; cursor: default; }
+.msg-row strong { display: block; color: var(--text); font-size: 16px; margin-bottom: 8px; }
+.msg-row .btn-submit, .msg-row .btn-plain { margin-top: 10px; }
+
+/* ---------- expanded detail row */
+.detail td { background: var(--row-open); border-bottom: 1px solid var(--line); box-shadow: inset 4px 0 0 var(--maple); padding: 10px 12px 12px 18px; cursor: default; }
+.detail-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px 18px; align-items: start; }
+.detail h3 { margin: 0 0 2px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); }
+.detail .val { font-size: 14px; }
+.detail .gap { color: var(--muted); font-size: 12px; margin-left: 6px; }
+.detail .only-phone { display: none; }
+.detail-shot img { display: block; max-width: 240px; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 3px; }
+.btn-plain {
+  font: inherit; font-size: 13px; background: #fff; color: var(--spruce); border: 1px solid var(--spruce);
+  border-radius: 4px; padding: 6px 12px; cursor: pointer;
+}
+.btn-plain:hover { background: var(--row-alt); }
+.btn-link { font: inherit; font-size: 13px; background: none; border: 0; padding: 0; color: var(--maple-dark); text-decoration: underline; cursor: pointer; }
+
+.show-all { text-align: center; padding: 12px; border-top: 1px solid var(--line); }
+
+/* ---------- footer */
+.footer { padding: 14px 2px 32px; font-size: 12.5px; color: var(--muted); }
+.footer p { margin: 0 0 6px; }
+
+/* ---------- phones: checkpoints stay, Car / Diff. Prev / Uploaded move into the tap row */
+@media (max-width: 640px) {
+  .wrap { padding: 0 8px; }
+  .titlebar-name { font-size: 16px; }
+  .titlebar-game { display: none; }
+  .band h1 { font-size: 20px; }
+  .stage-meta { font-size: 12px; }
+  .controls { gap: 8px; padding: 10px 8px; }
+  .btn-submit { flex: 1 1 100%; text-align: center; padding: 10px 16px; }
+  .control-search { margin-left: 0; flex: 1 1 100%; }
+  .control-search input { width: 100%; }
+  .seg { flex: 1 1 auto; }
+  .seg button { flex: 1 1 50%; }
+
+  .results { table-layout: fixed; font-size: 11.5px; }
+  .results th { font-size: 11px; padding: 6px 2px; }
+  .results th .long { display: none; }
+  .results th .short { display: inline; }
+  .results td { padding: 6px 2px; }
+  .c-car, .c-prev, .c-up, .c-shot { display: none; }
+  .c-pos { width: 26px; }
+  .c-driver { min-width: 0; width: auto; padding-left: 4px !important; }
+  .c-time { width: 56px; }
+  .c-finish { width: 60px; }
+  .c-diff { width: 52px; }
+  .results td:last-of-type { padding-right: 6px; }
+  .driver-name { font-size: 12.5px; }
+  .car-sub { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
+  .detail td { padding: 10px 8px 12px 12px; }
+  .detail .only-phone { display: block; }
+  .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

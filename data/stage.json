@@ -1,0 +1,16 @@
+{
+  "id": "als-playground",
+  "name": "Al's Playground",
+  "event": "LSPR 2024 SS1",
+  "location": "Marquette County, Michigan",
+  "length_km": 12.5,
+  "surface": "Gravel",
+  "rbr_map_id": 6001,
+  "min_finish_ms": 300000,
+  "max_finish_ms": 1800000,
+  "display_time_zone": "America/Chicago",
+  "display_time_zone_label": "US Central time (CT)",
+  "rows_before_show_all": 100,
+  "submissions_open": false,
+  "repo_url": "https://github.com/Hackinator07/als-playground"
+}

@@ -1,0 +1,50 @@
+{
+ "generated_at": "2026-10-02T22:00:00.000Z",
+ "sample": "ties",
+ "runs": [
+  {
+   "id": "aaaaa2",
+   "driver": "Jane Driver",
+   "car_id": "subaru-impreza-gc8-555-grpa",
+   "car_name": "Subaru Impreza GC8 555 GrpA",
+   "cp1_ms": 141402,
+   "cp2_ms": 280118,
+   "finish_ms": 408034,
+   "uploaded_at": "2026-10-14T00:02:11.000Z",
+   "screenshot": "assets/samples/sample-screenshot.webp"
+  },
+  {
+   "id": "aaaaa3",
+   "driver": "Alex Rally",
+   "car_id": "skoda-fabia-rs-rally2",
+   "car_name": "Skoda Fabia RS Rally2",
+   "cp1_ms": 141390,
+   "cp2_ms": 281900,
+   "finish_ms": 410500,
+   "uploaded_at": "2026-10-15T13:11:40.000Z",
+   "screenshot": null
+  },
+  {
+   "id": "aaaaa4",
+   "driver": "Sam Gravel",
+   "car_id": "hyundai-i20-n-rally2",
+   "car_name": "Hyundai i20 N Rally2",
+   "cp1_ms": 142010,
+   "cp2_ms": 282330,
+   "finish_ms": 410500,
+   "uploaded_at": "2026-10-17T02:40:05.000Z",
+   "screenshot": "assets/samples/sample-screenshot.webp"
+  },
+  {
+   "id": "aaaaa5",
+   "driver": "Pat Slow",
+   "car_id": "lancia-stratos-hf-grp4",
+   "car_name": "Lancia Stratos HF Grp4",
+   "cp1_ms": 160800,
+   "cp2_ms": 320040,
+   "finish_ms": 472120,
+   "uploaded_at": "2026-10-17T17:00:30.000Z",
+   "screenshot": null
+  }
+ ]
+}

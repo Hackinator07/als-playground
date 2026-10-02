@@ -1,0 +1,72 @@
+{
+ "generated_at": "2026-10-02T22:00:00.000Z",
+ "sample": "repeat",
+ "runs": [
+  {
+   "id": "aaaaa6",
+   "driver": "Jane Driver",
+   "car_id": "subaru-impreza-gc8-555-grpa",
+   "car_name": "Subaru Impreza GC8 555 GrpA",
+   "cp1_ms": 146752,
+   "cp2_ms": 292395,
+   "finish_ms": 425200,
+   "uploaded_at": "2026-10-05T18:00:00.000Z",
+   "screenshot": null
+  },
+  {
+   "id": "aaaaa7",
+   "driver": "Jane Driver",
+   "car_id": "subaru-impreza-gc8-555-grpa",
+   "car_name": "Subaru Impreza GC8 555 GrpA",
+   "cp1_ms": 142823,
+   "cp2_ms": 284773,
+   "finish_ms": 418900,
+   "uploaded_at": "2026-10-06T18:00:00.000Z",
+   "screenshot": null
+  },
+  {
+   "id": "aaaaa8",
+   "driver": "Jane Driver",
+   "car_id": "skoda-fabia-rs-rally2",
+   "car_name": "Skoda Fabia RS Rally2",
+   "cp1_ms": 143137,
+   "cp2_ms": 280299,
+   "finish_ms": 412400,
+   "uploaded_at": "2026-10-07T18:00:00.000Z",
+   "screenshot": "assets/samples/sample-screenshot.webp"
+  },
+  {
+   "id": "aaaaa9",
+   "driver": "Alex Rally",
+   "car_id": "skoda-fabia-rs-rally2",
+   "car_name": "Skoda Fabia RS Rally2",
+   "cp1_ms": 140983,
+   "cp2_ms": 281074,
+   "finish_ms": 415000,
+   "uploaded_at": "2026-10-06T20:00:00.000Z",
+   "screenshot": null
+  },
+  {
+   "id": "aaaaaa",
+   "driver": "Pat Slow",
+   "car_id": "subaru-impreza-gc8-555-grpa",
+   "car_name": "Subaru Impreza GC8 555 GrpA",
+   "cp1_ms": 144259,
+   "cp2_ms": 287699,
+   "finish_ms": 421700,
+   "uploaded_at": "2026-10-08T01:00:00.000Z",
+   "screenshot": null
+  },
+  {
+   "id": "aaaaab",
+   "driver": "Alex Rally",
+   "car_id": "toyota-gr-yaris-rally2",
+   "car_name": "Toyota GR Yaris Rally2",
+   "cp1_ms": 145129,
+   "cp2_ms": 285430,
+   "finish_ms": 416250,
+   "uploaded_at": "2026-10-09T01:00:00.000Z",
+   "screenshot": null
+  }
+ ]
+}
