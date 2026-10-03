@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "dnurj11v",
+  "stage": "als-playground",
+  "driver": "Max Sutton",
+  "car_id": "mitsubishi-lancer-evo-ii-grpa",
+  "car_name": "Mitsubishi Lancer Evo II GrpA",
+  "cp1_ms": 132800,
+  "cp2_ms": 318700,
+  "finish_ms": 418044,
+  "entered": {
+    "cp1": "2:12.8",
+    "cp2": "5:18.7",
+    "finish": "6:58.044"
+  },
+  "uploaded_at": "2026-10-03T14:49:02.842Z",
+  "screenshot": "screenshots/2026/dnurj11v.webp",
+  "status": "published"
+}
