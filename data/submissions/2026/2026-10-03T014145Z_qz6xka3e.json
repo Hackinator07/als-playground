@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "qz6xka3e",
+  "stage": "als-playground",
+  "driver": "Max Sutton",
+  "car_id": "vw-golf-ii-gti-16v-grpa",
+  "car_name": "VW Golf II GTI 16V GrpA",
+  "cp1_ms": 143600,
+  "cp2_ms": 344700,
+  "finish_ms": 447588,
+  "entered": {
+    "cp1": "2:23.6",
+    "cp2": "5:44.7",
+    "finish": "7:27.588"
+  },
+  "uploaded_at": "2026-10-03T01:41:45.761Z",
+  "screenshot": "screenshots/2026/qz6xka3e.webp",
+  "status": "published"
+}
