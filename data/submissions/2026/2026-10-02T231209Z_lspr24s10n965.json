@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n965",
+  "stage": "als-playground",
+  "driver": "Chris Cyr",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 165900,
+  "cp2_ms": 375700,
+  "finish_ms": 476400,
+  "entered": {
+    "cp1": "2:45.9",
+    "cp2": "6:15.7",
+    "finish": "7:56.4"
+  },
+  "uploaded_at": "2026-10-02T23:12:09.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #965, 2014 Ford Fiesta ST, co-driver Glen Ray"
+}

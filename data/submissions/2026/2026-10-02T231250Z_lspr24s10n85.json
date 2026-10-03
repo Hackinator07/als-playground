@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n85",
+  "stage": "als-playground",
+  "driver": "Brie Lucio",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 197700,
+  "cp2_ms": 435600,
+  "finish_ms": 549400,
+  "entered": {
+    "cp1": "3:17.7",
+    "cp2": "7:15.6",
+    "finish": "9:09.4"
+  },
+  "uploaded_at": "2026-10-02T23:12:50.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #85, 2017 Ford Fiesta, co-driver Tim Kohlmann"
+}

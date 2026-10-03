@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n839",
+  "stage": "als-playground",
+  "driver": "Kevin Kahl",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2017 Subaru WRX",
+  "cp1_ms": 183800,
+  "cp2_ms": 414400,
+  "finish_ms": 524300,
+  "entered": {
+    "cp1": "3:03.8",
+    "cp2": "6:54.4",
+    "finish": "8:44.3"
+  },
+  "uploaded_at": "2026-10-02T23:12:40.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #839, co-driver Cray Dumeah. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n300",
+  "stage": "als-playground",
+  "driver": "Chase Blakely",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2000 Volkswagen GTI GLX",
+  "cp1_ms": 211500,
+  "cp2_ms": 475500,
+  "finish_ms": 596700,
+  "entered": {
+    "cp1": "3:31.5",
+    "cp2": "7:55.5",
+    "finish": "9:56.7"
+  },
+  "uploaded_at": "2026-10-02T23:13:01.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #300, co-driver Michael Callaway. This vehicle has no Richard Burns Rally version."
+}

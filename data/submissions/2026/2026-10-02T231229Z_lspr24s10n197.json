@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n197",
+  "stage": "als-playground",
+  "driver": "Daniel Hayes",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2006 Ford Mustang GT",
+  "cp1_ms": 171300,
+  "cp2_ms": 395100,
+  "finish_ms": 502500,
+  "entered": {
+    "cp1": "2:51.3",
+    "cp2": "6:35.1",
+    "finish": "8:22.5"
+  },
+  "uploaded_at": "2026-10-02T23:12:29.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #197, co-driver Boyd Smith. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n625",
+  "stage": "als-playground",
+  "driver": "Aidan Hicks",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 165500,
+  "cp2_ms": 383600,
+  "finish_ms": 485000,
+  "entered": {
+    "cp1": "2:45.5",
+    "cp2": "6:23.6",
+    "finish": "8:05.0"
+  },
+  "uploaded_at": "2026-10-02T23:12:18.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #625, 1996 Subaru Impreza, co-driver John Hicks"
+}

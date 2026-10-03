@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n192",
+  "stage": "als-playground",
+  "driver": "Javier Olivares",
+  "car_id": "ford-fiesta-rally2",
+  "car_name": "Ford Fiesta Rally2",
+  "cp1_ms": 149300,
+  "cp2_ms": 347500,
+  "finish_ms": 442000,
+  "entered": {
+    "cp1": "2:29.3",
+    "cp2": "5:47.5",
+    "finish": "7:22.0"
+  },
+  "uploaded_at": "2026-10-02T23:12:02.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #192, 2021 Ford Fiesta Rally2, co-driver KJ Miller"
+}

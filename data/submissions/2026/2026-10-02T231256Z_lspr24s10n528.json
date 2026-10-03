@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n528",
+  "stage": "als-playground",
+  "driver": "Keegan Helwig",
+  "car_id": "bmw-m3-e30-grpa",
+  "car_name": "BMW M3 E30 GrpA",
+  "cp1_ms": 198300,
+  "cp2_ms": 445300,
+  "finish_ms": 564600,
+  "entered": {
+    "cp1": "3:18.3",
+    "cp2": "7:25.3",
+    "finish": "9:24.6"
+  },
+  "uploaded_at": "2026-10-02T23:12:56.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #528, 1990 BMW 325i, co-driver Elena Huizar"
+}

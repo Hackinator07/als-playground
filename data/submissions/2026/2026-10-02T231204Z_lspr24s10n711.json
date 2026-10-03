@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n711",
+  "stage": "als-playground",
+  "driver": "John Farrow",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 156900,
+  "cp2_ms": 359400,
+  "finish_ms": 455300,
+  "entered": {
+    "cp1": "2:36.9",
+    "cp2": "5:59.4",
+    "finish": "7:35.3"
+  },
+  "uploaded_at": "2026-10-02T23:12:04.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #711, 2002 Subaru Impreza WRX, co-driver Michael Farrow"
+}

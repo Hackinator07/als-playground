@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n897",
+  "stage": "als-playground",
+  "driver": "James Randall",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2015 Subaru WRX",
+  "cp1_ms": 168800,
+  "cp2_ms": 385100,
+  "finish_ms": 489100,
+  "entered": {
+    "cp1": "2:48.8",
+    "cp2": "6:25.1",
+    "finish": "8:09.1"
+  },
+  "uploaded_at": "2026-10-02T23:12:23.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #897, co-driver Andrew Rausch. This vehicle has no Richard Burns Rally version."
+}

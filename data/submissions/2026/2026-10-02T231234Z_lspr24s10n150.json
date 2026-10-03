@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n150",
+  "stage": "als-playground",
+  "driver": "Ivo Draganov",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 170200,
+  "cp2_ms": 401100,
+  "finish_ms": 511100,
+  "entered": {
+    "cp1": "2:50.2",
+    "cp2": "6:41.1",
+    "finish": "8:31.1"
+  },
+  "uploaded_at": "2026-10-02T23:12:34.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #150, 2002 Subaru WRX Wagon, co-driver Vladimir Yanev"
+}

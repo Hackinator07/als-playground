@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24s10n29",
+  "stage": "als-playground",
+  "driver": "Tim O'Neil",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "1969 AMC AMX",
+  "cp1_ms": 172500,
+  "cp2_ms": 399800,
+  "finish_ms": 507200,
+  "entered": {
+    "cp1": "2:52.5",
+    "cp2": "6:39.8",
+    "finish": "8:27.2"
+  },
+  "uploaded_at": "2026-10-02T23:12:33.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS10 time, timed to the tenth: car #29, co-driver Mika Rajasalo. This vehicle has no Richard Burns Rally version."
+}
