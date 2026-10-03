@@ -49,3 +49,10 @@ test('stored run: each kind of damage is caught', () => {
   assert.match(checkStoredRun({ ...good, label: 'x'.repeat(21) }, carIds, stage), /label/);
   assert.match(checkStoredRun({ ...good, note: 5 }, carIds, stage), /note/);
 });
+
+test('runTag: curated labels kept, everything else tagged RBR <year> in Central time', async () => {
+  const { runTag } = await import('../shared/rules.js');
+  assert.deepEqual(runTag({ label: 'LSPR 2024', uploaded_at: '2026-10-02T23:10:00.000Z' }), { text: 'LSPR 2024', kind: 'real' });
+  assert.deepEqual(runTag({ uploaded_at: '2026-10-03T01:21:00.000Z' }), { text: 'RBR 2026', kind: 'virtual' });
+  assert.deepEqual(runTag({ uploaded_at: '2027-01-01T03:00:00.000Z' }), { text: 'RBR 2026', kind: 'virtual' });   // still 31 Dec in Chicago
+});

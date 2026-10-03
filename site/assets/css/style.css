@@ -8,6 +8,8 @@
   --maple-dark: #A9521A;      /* links */
   --pine: #2E6B45;            /* submit buttons: green so they stand apart from the maple band (white text about 6:1) */
   --pine-hover: #24573A;
+  --rbr-bg: #E2EBF3;          /* "RBR <year>" tag on virtual runs */
+  --rbr-text: #24506E;
   --row: #FFFFFF;
   --row-alt: #EEF1EA;         /* sage zebra row */
   --row-hover: #F7EDE2;
@@ -123,6 +125,7 @@ select { padding-right: 24px; }
   display: inline-block; padding: 0 5px; border-radius: 3px; background: var(--row-mine); color: #7A3A0E;
   font-size: 11px; line-height: 16px; font-weight: 600; white-space: nowrap; vertical-align: 1px;
 }
+.label-virtual { background: var(--rbr-bg); color: var(--rbr-text); }   /* RBR runs: slate blue, apart from the maple LSPR tags */
 .detail-note { grid-column: span 2; }
 .finish { font-weight: 700; color: var(--spruce); }
 .fastest { color: var(--fastest); font-weight: 700; }

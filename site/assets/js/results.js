@@ -1,6 +1,6 @@
 // Results page: loads the data, ranks it with shared/rules.js and draws the table.
 import {
-  rankRuns, formatTime, formatDiff, zonedStamp, driverKey,
+  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag,
 } from '../../shared/rules.js';
 
 const SAMPLES = [
@@ -176,7 +176,7 @@ function rowHtml(row, i, ctx) {
     : '';
   const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
     <td class="c-pos">${pos}</td>
-    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${run.label ? ` <span class="label">${esc(run.label)}</span>` : ''}<span class="car-sub">${esc(run.car_name)}</span></td>
+    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind}">${esc(t.text)}</span>`; })()}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car">${esc(run.car_name)}${tag}</td>
     <td class="c-time${fast1}">${formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${formatTime(run.cp2_ms)}</td>
