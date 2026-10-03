@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "an3cotqf",
+  "stage": "als-playground",
+  "driver": "August Humphries",
+  "car_id": "audi-quattro-a2-grpb",
+  "car_name": "Audi quattro A2 GrpB",
+  "cp1_ms": 347700,
+  "cp2_ms": 738900,
+  "finish_ms": 951315,
+  "entered": {
+    "cp1": "5:47.700",
+    "cp2": "12:18.900",
+    "finish": "15:51.315"
+  },
+  "uploaded_at": "2026-10-03T21:38:46.163Z",
+  "screenshot": "screenshots/2026/an3cotqf.webp",
+  "status": "published"
+}
