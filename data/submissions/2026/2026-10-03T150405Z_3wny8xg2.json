@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "3wny8xg2",
+  "stage": "als-playground",
+  "driver": "Max Mitchell",
+  "car_id": "renault-clio-rally3",
+  "car_name": "Renault Clio Rally3",
+  "cp1_ms": 132800,
+  "cp2_ms": 313700,
+  "finish_ms": 402342,
+  "entered": {
+    "cp1": "2:12.8",
+    "cp2": "5:13.7",
+    "finish": "6:42.342"
+  },
+  "uploaded_at": "2026-10-03T15:04:05.163Z",
+  "screenshot": "screenshots/2026/3wny8xg2.jpg",
+  "status": "published"
+}
