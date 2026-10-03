@@ -204,15 +204,18 @@ function byFinishThenUpload(a, b) {
  * Returns { rows, fastestCp1, fastestCp2, fastestSectors, runsByDriver }.
  */
 export function rankRuns(runs, options = {}) {
-  const { view = 'best', group = '', carGroup = new Map() } = options;
+  const { view = 'best', group = '', carGroup = new Map(), source = '' } = options;
+
+  // source: '' all runs, 'virtual' RBR runs only, 'real' curated real-world results only (see runTag)
+  const inSource = source ? runs.filter((r) => runTag(r).kind === source) : runs;
 
   const runsByDriver = new Map();
-  for (const r of runs) {
+  for (const r of inSource) {
     const k = driverKey(r.driver);
     runsByDriver.set(k, (runsByDriver.get(k) || 0) + 1);
   }
 
-  let pool = group ? runs.filter((r) => carGroup.get(r.car_id) === group) : runs.slice();
+  let pool = group ? inSource.filter((r) => carGroup.get(r.car_id) === group) : inSource.slice();
 
   if (view === 'best') {
     const best = new Map();

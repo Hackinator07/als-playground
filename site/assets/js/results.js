@@ -11,6 +11,9 @@ const SAMPLES = [
 const params = new URLSearchParams(location.search);
 const sample = (params.get('sample') || '').toLowerCase();
 const highlightId = params.get('highlight') || '';
+// ?runs=virtual | lspr picks the Virtual / LSPR 2024 switch (shareable links)
+const SOURCE_PARAM = { virtual: 'virtual', lspr: 'real' };
+const SOURCE_NAME = { virtual: 'virtual', real: 'LSPR 2024' };
 
 const state = {
   stage: null,
@@ -20,6 +23,7 @@ const state = {
   runs: [],
   generatedAt: null,
   view: 'best',
+  source: SOURCE_PARAM[(params.get('runs') || '').toLowerCase()] || '',
   group: '',
   search: '',
   showAll: false,
@@ -113,7 +117,7 @@ function renderClassOptions() {
 
 function render() {
   const { rows, fastestCp1, fastestCp2, fastestSectors } = rankRuns(state.runs, {
-    view: state.view, group: state.group, carGroup: state.carGroup,
+    view: state.view, group: state.group, carGroup: state.carGroup, source: state.source,
   });
 
   const q = driverKey(state.search);
@@ -128,8 +132,12 @@ function render() {
     setMessage(`<strong>No times yet. Be the first.</strong>Drive ${esc(state.stage?.name || 'the stage')}, then post your checkpoint and finish times.<br><a class="btn-submit" href="submit/">Submit a time</a>`);
     return;
   }
+  if (rows.length === 0 && state.source && !state.group) {
+    setMessage(`<strong>No ${esc(SOURCE_NAME[state.source])} times yet.</strong><button type="button" class="btn-plain" data-action="all-sources">Show all times</button>`);
+    return;
+  }
   if (rows.length === 0) {
-    setMessage(`<strong>No times in ${esc(state.group)} yet.</strong><button type="button" class="btn-plain" data-action="all-classes">Show all drivetrains</button>`);
+    setMessage(`<strong>No ${state.source ? esc(SOURCE_NAME[state.source]) + ' ' : ''}times in ${esc(state.group)} yet.</strong><button type="button" class="btn-plain" data-action="all-classes">Show all drivetrains</button>`);
     return;
   }
   if (shown.length === 0) {
@@ -148,10 +156,12 @@ function render() {
 function renderSummary(rows) {
   const el = $('summary');
   if (state.runs.length === 0) { el.textContent = ''; return; }
-  const drivers = new Set(state.runs.map((r) => driverKey(r.driver))).size;
-  const runsWord = state.runs.length === 1 ? 'time' : 'times';
+  const pool = state.source ? state.runs.filter((r) => runTag(r, tz()).kind === state.source) : state.runs;
+  const drivers = new Set(pool.map((r) => driverKey(r.driver))).size;
+  const runsWord = pool.length === 1 ? 'time' : 'times';
   const driversWord = drivers === 1 ? 'driver' : 'drivers';
-  let text = `${state.runs.length} ${runsWord} from ${drivers} ${driversWord}`;
+  const kind = state.source ? `${SOURCE_NAME[state.source]} ` : '';
+  let text = `${pool.length} ${kind}${runsWord} from ${drivers} ${driversWord}`;
   if (state.group) text += ` · ${rows.length} ${state.view === 'best' ? (rows.length === 1 ? 'driver' : 'drivers') : (rows.length === 1 ? 'time' : 'times')} in ${state.group}`;
   text += state.view === 'best' ? ' · best time per driver' : ' · every run';
   el.innerHTML = esc(text) + pendingNote();
@@ -231,6 +241,7 @@ $('rows').addEventListener('click', (e) => {
   if (e.target.closest('[data-stop]')) return;
   const action = e.target.closest('[data-action]')?.dataset.action;
   if (action === 'all-runs') { setView('all'); return; }
+  if (action === 'all-sources') { setSource(''); return; }
   if (action === 'all-classes') { $('f-class').value = ''; state.group = ''; render(); return; }
   if (action === 'clear-search') { $('f-search').value = ''; state.search = ''; render(); return; }
   const tr = e.target.closest('tr.run');
@@ -246,10 +257,22 @@ $('rows').addEventListener('keydown', (e) => {
 
 function setView(view) {
   state.view = view;
-  document.querySelectorAll('.seg button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
+  document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
   render();
 }
-document.querySelectorAll('.seg button').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
+document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
+
+function setSource(source, { draw = true } = {}) {
+  state.source = source;
+  document.querySelectorAll('[data-source]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.source === source)));
+  const url = new URL(location.href);
+  const key = Object.keys(SOURCE_PARAM).find((k) => SOURCE_PARAM[k] === source);
+  if (key) url.searchParams.set('runs', key); else url.searchParams.delete('runs');
+  history.replaceState(null, '', url);
+  if (draw) render();
+}
+document.querySelectorAll('[data-source]').forEach((b) => b.addEventListener('click', () => setSource(b.dataset.source)));
+setSource(state.source, { draw: false });
 
 $('f-class').addEventListener('change', (e) => { state.group = e.target.value; render(); });
 $('f-search').addEventListener('input', (e) => { state.search = e.target.value; render(); });

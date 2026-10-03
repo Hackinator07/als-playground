@@ -125,3 +125,16 @@ test('many runs: positions are 1..n with no gaps when there are no ties', () => 
   assert.ok(r.rows.every((x, i) => x.pos === i + 1));
   assert.equal(r.rows.at(-1).diffFirst, 249 * 137);
 });
+
+test('source filter: virtual (RBR) vs real (curated label) runs, ranked within the selection', () => {
+  const base = { car_id: 'x', cp1_ms: 100000, cp2_ms: 200000, screenshot: null };
+  const runs = [
+    { ...base, id: 'r1', driver: 'Real One', finish_ms: 400000, uploaded_at: '2026-10-02T23:10:00.000Z', label: 'LSPR 2024' },
+    { ...base, id: 'v1', driver: 'Sim One', finish_ms: 450000, uploaded_at: '2026-10-03T01:00:00.000Z' },
+    { ...base, id: 'v2', driver: 'Real One', finish_ms: 470000, uploaded_at: '2026-10-03T02:00:00.000Z' },
+  ];
+  const v = rankRuns(runs, { source: 'virtual' });
+  assert.deepEqual(v.rows.map((r) => [r.run.id, r.pos, r.diffFirst]), [['v1', 1, 0], ['v2', 2, 20000]]);
+  assert.deepEqual(rankRuns(runs, { source: 'real' }).rows.map((r) => r.run.id), ['r1']);
+  assert.deepEqual(rankRuns(runs).rows.map((r) => r.run.id), ['r1', 'v1']);
+});
