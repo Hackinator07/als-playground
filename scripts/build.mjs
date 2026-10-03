@@ -10,6 +10,7 @@
 // Run: node scripts/build.mjs
 
 import fs from 'node:fs';
+import crypto from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkStoredRun } from '../shared/rules.js';
@@ -115,5 +116,26 @@ fs.writeFileSync(
   JSON.stringify({ generated_at: new Date().toISOString(), runs }) + '\n',
 );
 fs.writeFileSync(path.join(out, '.nojekyll'), '');
+
+// --- cache-busting: browsers (and the Pages CDN, 10 min) keep old copies of the style and scripts, so a new
+// release could pair a new page with an old script. Every reference gets ?v=<hash of the code files>.
+{
+  const code = ['assets/css/style.css', 'assets/js/results.js', 'assets/js/submit.js', 'shared/rules.js'];
+  const h = crypto.createHash('sha256');
+  for (const f of code) h.update(fs.readFileSync(path.join(out, f)));
+  const v = h.digest('hex').slice(0, 10);
+  const stamp = (f, pairs) => {
+    let t = fs.readFileSync(path.join(out, f), 'utf8');
+    for (const [a, b] of pairs) {
+      if (!t.includes(a)) throw new Error(`cache-busting: ${a} not found in ${f}`);
+      t = t.split(a).join(b);
+    }
+    fs.writeFileSync(path.join(out, f), t);
+  };
+  stamp('index.html', [['assets/css/style.css"', `assets/css/style.css?v=${v}"`], ['assets/js/results.js"', `assets/js/results.js?v=${v}"`]]);
+  stamp('submit/index.html', [['../assets/css/style.css"', `../assets/css/style.css?v=${v}"`], ['../assets/js/submit.js"', `../assets/js/submit.js?v=${v}"`]]);
+  stamp('assets/js/results.js', [["'../../shared/rules.js'", `'../../shared/rules.js?v=${v}'`]]);
+  stamp('assets/js/submit.js', [["'../../shared/rules.js'", `'../../shared/rules.js?v=${v}'`]]);
+}
 
 console.log(`Built _site: ${runs.length} published, ${hidden} hidden, ${skipped} skipped.`);
