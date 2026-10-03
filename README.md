@@ -70,7 +70,7 @@ If a file you edit has a mistake, the build skips that one file and shows a warn
 - The class filter ranks within the class, using each driver's best run in that class.
 - Diff. Prev and Diff. First use the finish time only. The leader shows 00.000.
 - Purple marks the fastest Checkpoint 1 and Checkpoint 2 among the rows shown.
-- Car groups in `data/cars.json` are the RSF plugin's categories (102 RSF cars plus the 8 original RBR cars under "Original"). Correct any car by editing its `group`.
+- Cars in `data/cars.json` are grouped by drivetrain (RWD, FWD, AWD, 4WD) as in the RSF launcher: 102 RSF cars plus the 8 original RBR cars. The drivetrain filter and the tag beside each car come from this. Correct a car by editing its `group`.
 
 ## Working on it locally
 

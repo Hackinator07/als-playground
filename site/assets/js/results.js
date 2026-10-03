@@ -102,7 +102,7 @@ function renderClassOptions() {
   const used = new Set(state.runs.map((r) => state.carGroup.get(r.car_id)).filter(Boolean));
   const sel = $('f-class');
   const keep = state.group;
-  sel.innerHTML = '<option value="">All classes</option>' + state.groups
+  sel.innerHTML = '<option value="">All drivetrains</option>' + state.groups
     .filter((g) => used.has(g.name))
     .map((g) => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
   sel.value = used.has(keep) ? keep : '';
@@ -129,7 +129,7 @@ function render() {
     return;
   }
   if (rows.length === 0) {
-    setMessage(`<strong>No times in ${esc(state.group)} yet.</strong><button type="button" class="btn-plain" data-action="all-classes">Show all classes</button>`);
+    setMessage(`<strong>No times in ${esc(state.group)} yet.</strong><button type="button" class="btn-plain" data-action="all-classes">Show all drivetrains</button>`);
     return;
   }
   if (shown.length === 0) {
