@@ -138,3 +138,25 @@ test('source filter: virtual (RBR) vs real (curated label) runs, ranked within t
   assert.deepEqual(rankRuns(runs, { source: 'real' }).rows.map((r) => r.run.id), ['r1']);
   assert.deepEqual(rankRuns(runs).rows.map((r) => r.run.id), ['r1', 'v1']);
 });
+
+test('realPlacings: place among each real stage, with the runs either side', async () => {
+  const { realPlacings } = await import('../shared/rules.js');
+  const mk = (id, ms, note) => ({ id, driver: id, finish_ms: ms, uploaded_at: '2026-10-02T23:10:00.000Z', label: 'LSPR 2024', note });
+  const runs = [
+    mk('a', 400000, 'Real LSPR 2024 SS1 time'), mk('b', 450000, 'Real LSPR 2024 SS1 time'), mk('c', 500000, 'Real LSPR 2024 SS1 time'),
+    mk('d', 420000, 'Real LSPR 2024 SS10 time'),
+    { id: 'v', driver: 'v', finish_ms: 410000, uploaded_at: '2026-10-03T01:00:00.000Z' },
+  ];
+  const p = realPlacings(456127, runs);
+  assert.deepEqual(p.map((x) => [x.stage, x.place, x.of, x.faster?.id, x.slower?.id]), [['SS1', 3, 3, 'b', 'c'], ['SS10', 2, 1, 'd', undefined]]);
+  assert.deepEqual(realPlacings(390000, runs).map((x) => x.place), [1, 1]);
+});
+
+test('theoreticalBest adds the fastest sector of each part, skipping missing ones', async () => {
+  const { theoreticalBest } = await import('../shared/rules.js');
+  const row = (id, s, up = '2026-10-03T01:00:00.000Z') => ({ run: { id, uploaded_at: up }, sectors: s });
+  const t = theoreticalBest([row('a', [150000, 200000, 90000]), row('b', [140000, 210000, null]), row('c', [160000, 190000, 95000])]);
+  assert.equal(t.total, 140000 + 190000 + 90000);
+  assert.deepEqual(t.parts.map((p) => p.run.id), ['b', 'c', 'a']);
+  assert.equal(theoreticalBest([row('b', [140000, null, null])]), null);
+});

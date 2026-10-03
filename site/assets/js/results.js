@@ -1,6 +1,6 @@
 // Results page: loads the data, ranks it with shared/rules.js and draws the table.
 import {
-  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag,
+  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag, realPlacings, theoreticalBest,
 } from '../../shared/rules.js';
 
 const SAMPLES = [
@@ -33,6 +33,21 @@ const state = {
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const tz = () => state.stage?.display_time_zone || 'America/Chicago';
+/** A gap in prose: "8.539 s" under a minute, "1:04.086" above. */
+const gapText = (ms) => (ms < 60000 ? `${(ms / 1000).toFixed(3)} s` : formatDiff(ms));
+const ordinal = (n) => {
+  const t = n % 100;
+  const suf = t >= 11 && t <= 13 ? 'th' : ({ 1: 'st', 2: 'nd', 3: 'rd' }[n % 10] || 'th');
+  return `${n}${suf}`;
+};
+/** "9th of 72 on SS1, between Jimmy Pelizzari (7:51.800) and Ryan Booth (7:52.500)" */
+function placingText(p) {
+  const who = (r) => `${esc(r.driver)} (${formatTime(r.finish_ms)})`;
+  const head = `<strong>${ordinal(p.place)} of ${p.of + 1}</strong> on ${p.stage}`;
+  if (!p.faster) return `${head}, ahead of ${who(p.slower)}`;
+  if (!p.slower) return `${head}, behind ${who(p.faster)}`;
+  return `${head}, between ${who(p.faster)} and ${who(p.slower)}`;
+}
 
 // Phones hide Car, Diff. Prev, Uploaded and the camera column, so full-width
 // cells must span 6 columns there (spanning hidden columns breaks the layout).
@@ -127,6 +142,8 @@ function render() {
   if (truncated) shown = shown.slice(0, limit);
 
   renderSummary(rows);
+  renderTheory();
+  renderMine();
 
   if (state.runs.length === 0) {
     setMessage(`<strong>No times yet. Be the first.</strong>Drive ${esc(state.stage?.name || 'the stage')}, then post your checkpoint and finish times.<br><a class="btn-submit" href="submit/">Submit a time</a>`);
@@ -165,6 +182,39 @@ function renderSummary(rows) {
   if (state.group) text += ` · ${rows.length} ${state.view === 'best' ? (rows.length === 1 ? 'driver' : 'drivers') : (rows.length === 1 ? 'time' : 'times')} in ${state.group}`;
   text += state.view === 'best' ? ' · best time per driver' : ' · every run';
   el.innerHTML = esc(text) + pendingNote();
+}
+
+function renderTheory() {
+  const el = $('theory');
+  const all = rankRuns(state.runs, { view: 'all', group: state.group, carGroup: state.carGroup, source: state.source }).rows;
+  const t = all.length >= 2 ? theoreticalBest(all) : null;
+  if (!t) { el.hidden = true; return; }
+  const names = t.parts.map((p, i) => `<span class="theory-part">S${i + 1} ${esc(p.run.driver)} <span class="theory-ms">${formatTime(p.ms)}</span></span>`).join('');
+  el.innerHTML = `<span class="theory-head">Theoretical best <strong>${formatTime(t.total)}</strong></span>${names}`;
+  el.title = 'The fastest sector 1, 2 and 3 in this selection, added together';
+  el.hidden = false;
+}
+
+/** After submitting: where the new time ranks among virtual times, and against 2024. */
+function renderMine() {
+  const el = $('mine-banner');
+  const run = highlightId && state.runs.find((r) => r.id === highlightId);
+  if (!run || runTag(run, tz()).kind !== 'virtual') { el.hidden = true; return; }
+  const v = rankRuns(state.runs, { view: 'best', source: 'virtual' }).rows;
+  const me = v.find((r) => driverKey(r.run.driver) === driverKey(run.driver));
+  let text = `Your <strong>${formatTime(run.finish_ms)}</strong>`;
+  if (me && me.run.id === run.id) {
+    const leader = v[0].run;
+    text += me.pos === 1
+      ? (v.length > 1 ? ` is the <strong>fastest virtual time</strong>, ${gapText(v[1].run.finish_ms - run.finish_ms)} ahead of ${esc(v[1].run.driver)}.` : ' is the <strong>fastest virtual time</strong>.')
+      : ` is <strong>P${me.pos} of ${v.length}</strong> in Virtual, ${gapText(me.diffFirst)} behind ${esc(leader.driver)}.`;
+  } else if (me) {
+    text += ` is saved. Your best is still <strong>${formatTime(me.run.finish_ms)}</strong> (P${me.pos} of ${v.length} in Virtual).`;
+  }
+  const pl = realPlacings(run.finish_ms, state.runs);
+  if (pl.length) text += ` In 2024 it would have been ${pl.map(placingText).join('; ')}.`;
+  el.innerHTML = text;
+  el.hidden = false;
 }
 
 function pendingNote() {
@@ -208,9 +258,11 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     const isBest = t === best;
     return `<div><h3>${label}</h3><div class="val${isBest ? ' fastest' : ''}">${formatTime(t)}<span class="gap">${isBest ? 'fastest' : '+' + formatDiff(t - best)}</span></div></div>`;
   };
-  const runsNote = state.view === 'best' && driverRuns > 1
-    ? `<div><h3>Runs</h3><div class="val">${driverRuns} runs · <button type="button" class="btn-link" data-action="all-runs">All runs</button></div></div>`
+  const placings = runTag(run, tz()).kind === 'virtual' ? realPlacings(run.finish_ms, state.runs) : [];
+  const vs2024 = placings.length
+    ? `<div class="detail-wide"><h3>If driven at LSPR 2024</h3><div class="val">${placings.map(placingText).join('<br>')}</div></div>`
     : '';
+  const runsNote = historyHtml(run, driverRuns);
   const shot = run.screenshot
     ? `<div class="detail-shot"><h3>Screenshot</h3><a href="${esc(run.screenshot)}" target="_blank" rel="noopener" data-stop><img src="${esc(run.screenshot)}" alt="Screenshot of ${esc(run.driver)}'s run" loading="lazy"></a></div>`
     : '';
@@ -221,10 +273,34 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     <div class="only-phone"><h3>Car</h3><div class="val">${esc(run.car_name)}${group ? ` <span class="tag">${esc(state.groupTag.get(group) || group)}</span>` : ''}</div></div>
     <div class="only-phone"><h3>Diff. Prev</h3><div class="val">${formatDiff(diffPrev)}</div></div>
     <div><h3>Uploaded</h3><div class="val">${up.date} ${up.time} ${up.zone}<span class="gap">${up.utc}</span></div></div>
+    ${vs2024}
     ${runsNote}
     ${run.note ? `<div class="detail-note"><h3>Note</h3><div class="val">${esc(run.note)}</div></div>` : ''}
     ${shot}
   </div></td></tr>`;
+}
+
+/** Every run by this driver, oldest first, with the change from their previous best. */
+function historyHtml(run, driverRuns) {
+  const key = driverKey(run.driver);
+  const mine = state.runs.filter((r) => driverKey(r.driver) === key)
+    .sort((a, b) => Date.parse(a.uploaded_at) - Date.parse(b.uploaded_at) || a.finish_ms - b.finish_ms);
+  if (mine.length < 2) return '';
+  const fastest = Math.min(...mine.map((r) => r.finish_ms));
+  let best = Infinity;
+  const rows = mine.map((r) => {
+    const tag = runTag(r, tz());
+    const when = tag.kind === 'real' ? esc((/LSPR 2024 (SS\d+)/.exec(r.note || '') || [])[1] || tag.text) : zonedStamp(r.uploaded_at, tz()).date;
+    const change = Number.isFinite(best)
+      ? (r.finish_ms < best ? `<span class="hist-better">−${formatDiff(best - r.finish_ms)}</span>` : `<span class="hist-worse">+${formatDiff(r.finish_ms - best)}</span>`)
+      : '';
+    best = Math.min(best, r.finish_ms);
+    const cls = [r.id === run.id ? 'hist-this' : '', r.finish_ms === fastest ? 'hist-best' : ''].join(' ').trim();
+    return `<tr${cls ? ` class="${cls}"` : ''}><td><span class="label label-${tag.kind}">${esc(tag.text)}</span> ${when}</td><td class="hist-car">${esc(r.car_name)}</td><td class="hist-t">${formatTime(r.finish_ms)}</td><td class="hist-t">${change}</td></tr>`;
+  }).join('');
+  const link = state.view === 'best' ? ` · <button type="button" class="btn-link" data-action="all-runs">Show all runs on the board</button>` : '';
+  return `<div class="detail-wide"><h3>${driverRuns} runs by ${esc(run.driver)}${link}</h3>
+    <table class="history"><thead><tr><th>When</th><th class="hist-car">Car</th><th class="hist-t">Finish</th><th class="hist-t">vs. best before</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
 
 // ------------------------------------------------------------ events

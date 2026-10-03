@@ -25,6 +25,7 @@ const state = {
   widgetId: null,
   touched: new Set(),
   sending: false,
+  carId: '',    // the chosen car (the visible box holds its name)
 };
 
 // ------------------------------------------------------------ setup
@@ -84,21 +85,121 @@ function showFatal(text) {
   showMode(esc(text));
 }
 
+// ------------------------------------------------------------ car picker
+// A combobox: a text box that filters a grouped dropdown as you type. Every word
+// typed must appear in the car's name or drivetrain ("4wd impreza", "fiesta r2").
+
+const combo = {
+  list: [],      // active cars, grouped and sorted
+  shown: [],     // cars currently listed
+  active: -1,    // index into shown of the keyboard-highlighted car
+};
+
 function fillCars() {
-  const sel = $('f-car');
   const active = state.cars.cars.filter((c) => c.active !== false);
-  sel.innerHTML = '<option value="">Choose a car…</option>' + state.cars.groups.map((g) => {
-    const list = active.filter((c) => c.group === g.name).sort((a, b) => a.name.localeCompare(b.name));
-    if (!list.length) return '';
-    return `<optgroup label="${esc(g.name)}">${list.map((c) => `<option value="${esc(c.id)}">${esc(c.name)}</option>`).join('')}</optgroup>`;
-  }).join('');
+  combo.list = state.cars.groups.flatMap((g) => active.filter((c) => c.group === g.name).sort((a, b) => a.name.localeCompare(b.name)));
 }
+
+const carById = (id) => combo.list.find((c) => c.id === id);
+const norm = (t) => String(t).toLocaleLowerCase('en-US').normalize('NFKD').replace(/[\u0300-\u036f]/g, '');
+
+function matches(q) {
+  const words = norm(q).split(/[\s,]+/).filter(Boolean);
+  if (!words.length) return combo.list;
+  return combo.list.filter((c) => { const hay = norm(`${c.name} ${c.group}`); return words.every((w) => hay.includes(w)); });
+}
+
+function drawList() {
+  const ul = $('car-list');
+  if (!combo.shown.length) {
+    ul.innerHTML = '<li class="combo-empty" role="presentation">No car matches. Try fewer letters, or open the full list with the arrow.</li>';
+    return;
+  }
+  let html = ''; let group = '';
+  combo.shown.forEach((c, i) => {
+    if (c.group !== group) { group = c.group; html += `<li class="combo-group" role="presentation">${esc(group)}</li>`; }
+    const cls = ['combo-opt', i === combo.active ? 'is-active' : '', c.id === state.carId ? 'is-chosen' : ''].join(' ').trim();
+    html += `<li class="${cls}" role="option" id="car-opt-${i}" data-i="${i}" aria-selected="${c.id === state.carId}">${esc(c.name)}</li>`;
+  });
+  ul.innerHTML = html;
+  const input = $('f-car');
+  if (combo.active >= 0) {
+    input.setAttribute('aria-activedescendant', `car-opt-${combo.active}`);
+    $(`car-opt-${combo.active}`)?.scrollIntoView({ block: 'nearest' });
+  } else input.removeAttribute('aria-activedescendant');
+}
+
+function openList(query) {
+  combo.shown = query === null ? combo.list : matches(query);
+  const chosen = combo.shown.findIndex((c) => c.id === state.carId);
+  combo.active = chosen >= 0 ? chosen : (query ? 0 : -1);
+  if (!combo.shown.length) combo.active = -1;
+  $('car-list').hidden = false;
+  $('f-car').setAttribute('aria-expanded', 'true');
+  drawList();
+}
+
+function closeList() {
+  $('car-list').hidden = true;
+  $('f-car').setAttribute('aria-expanded', 'false');
+  $('f-car').removeAttribute('aria-activedescendant');
+}
+
+function chooseCar(id, { silent = false } = {}) {
+  const car = carById(id);
+  state.carId = car ? car.id : '';
+  $('f-car').value = car ? car.name : '';
+  closeList();
+  if (!silent) { state.touched.add('car'); check(); }
+}
+
+/** Leaving the box: keep an exact or single match, otherwise the car is unset (and flagged). */
+function settleCar() {
+  const text = $('f-car').value.trim();
+  const chosen = carById(state.carId);
+  if (chosen && chosen.name === $('f-car').value) { closeList(); return; }
+  if (!text) { state.carId = ''; closeList(); state.touched.add('car'); check(); return; }
+  const exact = combo.list.find((c) => norm(c.name) === norm(text));
+  const found = exact ? [exact] : matches(text);
+  if (found.length === 1) chooseCar(found[0].id);
+  else { state.carId = ''; closeList(); state.touched.add('car'); check(); }
+}
+
+$('f-car').addEventListener('focus', () => { $('f-car').select(); openList(null); });
+$('f-car').addEventListener('input', () => { state.carId = ''; openList($('f-car').value); if (state.touched.has('car')) check(); });
+$('f-car').addEventListener('blur', () => setTimeout(() => { if (document.activeElement !== $('f-car')) settleCar(); }, 120));
+$('f-car').addEventListener('keydown', (e) => {
+  const open = !$('car-list').hidden;
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (!open) { openList(state.carId ? null : $('f-car').value); return; }
+    if (!combo.shown.length) return;
+    const step = e.key === 'ArrowDown' ? 1 : -1;
+    combo.active = combo.active < 0 ? (step > 0 ? 0 : combo.shown.length - 1) : (combo.active + step + combo.shown.length) % combo.shown.length;
+    drawList();
+  } else if (e.key === 'Enter') {
+    if (open && combo.active >= 0) { e.preventDefault(); chooseCar(combo.shown[combo.active].id); }
+  } else if (e.key === 'Escape') {
+    if (open) { e.preventDefault(); const c = carById(state.carId); if (c) $('f-car').value = c.name; closeList(); }
+  } else if (e.key === 'Tab' && open && combo.active >= 0 && $('f-car').value.trim() && !state.carId) {
+    chooseCar(combo.shown[combo.active].id);
+  }
+});
+$('car-list').addEventListener('mousedown', (e) => e.preventDefault());   // keep focus in the box
+$('car-list').addEventListener('click', (e) => {
+  const li = e.target.closest('.combo-opt');
+  if (li) chooseCar(combo.shown[Number(li.dataset.i)].id);
+});
+$('car-toggle').addEventListener('mousedown', (e) => e.preventDefault());
+$('car-toggle').addEventListener('click', () => {
+  if ($('car-list').hidden) { $('f-car').focus(); openList(null); } else closeList();
+});
 
 function restoreLast() {
   const driver = store.get('alsp.driver');
   const car = store.get('alsp.car');
   if (driver) $('f-driver').value = driver;
-  if (car && [...$('f-car').options].some((o) => o.value === car)) $('f-car').value = car;
+  if (car && carById(car)) chooseCar(car, { silent: true });
 }
 
 // ------------------------------------------------------------ Turnstile
@@ -137,7 +238,7 @@ function resetTurnstile() {
 function readForm() {
   return {
     driver: $('f-driver').value,
-    car_id: $('f-car').value,
+    car_id: state.carId,
     cp1: $('f-cp1').value,
     cp2: $('f-cp2').value,
     finish: $('f-finish').value,
@@ -176,7 +277,6 @@ for (const f of ['cp1', 'cp2', 'finish']) {
 }
 $('f-driver').addEventListener('blur', () => { state.touched.add('driver'); check(); });
 $('f-driver').addEventListener('input', () => { if (state.touched.has('driver')) check(); });
-$('f-car').addEventListener('change', () => { state.touched.add('car'); check(); });
 $('f-consent').addEventListener('change', () => { state.touched.add('consent'); check(); });
 
 // ------------------------------------------------------------ screenshot

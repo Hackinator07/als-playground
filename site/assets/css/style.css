@@ -155,6 +155,23 @@ select { padding-right: 24px; }
 .btn-plain:hover { background: var(--row-alt); }
 .btn-link { font: inherit; font-size: 13px; background: none; border: 0; padding: 0; color: var(--maple-dark); text-decoration: underline; cursor: pointer; }
 
+.theory { margin: 0; padding: 0 12px 8px; font-size: 12.5px; color: var(--muted); display: flex; flex-wrap: wrap; gap: 2px 14px; font-variant-numeric: tabular-nums; }
+.theory-head { color: var(--text); }
+.theory-head strong { color: var(--fastest); }
+.theory-ms { color: var(--fastest); }
+.mine-banner { margin: 0 12px 10px; padding: 8px 12px; background: #E8F2EC; border-left: 4px solid var(--pine); border-radius: 0 4px 4px 0; font-size: 13.5px; color: var(--text); }
+.detail-wide { grid-column: 1 / -1; }
+.history { border-collapse: collapse; font-size: 12.5px; font-variant-numeric: tabular-nums; margin-top: 2px; }
+.results .history th, .results .history td {
+  background: none; box-shadow: none; border: 0; border-top: 1px solid #E6E9E1; color: var(--text);
+  text-align: left; vertical-align: middle; padding: 3px 16px 3px 0; font-size: 12.5px; line-height: 1.35;
+}
+.results .history th { border-top: 0; color: var(--muted); font-weight: 600; font-size: 11px; padding-bottom: 2px; }
+.results .history .hist-t { text-align: right; }
+.results .history tr.hist-this td { font-weight: 700; }
+.results .history tr.hist-best td:nth-child(3) { color: var(--fastest); }
+.results .history .hist-better { color: var(--pine); }
+.results .history .hist-worse { color: var(--muted); }
 .show-all { text-align: center; padding: 12px; border-top: 1px solid var(--line); }
 
 /* ---------- footer */
@@ -195,6 +212,9 @@ select { padding-right: 24px; }
   .detail .only-phone { display: block; }
   .detail-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .label { font-size: 10px; padding: 0 3px; }
+  .results .history .hist-car { display: none; }
+  .mine-banner { margin: 0 8px 10px; }
+  .theory { padding: 0 8px 8px; }
 }
 
 /* ---------- submit page */
@@ -218,6 +238,28 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
 .field input[type="text"], .field select { width: 100%; font: inherit; font-size: 15px; padding: 8px 10px; min-height: 40px; border: 1px solid #B9C0B2; border-radius: 4px; background: #fff; color: var(--text); }
 .time-grid input[type="text"] { font-variant-numeric: tabular-nums; font-size: 16px; }
 .field input[aria-invalid="true"], .field select[aria-invalid="true"] { border-color: #B3261E; box-shadow: 0 0 0 1px #B3261E; }
+.combo { position: relative; }
+.combo input[type="text"] { padding-right: 38px; }
+.combo-toggle {
+  position: absolute; top: 1px; right: 1px; bottom: 1px; width: 36px; border: 0; border-left: 1px solid #E1E5DC;
+  background: transparent; color: var(--spruce); cursor: pointer; border-radius: 0 4px 4px 0; display: grid; place-items: center;
+}
+.combo-toggle svg { width: 12px; height: 8px; }
+.combo-toggle:hover { background: var(--row-alt); }
+.combo-list {
+  position: absolute; z-index: 30; left: 0; right: 0; top: calc(100% + 2px); max-height: 320px; overflow-y: auto;
+  margin: 0; padding: 4px 0; list-style: none; background: #fff; border: 1px solid #B9C0B2; border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(28, 28, 26, 0.14);
+}
+.combo-group {
+  position: sticky; top: -4px; padding: 6px 10px 3px; background: #F4F6F1; color: var(--muted);
+  font-size: 11px; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase;
+}
+.combo-opt { padding: 7px 10px; font-size: 14.5px; cursor: pointer; }
+.combo-opt:hover, .combo-opt.is-active { background: var(--row-alt); }
+.combo-opt.is-active { box-shadow: inset 3px 0 0 var(--pine); }
+.combo-opt.is-chosen { font-weight: 700; color: var(--spruce); }
+.combo-empty { padding: 8px 10px; color: var(--muted); font-size: 13.5px; }
 .field input[type="file"] { font: inherit; font-size: 13.5px; max-width: 100%; }
 .hint { margin: 4px 0 0; font-size: 12.5px; color: var(--muted); }
 .error { margin: 4px 0 0; font-size: 13px; color: #B3261E; font-weight: 600; min-height: 0; }

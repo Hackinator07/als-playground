@@ -45,8 +45,13 @@
 
           <div class="field">
             <label for="f-car">Car</label>
-            <select id="f-car" name="car" aria-describedby="h-car e-car"><option value="">Choose a car…</option></select>
-            <p class="hint" id="h-car">Grouped by drivetrain (RWD, FWD, AWD, 4WD), as in the RSF launcher. Car missing? <a id="car-missing" href="https://github.com/Hackinator07/als-playground/issues/new?title=Car%20missing">Tell us</a>.</p>
+            <div class="combo" id="car-combo">
+              <input id="f-car" name="car" type="text" role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="car-list"
+                     autocomplete="off" spellcheck="false" placeholder="Type to search, or pick from the list" aria-describedby="h-car e-car">
+              <button type="button" class="combo-toggle" id="car-toggle" tabindex="-1" aria-label="Show all cars"><svg viewBox="0 0 12 8" aria-hidden="true"><path d="M1 1l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+              <ul class="combo-list" id="car-list" role="listbox" aria-label="Cars" hidden></ul>
+            </div>
+            <p class="hint" id="h-car">Type any part of the name, e.g. <code>fiesta</code> or <code>4wd impreza</code>, or open the list (grouped by drivetrain, as in the RSF launcher). Car missing? <a id="car-missing" href="https://github.com/Hackinator07/als-playground/issues/new?title=Car%20missing">Tell us</a>.</p>
             <p class="error" id="e-car" aria-live="polite"></p>
           </div>
 

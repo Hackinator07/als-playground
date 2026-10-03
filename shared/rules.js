@@ -304,3 +304,57 @@ export function runTag(run, timeZone = 'America/Chicago') {
   const text = run.label || `RBR ${zonedStamp(run.uploaded_at, timeZone).date.slice(0, 4)}`;
   return { text, kind: /^RBR\b/.test(text) ? 'virtual' : 'real' };
 }
+
+// ---------------------------------------------------------------- real-world comparison
+
+/** The real event a curated run came from, e.g. "SS1" / "SS10" (from its note), or null. */
+export function realStage(run) {
+  if (runTag(run).kind !== 'real') return null;
+  const m = /LSPR 2024 (SS\d+)/.exec(run.note || '');
+  return m ? m[1] : null;
+}
+
+/**
+ * Where a finish time would have placed among the real results, per real stage.
+ * Returns [{ stage: 'SS1', place, of, faster: run|null, slower: run|null }] in stage order,
+ * where faster / slower are the real runs just ahead of / just behind that time.
+ */
+export function realPlacings(finishMs, runs) {
+  const byStage = new Map();
+  for (const r of runs) {
+    const s = realStage(r);
+    if (!s) continue;
+    if (!byStage.has(s)) byStage.set(s, []);
+    byStage.get(s).push(r);
+  }
+  const num = (s) => Number(s.replace(/\D/g, ''));
+  return [...byStage.keys()].sort((a, b) => num(a) - num(b)).map((stage) => {
+    const list = byStage.get(stage).slice().sort((a, b) => a.finish_ms - b.finish_ms);
+    const ahead = list.filter((r) => r.finish_ms < finishMs);
+    return {
+      stage,
+      place: ahead.length + 1,
+      of: list.length,
+      faster: ahead.length ? ahead[ahead.length - 1] : null,
+      slower: list.find((r) => r.finish_ms >= finishMs) || null,
+    };
+  });
+}
+
+/**
+ * Theoretical best: the fastest sector 1, 2 and 3 across the given rows (any runs), added up.
+ * Returns { total, parts: [{ ms, run }] x3 } or null when a sector has no time.
+ */
+export function theoreticalBest(rows) {
+  const parts = [0, 1, 2].map((s) => {
+    let best = null;
+    for (const row of rows) {
+      const t = row.sectors[s];
+      if (t === null || t === undefined) continue;
+      if (!best || t < best.ms || (t === best.ms && Date.parse(row.run.uploaded_at) < Date.parse(best.run.uploaded_at))) best = { ms: t, run: row.run };
+    }
+    return best;
+  });
+  if (parts.some((p) => !p)) return null;
+  return { total: parts.reduce((a, p) => a + p.ms, 0), parts };
+}
