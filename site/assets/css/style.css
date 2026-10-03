@@ -5,7 +5,9 @@
   --spruce-text: #F1EEE4;     /* text on spruce */
   --maple: #C8641E;           /* stage band */
   --maple-text: #FFF6EC;      /* text on the band (keep it 18 px+ bold) */
-  --maple-dark: #A9521A;      /* submit button, links */
+  --maple-dark: #A9521A;      /* links */
+  --pine: #2E6B45;            /* submit buttons: green so they stand apart from the maple band (white text about 6:1) */
+  --pine-hover: #24573A;
   --row: #FFFFFF;
   --row-alt: #EEF1EA;         /* sage zebra row */
   --row-hover: #F7EDE2;
@@ -62,10 +64,10 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px; border-bottom: 1px solid var(--line); }
 .btn-submit {
-  display: inline-block; background: var(--maple-dark); color: #fff; text-decoration: none;
+  display: inline-block; background: var(--pine); color: #fff; text-decoration: none;
   font-weight: 700; font-size: 14px; padding: 8px 16px; border-radius: 4px; white-space: nowrap;
 }
-.btn-submit:hover { background: #8E4415; }
+.btn-submit:hover { background: var(--pine-hover); }
 .control { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
 select, input[type="search"] {
   font: inherit; font-size: 14px; color: var(--text); background: #fff;
