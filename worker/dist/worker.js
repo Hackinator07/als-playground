@@ -288,6 +288,17 @@ function zonedStamp(iso, timeZone = 'America/Chicago') {
   return { date, time, zone: parts.timeZoneName, offset, utc };
 }
 
+/**
+ * The tag shown beside a driver's name. Curated real-world times carry their own
+ * label (e.g. "LSPR 2024"); every other run is a virtual one and is tagged
+ * "RBR <year>", the year it was uploaded in the display time zone.
+ * Returns { text, kind } with kind "virtual" (RBR runs) or "real".
+ */
+function runTag(run, timeZone = 'America/Chicago') {
+  const text = run.label || `RBR ${zonedStamp(run.uploaded_at, timeZone).date.slice(0, 4)}`;
+  return { text, kind: /^RBR\b/.test(text) ? 'virtual' : 'real' };
+}
+
 // ===== worker/src/index.js =====
 // Al's Playground submissions Worker (Cloudflare Workers, free plan).
 //
