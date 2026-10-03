@@ -1,6 +1,6 @@
 # Al's Playground stage times
 
-Results board for **Al's Playground** (LSPR 2024 SS1, 12.5 km, gravel), a Richard Burns Rally stage.
+Results board for **Al's Playground** (LSPR 2024 SS1/10, 12.5 km, gravel), a Richard Burns Rally stage.
 
 **Live page:** https://hackinator07.github.io/als-playground/
 
