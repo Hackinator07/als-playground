@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n41",
+  "stage": "als-playground",
+  "driver": "Chris Sladek",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2023 Acura Integra",
+  "cp1_ms": 176200,
+  "cp2_ms": 402600,
+  "finish_ms": 506700,
+  "entered": {
+    "cp1": "2:56.2",
+    "cp2": "6:42.6",
+    "finish": "8:26.7"
+  },
+  "uploaded_at": "2026-10-02T23:11:12.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #41, co-driver Weston Davis. This vehicle has no Richard Burns Rally version."
+}

@@ -114,9 +114,12 @@ export function checkStoredRun(run, carIds, stage) {
   if (!carIds.has(run.car_id)) return `unknown car_id "${run.car_id}"`;
   if (typeof run.car_name !== 'string' || !run.car_name) return 'missing car_name';
   for (const k of ['cp1_ms', 'cp2_ms', 'finish_ms']) {
+    if (k === 'cp2_ms' && run[k] === null) continue;        // stored real results only: no checkpoint 2 time
     if (!Number.isInteger(run[k]) || run[k] <= 0) return `${k} must be a positive whole number`;
   }
-  const timeErr = checkTimes(run, stage);
+  const timeErr = run.cp2_ms === null
+    ? checkTimes({ ...run, cp2_ms: (run.cp1_ms + run.finish_ms) / 2 }, stage)
+    : checkTimes(run, stage);
   if (timeErr.length) return timeErr[0].message;
   if (typeof run.uploaded_at !== 'string' || Number.isNaN(Date.parse(run.uploaded_at))) return 'bad uploaded_at';
   if (run.screenshot !== null && run.screenshot !== undefined && typeof run.screenshot !== 'string') return 'bad screenshot';
@@ -238,7 +241,10 @@ export function rankRuns(runs, options = {}) {
     });
   }
 
-  const min = (f) => (rows.length ? Math.min(...rows.map(f)) : null);
+  const min = (f) => {
+    const v = rows.map(f).filter((x) => x !== null && x !== undefined);
+    return v.length ? Math.min(...v) : null;
+  };
   return {
     rows,
     fastestCp1: min((x) => x.run.cp1_ms),
@@ -249,6 +255,7 @@ export function rankRuns(runs, options = {}) {
 
 /** Sector times from cumulative checkpoints: [S1, S2, S3]. */
 export function sectorsOf(run) {
+  if (run.cp2_ms === null || run.cp2_ms === undefined) return [run.cp1_ms, null, null];
   return [run.cp1_ms, run.cp2_ms - run.cp1_ms, run.finish_ms - run.cp2_ms];
 }
 

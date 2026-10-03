@@ -179,7 +179,7 @@ function rowHtml(row, i, ctx) {
     <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind}">${esc(t.text)}</span>`; })()}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car">${esc(run.car_name)}${tag}</td>
     <td class="c-time${fast1}">${formatTime(run.cp1_ms)}</td>
-    <td class="c-time${fast2}">${formatTime(run.cp2_ms)}</td>
+    <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
     <td class="c-time c-finish finish">${formatTime(run.finish_ms)}</td>
     <td class="c-diff c-prev">${formatDiff(diffPrev)}</td>
     <td class="c-diff">${formatDiff(diffFirst)}</td>
@@ -193,6 +193,7 @@ function detailHtml(row, ctx, up, group, driverRuns) {
   const { run, diffPrev } = row;
   const sector = (s, label) => {
     const t = row.sectors[s];
+    if (t === null) return `<div><h3>${label}</h3><div class="val">—</div></div>`;
     const best = ctx.fastestSectors[s];
     const isBest = t === best;
     return `<div><h3>${label}</h3><div class="val${isBest ? ' fastest' : ''}">${formatTime(t)}<span class="gap">${isBest ? 'fastest' : '+' + formatDiff(t - best)}</span></div></div>`;

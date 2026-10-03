@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n423",
+  "stage": "als-playground",
+  "driver": "Michael Hooper",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2007 Lexus IS350",
+  "cp1_ms": 158900,
+  "cp2_ms": 1512900,
+  "finish_ms": 1612800,
+  "entered": {
+    "cp1": "2:38.9",
+    "cp2": "25:12.9",
+    "finish": "26:52.8"
+  },
+  "uploaded_at": "2026-10-02T23:11:21.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #423, co-driver Michael Hordijk. This vehicle has no Richard Burns Rally version."
+}

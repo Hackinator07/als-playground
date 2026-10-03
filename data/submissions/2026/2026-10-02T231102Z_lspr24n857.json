@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n857",
+  "stage": "als-playground",
+  "driver": "Lia Block",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "Subaru WRX ARA24",
+  "cp1_ms": 148300,
+  "cp2_ms": 342500,
+  "finish_ms": 432000,
+  "entered": {
+    "cp1": "2:28.3",
+    "cp2": "5:42.5",
+    "finish": "7:12.0"
+  },
+  "uploaded_at": "2026-10-02T23:11:02.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #857, co-driver Keaton Williams. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr24n949",
+  "stage": "als-playground",
+  "driver": "Charles Watson",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 199200,
+  "cp2_ms": null,
+  "finish_ms": 1110000,
+  "entered": {
+    "cp1": "3:19.2",
+    "cp2": "",
+    "finish": "18:30.0"
+  },
+  "uploaded_at": "2026-10-02T23:11:20.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2024",
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #949, 1995 Subaru Impreza, co-driver Logan Bair. No Checkpoint 2 time was recorded."
+}

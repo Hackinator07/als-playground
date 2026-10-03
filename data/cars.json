@@ -116,6 +116,9 @@
     { "id": "toyota-gr-yaris-rally2", "name": "Toyota GR Yaris Rally2", "group": "4WD", "active": true },
     { "id": "toyota-yaris-wrc-2018", "name": "Toyota Yaris WRC 2018", "group": "4WD", "active": true },
     { "id": "vw-polo-gti-r5", "name": "VW Polo GTI R5", "group": "4WD", "active": true },
-    { "id": "vw-polo-r-wrc-2016", "name": "VW Polo R WRC 2016", "group": "4WD", "active": true }
+    { "id": "vw-polo-r-wrc-2016", "name": "VW Polo R WRC 2016", "group": "4WD", "active": true },
+    { "id": "no-rbr-version-4wd", "name": "No RBR version (4WD)", "group": "4WD", "active": false },
+    { "id": "no-rbr-version-fwd", "name": "No RBR version (FWD)", "group": "FWD", "active": false },
+    { "id": "no-rbr-version-rwd", "name": "No RBR version (RWD)", "group": "RWD", "active": false }
   ]
 }

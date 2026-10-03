@@ -7,8 +7,9 @@ const stage = JSON.parse(fs.readFileSync(new URL('../data/stage.json', import.me
 const cars = JSON.parse(fs.readFileSync(new URL('../data/cars.json', import.meta.url)));
 const carIds = new Set(cars.cars.map((c) => c.id));
 
-test('cars.json: 110 cars, unique ids, every car in a listed group', () => {
-  assert.equal(cars.cars.length, 110);
+test('cars.json: 110 RBR cars plus 3 hidden no-RBR-version entries, unique ids, every car in a listed group', () => {
+  assert.equal(cars.cars.filter((c) => c.active !== false).length, 110);
+  assert.equal(cars.cars.length, 113);
   assert.equal(carIds.size, cars.cars.length);
   const groups = new Set(cars.groups.map((g) => g.name));
   for (const c of cars.cars) assert.ok(groups.has(c.group), `${c.name} has unknown group ${c.group}`);
@@ -55,4 +56,24 @@ test('runTag: curated labels kept, everything else tagged RBR <year> in Central 
   assert.deepEqual(runTag({ label: 'LSPR 2024', uploaded_at: '2026-10-02T23:10:00.000Z' }), { text: 'LSPR 2024', kind: 'real' });
   assert.deepEqual(runTag({ uploaded_at: '2026-10-03T01:21:00.000Z' }), { text: 'RBR 2026', kind: 'virtual' });
   assert.deepEqual(runTag({ uploaded_at: '2027-01-01T03:00:00.000Z' }), { text: 'RBR 2026', kind: 'virtual' });   // still 31 Dec in Chicago
+});
+
+test('stored real results may lack a checkpoint 2 time', async () => {
+  const { checkStoredRun: chk, sectorsOf, rankRuns } = await import('../shared/rules.js');
+  const cars = JSON.parse(fs.readFileSync(new URL('../data/cars.json', import.meta.url)));
+  const ids = new Set(cars.cars.map((c) => c.id));
+  const st = JSON.parse(fs.readFileSync(new URL('../data/stage.json', import.meta.url)));
+  const run = { schema: 1, id: 'nocp2test', stage: 'als-playground', driver: 'No Split', car_id: 'subaru-impreza-gc8-555-grpa',
+    car_name: 'Subaru Impreza GC8 555 GrpA', cp1_ms: 199200, cp2_ms: null, finish_ms: 1110000,
+    uploaded_at: '2026-10-02T23:11:20.000Z', screenshot: null, status: 'published' };
+  assert.equal(chk(run, ids, st), null);
+  assert.match(chk({ ...run, cp1_ms: 1200000 }, ids, st), /later/);
+  assert.deepEqual(sectorsOf(run), [199200, null, null]);
+  const r = rankRuns([run, { ...run, id: 'other', driver: 'Other', cp2_ms: 400000, finish_ms: 500000 }]);
+  assert.equal(r.fastestCp2, 400000);
+});
+
+test('no-RBR-version cars are hidden from the form', () => {
+  const cars = JSON.parse(fs.readFileSync(new URL('../data/cars.json', import.meta.url)));
+  for (const c of cars.cars.filter((x) => x.id.startsWith('no-rbr-version'))) assert.equal(c.active, false);
 });
