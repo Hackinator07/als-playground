@@ -21,9 +21,9 @@ const TIME_RE = /^(\d{1,2}):([0-5]\d)[.,](\d{1,3})$/;
  */
 function parseTime(input) {
   const s = String(input ?? '').trim();
-  if (s === '') return { ok: false, error: 'Enter a time, like 6:48.034' };
+  if (s === '') return { ok: false, error: 'Enter a time, like 8:31.274' };
   const m = TIME_RE.exec(s);
-  if (!m) return { ok: false, error: 'Use minutes:seconds.thousandths, like 6:48.034' };
+  if (!m) return { ok: false, error: 'Use minutes:seconds.thousandths, like 8:31.274' };
   const minutes = Number(m[1]);
   const seconds = Number(m[2]);
   const millis = Number(m[3].padEnd(3, '0'));

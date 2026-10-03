@@ -23,7 +23,7 @@ test('parseTime rejects ambiguous or malformed input', () => {
     assert.equal(parseTime(bad).ok, false, `should reject "${bad}"`);
   }
   assert.match(parseTime('').error, /Enter a time/);
-  assert.match(parseTime('6:48').error, /6:48\.034/);
+  assert.match(parseTime('6:48').error, /8:31\.274/);
 });
 
 test('formatTime always shows thousandths', () => {
