@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "md9tpvsj",
+  "stage": "als-playground",
+  "driver": "Amanda Bad",
+  "car_id": "audi-quattro-a2-grpb",
+  "car_name": "Audi quattro A2 GrpB",
+  "cp1_ms": 247000,
+  "cp2_ms": 549900,
+  "finish_ms": 713206,
+  "entered": {
+    "cp1": "4:07.000",
+    "cp2": "9:09.900",
+    "finish": "11:53.206"
+  },
+  "uploaded_at": "2026-10-03T21:12:30.085Z",
+  "screenshot": "screenshots/2026/md9tpvsj.webp",
+  "status": "published"
+}
