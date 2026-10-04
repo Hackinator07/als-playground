@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "yvrpi2nm",
+  "stage": "als-playground",
+  "driver": "Danny Shalev",
+  "car_id": "peugeot-208-rally4",
+  "car_name": "Peugeot 208 Rally4",
+  "cp1_ms": 133100,
+  "cp2_ms": 314000,
+  "finish_ms": 408697,
+  "entered": {
+    "cp1": "2:13.1",
+    "cp2": "5:14.0",
+    "finish": "6:48.697"
+  },
+  "uploaded_at": "2026-10-04T00:22:43.149Z",
+  "screenshot": "screenshots/2026/yvrpi2nm.webp",
+  "status": "published"
+}
