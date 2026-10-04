@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "dsxytp8c",
+  "stage": "als-playground",
+  "driver": "Devon Sapp",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 176100,
+  "cp2_ms": 377700,
+  "finish_ms": 475584,
+  "entered": {
+    "cp1": "2:56.100",
+    "cp2": "6:17.700",
+    "finish": "7:55.584"
+  },
+  "uploaded_at": "2026-10-04T19:13:59.633Z",
+  "screenshot": "screenshots/2026/dsxytp8c.webp",
+  "status": "published"
+}
