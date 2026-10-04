@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "sptp79iz",
+  "stage": "als-playground",
+  "driver": "Max Mitchell",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 126000,
+  "cp2_ms": 297300,
+  "finish_ms": 382356,
+  "entered": {
+    "cp1": "2:06.0",
+    "cp2": "4:57.30",
+    "finish": "6:22.356"
+  },
+  "uploaded_at": "2026-10-04T21:50:17.007Z",
+  "screenshot": "screenshots/2026/sptp79iz.jpg",
+  "status": "published"
+}
