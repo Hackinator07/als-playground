@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "2l1xrgbr",
+  "stage": "als-playground",
+  "driver": "Ethan Foster",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 126400,
+  "cp2_ms": 299200,
+  "finish_ms": 389255,
+  "entered": {
+    "cp1": "2:06.4",
+    "cp2": "4:59.2",
+    "finish": "6:29.255"
+  },
+  "uploaded_at": "2026-10-04T16:47:00.617Z",
+  "screenshot": "screenshots/2026/2l1xrgbr.webp",
+  "status": "published"
+}
