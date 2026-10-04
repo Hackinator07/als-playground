@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "ct214fbf",
+  "stage": "als-playground",
+  "driver": "Max Sutton",
+  "car_id": "mitsubishi-lancer-evo-ii-grpa",
+  "car_name": "Mitsubishi Lancer Evo II GrpA",
+  "cp1_ms": 131100,
+  "cp2_ms": 314200,
+  "finish_ms": 411066,
+  "entered": {
+    "cp1": "2:11.1",
+    "cp2": "5:14.2",
+    "finish": "6:51.066"
+  },
+  "uploaded_at": "2026-10-04T14:13:07.548Z",
+  "screenshot": "screenshots/2026/ct214fbf.webp",
+  "status": "published"
+}
