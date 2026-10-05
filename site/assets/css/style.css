@@ -291,5 +291,3 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   .shot-preview { flex-direction: column; align-items: flex-start; }
   .actions .btn-submit { flex: 1 1 100%; }
 }
-.footer .footer-get { margin: 0 0 12px; }
-.footer .footer-links { margin: 0 0 14px; font-size: 13.5px; }
