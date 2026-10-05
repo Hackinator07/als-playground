@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "0ec5brsh",
+  "stage": "als-playground",
+  "driver": "Josh Harris",
+  "car_id": "trabant-p-800-rs-grpa",
+  "car_name": "Trabant P 800 RS GrpA",
+  "cp1_ms": 198800,
+  "cp2_ms": 443200,
+  "finish_ms": 582556,
+  "entered": {
+    "cp1": "3:18.800",
+    "cp2": "7:23.200",
+    "finish": "9:42.556"
+  },
+  "uploaded_at": "2026-10-05T17:45:00.178Z",
+  "screenshot": "screenshots/2026/0ec5brsh.webp",
+  "status": "published"
+}
