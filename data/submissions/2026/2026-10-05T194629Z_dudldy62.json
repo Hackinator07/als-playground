@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "dudldy62",
+  "stage": "als-playground",
+  "driver": "Johann Von Vorst",
+  "car_id": "mini-jcw-wrc",
+  "car_name": "Mini JCW WRC",
+  "cp1_ms": 121970,
+  "cp2_ms": 291690,
+  "finish_ms": 378040,
+  "entered": {
+    "cp1": "2:01.97",
+    "cp2": "4:51.69",
+    "finish": "6:18.040"
+  },
+  "uploaded_at": "2026-10-05T19:46:29.313Z",
+  "screenshot": "screenshots/2026/dudldy62.webp",
+  "status": "published"
+}
