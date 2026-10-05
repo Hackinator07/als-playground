@@ -369,6 +369,7 @@ function theoreticalBest(rows) {
 // POST /submit  checks one time and, if it's good, commits it to the repo as a
 //               new file. It never edits or deletes anything that exists.
 // GET  /status  { open: true | false } so the form can say when submissions are closed.
+// GET  /time    { now: <ms since epoch> } Cloudflare's NTP-synced clock, for the rally clock on the site.
 //
 // Settings (Cloudflare dashboard → the Worker → Settings → Variables and Secrets):
 //   GITHUB_TOKEN       secret  fine-grained token, this repo only, Contents read/write
@@ -415,6 +416,11 @@ export default {
     if (request.method === 'OPTIONS') return new Response(null, { status: 204, headers: cors });
     if (request.method === 'GET' && url.pathname.replace(/\/+$/, '') === '/status') {
       return reply(200, { open: env.SUBMISSIONS_OPEN === 'true' });
+    }
+    if (request.method === 'GET' && url.pathname.replace(/\/+$/, '') === '/time') {
+      return new Response(JSON.stringify({ now: Date.now() }), {
+        status: 200, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', ...cors },
+      });
     }
     if (request.method !== 'POST' || !['/', '/submit'].includes(url.pathname.replace(/\/+$/, '') || '/')) {
       return reply(404, { ok: false, message: 'Not found.' });

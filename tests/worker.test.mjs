@@ -71,6 +71,16 @@ const good = (over = {}) => ({
   consent: true, website: '', turnstile: 'token', screenshot: null, ...over,
 });
 
+test('time endpoint returns the Worker clock, uncached, with CORS', async () => {
+  fakeWorld();
+  const before = Date.now();
+  const r = await call(env(), { method: 'GET', path: '/time' });
+  assert.equal(r.status, 200);
+  assert.ok(r.body.now >= before && r.body.now <= Date.now());
+  assert.equal(r.headers.get('cache-control'), 'no-store');
+  assert.equal(r.headers.get('access-control-allow-origin'), ORIGIN);
+});
+
 test('status and preflight', async () => {
   fakeWorld();
   assert.deepEqual((await call(env(), { method: 'GET', path: '/status' })).body, { open: true });

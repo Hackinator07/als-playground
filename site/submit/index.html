@@ -13,6 +13,10 @@
     <div class="wrap titlebar-inner">
       <a class="titlebar-name titlebar-link" href="../">Al's Playground stage times</a>
       <span class="titlebar-game">Richard Burns Rally</span>
+      <div class="rally-clock" id="rally-clock" role="img" aria-label="Rally time, Marquette, Michigan (Eastern)" data-sync="device">
+        <span class="clock-lcd" aria-hidden="true"><span class="clock-ghost">88:88:88</span><span class="clock-digits">--:--:--</span></span>
+        <span class="clock-status" aria-hidden="true">ET &middot; MARQUETTE</span>
+      </div>
     </div>
   </header>
 
@@ -115,5 +119,6 @@
   </main>
 
   <script type="module" src="../assets/js/submit.js"></script>
+  <script type="module" src="../assets/js/clock.js"></script>
 </body>
 </html>

@@ -46,7 +46,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 
 /* ---------- title bar */
 .titlebar { background: var(--spruce); color: var(--spruce-text); }
-.titlebar-inner { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 10px; }
+.titlebar-inner { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding-top: 10px; padding-bottom: 10px; }
 .titlebar-name { font-size: 18px; font-weight: 700; letter-spacing: 0.2px; }
 .titlebar-game { font-size: 12px; opacity: 0.85; }
 
@@ -174,6 +174,17 @@ select { padding-right: 24px; }
 .results .history .hist-worse { color: var(--muted); }
 .show-all { text-align: center; padding: 12px; border-top: 1px solid var(--line); }
 
+/* ---------- rally clock: seven-segment readout in the title bar */
+@font-face { font-family: "DSEG7"; src: url("../fonts/DSEG7Classic-Bold.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+.titlebar-game { margin-left: auto; }
+.rally-clock { display: inline-flex; flex-direction: column; align-items: center; gap: 3px; padding: 5px 10px 4px; background: #14110D; border: 1px solid #3A352D; border-radius: 4px; }
+.clock-lcd { position: relative; display: inline-block; font-family: "DSEG7", ui-monospace, monospace; font-weight: 700; font-size: 20px; line-height: 1; letter-spacing: 2px; white-space: nowrap; }
+.clock-ghost { color: #FFB000; opacity: 0.1; }
+.clock-digits { position: absolute; inset: 0; text-align: right; color: #FFB000; }
+.clock-status { font-size: 9px; letter-spacing: 1.2px; color: #B8860B; font-weight: 700; }
+.rally-clock[data-sync="device"] .clock-status { color: #8A7A5C; }
+@media (max-width: 640px) { .titlebar-name { margin-right: auto; } .rally-clock { padding: 4px 6px 3px; flex-shrink: 0; } .clock-lcd { font-size: 14px; letter-spacing: 1px; } .clock-status { font-size: 8px; } }
+
 /* ---------- footer */
 .footer { padding: 14px 2px 32px; font-size: 12.5px; color: var(--muted); }
 .footer p { margin: 0 0 6px; }
@@ -186,7 +197,7 @@ select { padding-right: 24px; }
 /* ---------- phones: checkpoints stay, Car / Diff. Prev / Uploaded move into the tap row */
 @media (max-width: 640px) {
   .wrap { padding: 0 8px; }
-  .titlebar-name { font-size: 16px; }
+  .titlebar-name { font-size: 14px; }
   .titlebar-game { display: none; }
   .band h1 { font-size: 20px; }
   .stage-meta { font-size: 12px; }
