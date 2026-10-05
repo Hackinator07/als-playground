@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "8ei0ybsz",
+  "stage": "als-playground",
+  "driver": "John Sigler",
+  "car_id": "citroen-xsara-kit-car",
+  "car_name": "Citroen Xsara Kit Car",
+  "cp1_ms": 193300,
+  "cp2_ms": 411100,
+  "finish_ms": 551539,
+  "entered": {
+    "cp1": "3:13.300",
+    "cp2": "6:51.100",
+    "finish": "9:11.539"
+  },
+  "uploaded_at": "2026-10-05T20:29:27.874Z",
+  "screenshot": "screenshots/2026/8ei0ybsz.webp",
+  "status": "published"
+}
