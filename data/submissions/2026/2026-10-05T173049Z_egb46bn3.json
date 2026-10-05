@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "egb46bn3",
+  "stage": "als-playground",
+  "driver": "Emily Carter",
+  "car_id": "renault-twingo-r2-evo",
+  "car_name": "Renault Twingo R2 Evo",
+  "cp1_ms": 154100,
+  "cp2_ms": 380700,
+  "finish_ms": 501821,
+  "entered": {
+    "cp1": "2:34.100",
+    "cp2": "6:20.700",
+    "finish": "8:21.821"
+  },
+  "uploaded_at": "2026-10-05T17:30:49.764Z",
+  "screenshot": "screenshots/2026/egb46bn3.webp",
+  "status": "published"
+}
