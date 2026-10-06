@@ -65,3 +65,6 @@
   #map { max-width: 420px; margin: 0 auto; }
   .tele-body { padding: 10px; }
 }
+
+.tele-nav { margin: 0 0 12px; }
+.tele .btn-back { display: inline-block; text-decoration: none; font-weight: 600; padding: 8px 14px; }

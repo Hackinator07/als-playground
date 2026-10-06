@@ -331,6 +331,7 @@ export function renderTunePage(meta, tune, rawText) {
       <p class="tune-facts">${facts}</p>
       <div class="guide-actions">
         <a class="btn-submit" href="${esc(meta.file_name)}" download>Download .lsp</a>
+        <a class="btn-plain" href="../../">Back to stage times</a>
         <a class="btn-plain" href="../">All vehicle tunes</a>
         <a class="btn-plain" href="../../guide/">Setup guide</a>
       </div>
@@ -375,6 +376,7 @@ export function renderLibrary(tunes, groups) {
       <div class="band"><h1 id="page-title">Vehicle Tune Library</h1></div>
       <p class="stage-meta">Setups shared by drivers &middot; ${tunes.length} ${tunes.length === 1 ? 'tune' : 'tunes'}</p>
       <div class="controls">
+        <a class="btn-plain btn-back" href="../">Back to stage times</a>
         <a class="btn-submit" href="../submit/">Submit a time</a>
         <label class="control">
           <span class="control-label">Drivetrain</span>

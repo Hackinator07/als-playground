@@ -71,3 +71,5 @@
 @media print {
   .raw pre { max-height: none; }
 }
+
+.tunes-board .btn-back { display: inline-block; text-decoration: none; font-weight: 600; padding: 8px 14px; }
