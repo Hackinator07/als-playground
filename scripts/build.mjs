@@ -138,6 +138,7 @@ fs.cpSync(path.join(root, 'site'), out, { recursive: true });
 fs.mkdirSync(path.join(out, 'shared'), { recursive: true });
 fs.copyFileSync(path.join(root, 'shared/rules.js'), path.join(out, 'shared/rules.js'));
 fs.copyFileSync(path.join(root, 'shared/tune.js'), path.join(out, 'shared/tune.js'));
+fs.copyFileSync(path.join(root, 'shared/ld.js'), path.join(out, 'shared/ld.js'));
 fs.mkdirSync(path.join(out, 'data'), { recursive: true });
 fs.copyFileSync(path.join(root, 'data/stage.json'), path.join(out, 'data/stage.json'));
 fs.copyFileSync(path.join(root, 'data/cars.json'), path.join(out, 'data/cars.json'));
