@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "23nkg5p0",
+  "stage": "als-playground",
+  "driver": "Ultimate Machine",
+  "car_id": "bmw-m3-e36-grpa",
+  "car_name": "BMW M3 E36 GrpA",
+  "cp1_ms": 180000,
+  "cp2_ms": 540000,
+  "finish_ms": 1536000,
+  "entered": {
+    "cp1": "3:00.000",
+    "cp2": "9:00.000",
+    "finish": "25:36.000"
+  },
+  "uploaded_at": "2026-10-06T19:13:01.259Z",
+  "screenshot": "screenshots/2026/23nkg5p0.webp",
+  "tune": {
+    "file": "tunes/2026/23nkg5p0.lsp",
+    "name": "89_d_gravel_longgear"
+  },
+  "status": "published"
+}
