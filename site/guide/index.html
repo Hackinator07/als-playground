@@ -53,6 +53,7 @@
 <article class="param" id="diff-maps"><h3>Differential maps</h3>
 <p>Differential maps let you adjust lock pressure with a gradual progression from 0 to 100% in relation to throttle, brake and overall speed. They control how the car’s three differentials (front, centre and rear) behave.</p>
 <p class="callout note"><b>Note</b> The ECU (engine control unit) always takes the highest lock value from throttle, brake and gear, and uses that.</p>
+<p class="callout important"><b>Important</b> Never set differential map values to zero. See the caveat at the end of this section.</p>
 </article>
 <article class="param" id="diff-centre"><h3>Central differential</h3>
 <p>This map is used for conventional driving and driving in a straight line.</p>
@@ -92,6 +93,21 @@
 </article>
 <article class="param" id="diff-handbrake-limit"><h3>Handbrake limit</h3>
 <p>Again a percentage of the control input needed, this time to reach the handbrake’s differential map in place of the central differential map.</p>
+</article>
+<article class="param caveat" id="diff-caveat"><h3>Caveat: don’t zero out differential values</h3>
+<p>In RBR NGP physics, the differential maps (<code>FrontDiffThrottle</code>, <code>RearDiffThrottle</code>) and the speed scale (<code>CenterSpeedMapFactor</code>) control how the differentials lock under throttle, braking and speed. They only work if they are filled in.</p>
+<table class="effects"><thead><tr><th scope="col">If this is zeroed</th><th scope="col">What happens</th></tr></thead><tbody>
+<tr><th scope="row">Front and rear differential map values</th><td>The progression curves lock up or break. The differentials end up open or unpredictable as speed and throttle increase.</td></tr>
+<tr><th scope="row"><code>CenterSpeedMapFactor</code> set to <code>0.000000</code></th><td>Speed-sensitive unlocking of the centre differential is switched off. It feels numb and bound up in high-speed sweeps, and unpredictable on power exit.</td></tr>
+</tbody></table>
+<p>Without active differential curves, NGP falls back to flat or open behaviour. That kills power transfer out of slides and makes the handling snap.</p>
+<h4>Why setups end up zeroed</h4>
+<ul class="steps">
+<li><b>Incomplete manual edits.</b> Copying setup blocks, or converting legacy files, without filling in all 10 index parameters leaves placeholder zeros across the array.</li>
+<li><b>Tool or plugin corruption.</b> Saving setups through third-party tools or mismatched NGP versions can fail to write the lookup curves, which clears the active differential data.</li>
+<li><b>Failed “locked diff” hacks.</b> Setting <code>CenterSpeedMapFactor</code> to zero is an attempt to force a fixed centre differential. It actually removes the speed-sensitive unlocking, so the car feels bound up in high-speed sweeps and unpredictable on power exit.</li>
+</ul>
+<p class="callout advice"><b>Advice</b> Stick to setups with fully populated differential maps.</p>
 </article>
 </section>
 <section class="gsec" id="suspension" aria-labelledby="suspension-h"><h2 id="suspension-h">Suspension</h2>
