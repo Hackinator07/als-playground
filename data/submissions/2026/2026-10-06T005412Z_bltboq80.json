@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "bltboq80",
+  "stage": "als-playground",
+  "driver": "RGG",
+  "car_id": "ford-fiesta-rally4",
+  "car_name": "Ford Fiesta Rally4",
+  "cp1_ms": 147870,
+  "cp2_ms": 344450,
+  "finish_ms": 445269,
+  "entered": {
+    "cp1": "2:27.87",
+    "cp2": "5:44.45",
+    "finish": "7:25.269"
+  },
+  "uploaded_at": "2026-10-06T00:54:12.120Z",
+  "screenshot": "screenshots/2026/bltboq80.webp",
+  "status": "published"
+}
