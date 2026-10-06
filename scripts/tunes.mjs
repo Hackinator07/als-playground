@@ -363,12 +363,12 @@ export function renderLibrary(tunes, groups) {
     const time = t.run_published && t.finish_ms ? `<a href="../?highlight=${esc(t.id)}">${esc(formatTime(t.finish_ms))}</a>` : '<span class="none">—</span>';
     const search = `${t.driver} ${t.car_name} ${t.tune_name}`.toLowerCase();
     return `<tr class="tune-row" data-search="${esc(search)}" data-group="${esc(t.group || '')}">`
-      + `<td class="c-driver"><a href="${esc(t.id)}/">${esc(t.driver)}</a></td>`
-      + `<td class="c-car">${esc(t.car_name)}${t.group_tag ? ` <span class="tag" title="${esc(t.group)}">${esc(t.group_tag)}</span>` : ''}</td>`
-      + `<td class="c-tune"><a href="${esc(t.id)}/">${esc(t.tune_name)}</a></td>`
-      + `<td class="c-time">${time}</td>`
-      + `<td class="c-date">${esc(dateOf(t.uploaded_at))}</td>`
-      + `<td class="c-act"><a href="${esc(t.id)}/">View</a> <a class="dl" href="${esc(t.id)}/${esc(t.file_name)}" download>Download</a></td></tr>`;
+      + `<td class="t-driver"><a href="${esc(t.id)}/">${esc(t.driver)}</a></td>`
+      + `<td class="t-car">${esc(t.car_name)}${t.group_tag ? ` <span class="tag" title="${esc(t.group)}">${esc(t.group_tag)}</span>` : ''}</td>`
+      + `<td class="t-tune"><a href="${esc(t.id)}/">${esc(t.tune_name)}</a></td>`
+      + `<td class="t-time">${time}</td>`
+      + `<td class="t-date">${esc(dateOf(t.uploaded_at))}</td>`
+      + `<td class="t-act"><a href="${esc(t.id)}/">View</a> <a class="dl" href="${esc(t.id)}/${esc(t.file_name)}" download>Download</a></td></tr>`;
   }).join('\n');
   const options = groups.filter((g) => tunes.some((t) => t.group === g.name)).map((g) => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
   const body = `    <section class="board tunes-board" aria-labelledby="page-title">
@@ -387,7 +387,7 @@ export function renderLibrary(tunes, groups) {
       </div>
       <p class="tune-count" id="t-count" aria-live="polite"></p>
       <table class="results tunes-table">
-        <thead><tr><th>Driver</th><th>Vehicle</th><th>Tune</th><th>Stage time</th><th class="c-date">Uploaded</th><th>Get it</th></tr></thead>
+        <thead><tr><th>Driver</th><th>Vehicle</th><th>Tune</th><th>Stage time</th><th class="t-date">Uploaded</th><th>Get it</th></tr></thead>
         <tbody id="t-body">
 ${rows}
         </tbody>

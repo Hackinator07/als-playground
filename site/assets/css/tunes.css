@@ -9,13 +9,13 @@
 .tunes-table tbody tr:nth-child(odd) { background: var(--row); }
 .tunes-table tbody tr:nth-child(even) { background: var(--row-alt); }
 .tunes-table tbody tr:hover { background: var(--row-hover); }
-.tunes-table .c-driver a, .tunes-table .c-tune a { font-weight: 700; color: var(--spruce); text-decoration: none; }
-.tunes-table .c-driver a:hover, .tunes-table .c-tune a:hover { text-decoration: underline; color: var(--maple-dark); }
-.tunes-table .c-time, .tunes-table .c-date { white-space: nowrap; }
-.tunes-table .c-act { white-space: nowrap; }
-.tunes-table .c-act a { display: inline-block; margin-right: 10px; }
-.tunes-table .c-act .dl { padding: 3px 10px; margin: 0; border: 1px solid var(--spruce); border-radius: 4px; color: var(--spruce); text-decoration: none; font-weight: 600; background: #fff; }
-.tunes-table .c-act .dl:hover { background: var(--row-alt); }
+.tunes-table .t-driver a, .tunes-table .t-tune a { font-weight: 700; color: var(--spruce); text-decoration: none; }
+.tunes-table .t-driver a:hover, .tunes-table .t-tune a:hover { text-decoration: underline; color: var(--maple-dark); }
+.tunes-table .t-time, .tunes-table .t-date { white-space: nowrap; }
+.tunes-table .t-act { white-space: nowrap; }
+.tunes-table .t-act a { display: inline-block; margin-right: 10px; }
+.tunes-table .t-act .dl { padding: 3px 10px; margin: 0; border: 1px solid var(--spruce); border-radius: 4px; color: var(--spruce); text-decoration: none; font-weight: 600; background: #fff; }
+.tunes-table .t-act .dl:hover { background: var(--row-alt); }
 .none { color: var(--muted); }
 .empty { margin: 0; padding: 22px 12px; text-align: center; color: var(--muted); }
 .tunes-note { margin: 0; padding: 10px 12px 14px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); }
@@ -44,11 +44,27 @@
 .raw summary { cursor: pointer; font-weight: 600; color: var(--maple-dark); }
 .raw pre { margin: 10px 0 0; padding: 12px; max-height: 480px; overflow: auto; background: #1C1C1A; color: #EDEBE3; border-radius: 4px; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
 
-@media (max-width: 640px) {
-  .tunes-table .c-date, .tunes-table th.c-date { display: none; }
-  .tunes-table { font-size: 12.5px; }
-  .tunes-table td, .tunes-table th { padding: 7px 5px; }
-  .tunes-table .c-act a { margin-right: 6px; }
+@media (max-width: 860px) {
+  /* The library table becomes a stack of cards, one per tune, so nothing gets squashed. */
+  .tunes-table, .tunes-table tbody { display: block; }
+  .tunes-table thead { display: none; }
+  .tunes-table tbody tr {
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 10px; align-items: baseline;
+    padding: 10px 12px 12px; border-bottom: 1px solid var(--line);
+  }
+  .tunes-table tbody tr[hidden] { display: none; }
+  .tunes-table td { display: block; padding: 0; border: 0; min-width: 0; }
+  .tunes-table .t-driver { grid-column: 1; grid-row: 1; font-size: 15px; }
+  .tunes-table .t-time { grid-column: 2; grid-row: 1; font-size: 15px; font-weight: 700; text-align: right; }
+  .tunes-table .t-car { grid-column: 1 / -1; grid-row: 2; color: var(--muted); font-size: 13px; }
+  .tunes-table .t-tune { grid-column: 1 / -1; grid-row: 3; font-size: 14px; overflow-wrap: anywhere; }
+  .tunes-table .t-date { grid-column: 1 / -1; grid-row: 4; display: block; font-size: 12px; color: var(--muted); }
+  .tunes-table .t-date::before { content: "Uploaded "; }
+  .tunes-table .t-act { grid-column: 1 / -1; grid-row: 5; display: flex; gap: 8px; margin-top: 8px; }
+  .tunes-table .t-act a,
+  .tunes-table .t-act .dl { display: flex; align-items: center; justify-content: center; flex: 1 1 0; box-sizing: border-box; min-height: 40px; margin: 0; padding: 9px 12px; line-height: 1.2; text-align: center; border: 1px solid var(--spruce); border-radius: 4px; background: #fff; color: var(--spruce); font-weight: 600; text-decoration: none; }
+  .tunes-table .t-act .dl { background: var(--pine); border-color: var(--pine); color: #fff; }
+  .tunes-table .t-act .dl:hover { background: var(--pine-hover); }
   .values { font-size: 13px; }
   .values tbody th { min-width: 130px; }
 }
