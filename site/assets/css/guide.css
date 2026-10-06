@@ -1,0 +1,66 @@
+/* Car setup guide page. Uses the colour tokens from style.css. */
+.board.guide { overflow: visible; }
+.board.guide .band { border-radius: 3px 3px 0 0; }
+.guide-actions { display: flex; flex-wrap: wrap; gap: 8px 10px; align-items: center; padding: 12px; border-bottom: 1px solid var(--line); }
+.guide-actions .btn-plain { text-decoration: none; display: inline-block; font-weight: 600; padding: 8px 14px; }
+.guide-layout { display: grid; grid-template-columns: 210px minmax(0, 1fr); gap: 0 28px; padding: 16px 16px 24px; align-items: start; }
+.guide-toc { position: sticky; top: 12px; font-size: 13.5px; }
+.toc-title { margin: 0 0 6px; font-size: 11.5px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--muted); }
+.guide-toc ol { margin: 0; padding: 0; list-style: none; border-left: 2px solid var(--line); }
+.guide-toc a { display: block; padding: 5px 0 5px 12px; margin-left: -2px; border-left: 2px solid transparent; color: var(--text); text-decoration: none; }
+.guide-toc a:hover { color: var(--maple-dark); border-left-color: var(--maple); }
+.guide-body { max-width: 760px; font-size: 15px; line-height: 1.55; }
+.guide-body p { margin: 0 0 10px; }
+.gsec { margin: 0 0 30px; scroll-margin-top: 12px; }
+.gsec h2 { margin: 0 0 10px; padding: 0 0 6px; font-size: 21px; line-height: 1.25; color: var(--spruce); border-bottom: 3px solid var(--maple); }
+.gsec.intro { margin-bottom: 22px; }
+.lead { font-size: 15.5px; color: var(--text); }
+.param { margin: 0 0 16px; padding: 12px 14px 4px; background: #fff; border: 1px solid var(--line); border-left: 4px solid var(--spruce); border-radius: 0 4px 4px 0; scroll-margin-top: 12px; }
+.param h3 { margin: 0 0 6px; font-size: 16px; color: var(--spruce); }
+h3.sub { margin: 20px 0 6px; font-size: 13px; letter-spacing: 1px; text-transform: uppercase; color: var(--maple-dark); }
+.steps { margin: 0 0 12px; padding-left: 22px; }
+.steps li { margin: 0 0 4px; }
+kbd { font: 600 12.5px/1 var(--font); padding: 2px 6px; border: 1px solid #BDB8AB; border-bottom-width: 2px; border-radius: 3px; background: #FAF8F2; white-space: nowrap; }
+.effects { width: 100%; border-collapse: collapse; margin: 4px 0 12px; font-size: 14px; }
+.effects th, .effects td { padding: 7px 10px; text-align: left; vertical-align: top; border: 1px solid var(--line); }
+.effects thead th { background: var(--spruce); color: var(--spruce-text); font-weight: 600; font-size: 12.5px; border-color: var(--spruce); }
+.effects tbody th { background: var(--row-alt); white-space: nowrap; font-weight: 700; width: 1%; }
+.effects .arrow { display: inline; margin-right: 5px; color: var(--maple-dark); font-size: 11px; }
+.callout { margin: 0 0 12px; padding: 8px 12px; border-left: 4px solid var(--pine); background: #E8F2EC; border-radius: 0 4px 4px 0; }
+.callout b { margin-right: 6px; font-size: 11.5px; letter-spacing: 1px; text-transform: uppercase; }
+.callout.advice { border-left-color: var(--maple); background: #FBEFE4; }
+.callout.note { border-left-color: var(--rbr-text); background: var(--rbr-bg); }
+.callout.important { border-left-color: #8A2E1A; background: #F7E3DD; }
+
+@media (max-width: 860px) {
+  .guide-layout { display: block; padding: 12px 10px 20px; }
+  .guide-toc { position: static; margin: 0 0 18px; }
+  .guide-toc ol { display: flex; flex-wrap: wrap; gap: 6px; border: 0; }
+  .guide-toc a { padding: 6px 12px; margin: 0; border: 1px solid var(--line); border-radius: 16px; background: #fff; }
+  .guide-toc a:hover { border-color: var(--maple); }
+  .guide-actions .btn-submit { flex: 1 1 100%; text-align: center; }
+  .effects { font-size: 13px; }
+  .effects th, .effects td { padding: 6px 7px; }
+  .effects tbody th { white-space: normal; }
+}
+
+@media print {
+  @page { size: letter; margin: 0.6in; }
+  body { background: #fff; font-size: 11pt; }
+  .titlebar, .guide-actions, .guide-toc, .footer, .stage-meta { display: none !important; }
+  .wrap { max-width: none; padding: 0; }
+  .board { margin: 0; border: 0; }
+  .band { background: none; color: var(--spruce); text-align: left; padding: 0 0 6px; border-bottom: 3px solid var(--maple); }
+  .band h1 { font-size: 24pt; }
+  .guide-layout { display: block; padding: 10px 0 0; }
+  .guide-body { max-width: none; font-size: 10.5pt; }
+  .gsec { margin-bottom: 18pt; }
+  .gsec h2 { break-after: avoid; }
+  .callout, .effects tr { break-inside: avoid; }
+  .param { break-inside: auto; padding: 8pt 10pt 2pt; margin-bottom: 9pt; }
+  .param h3 { break-after: avoid; }
+  .effects { break-inside: avoid; }
+  .effects tbody th { white-space: nowrap; width: 1%; }
+  .effects { font-size: 10pt; }
+  .effects thead th, .callout, .effects tbody th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}

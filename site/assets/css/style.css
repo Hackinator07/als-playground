@@ -192,7 +192,8 @@ select { padding-right: 24px; }
 .footer .footer-links { margin: 0 0 14px; font-size: 13.5px; }
 .footer a { color: var(--maple-dark); }
 .footer .btn-submit { color: #fff; }
-@media (max-width: 600px) { .footer .btn-submit { display: block; } }
+.footer .btn-guide { display: inline-block; margin-left: 8px; padding: 9px 16px; font-size: 14px; font-weight: 700; text-decoration: none; color: var(--spruce); }
+@media (max-width: 600px) { .footer .btn-submit { display: block; } .footer .btn-guide { display: block; margin: 8px 0 0; text-align: center; } }
 
 /* ---------- phones: checkpoints stay, Car / Diff. Prev / Uploaded move into the tap row */
 @media (max-width: 640px) {

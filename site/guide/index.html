@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Richard Burns Rally car setup guide · Al's Playground</title>
+  <meta name="description" content="A plain-English guide to the Richard Burns Rally car setup menu: differentials, suspension, geometry, anti-roll bars, tyres, brakes and gearbox.">
+  <link rel="icon" href="../assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <link rel="stylesheet" href="../assets/css/guide.css">
+</head>
+<body>
+  <header class="titlebar">
+    <div class="wrap titlebar-inner">
+      <a class="titlebar-name titlebar-link" href="../">Al's Playground stage times</a>
+      <span class="titlebar-game">Richard Burns Rally</span>
+      <div class="rally-clock" id="rally-clock" role="img" aria-label="Rally time, Marquette, Michigan (Eastern)" data-sync="device">
+        <span class="clock-lcd" aria-hidden="true"><span class="clock-ghost">88:88:88</span><span class="clock-digits">--:--:--</span></span>
+        <span class="clock-status" aria-hidden="true">ET &middot; MARQUETTE</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="board guide" aria-labelledby="page-title">
+      <div class="band"><h1 id="page-title">Car Setup Guide</h1></div>
+      <p class="stage-meta">Richard Burns Rally &middot; For drivers who want to tune the car</p>
+      <div class="guide-actions">
+        <a class="btn-submit" href="../assets/downloads/Als-Playground-RBR-Car-Setup-Guide.pdf" download>Download PDF</a>
+        <a class="btn-plain" href="../">Back to stage times</a>
+        <button type="button" class="btn-plain print-btn" id="print-btn" hidden>Print</button>
+      </div>
+      <div class="guide-layout">
+        <nav class="guide-toc" aria-label="Guide sections"><p class="toc-title">On this page</p><ol><li><a href="#controls">Setup screen controls</a></li><li><a href="#differential">Differential</a></li><li><a href="#suspension">Suspension</a></li><li><a href="#geometry">Geometry</a></li><li><a href="#arb">Anti-roll bars and steering</a></li><li><a href="#tyres">Tyres</a></li><li><a href="#brakes">Brakes</a></li><li><a href="#gearbox">Gearbox</a></li></ol></nav>
+        <div class="guide-body">
+          <section class="gsec intro" aria-label="Introduction">
+            <p class="lead">Richard Burns Rally has one of the most detailed car-setup systems ever put in a rally simulation. Plenty of drivers are happy with the standard setup, but if you want to explore the finer points of rally driving, tuning is essential. This guide walks through the setup menu, which you can open before each event or stage.</p>
+            <p>The default setups were made by Richard Burns together with an engineer he worked closely with. If you decide to go down the rally-engineering path, expect to lose hours: changing one value affects many others, and together they change how the car behaves.</p>
+            <p class="callout note"><b>Note</b> This is a plain-English edit of a community guide that had been machine-translated. Parameter names follow standard rally-setup terms and may differ slightly from the labels in the in-game menu.</p>
+          </section>
+<section class="gsec" id="controls" aria-labelledby="controls-h"><h2 id="controls-h">Setup screen controls</h2>
+<p class="lead">On the setup screen the controls differ slightly from the standard ones.</p>
+<ol class="steps"><li>Use the <kbd>Up</kbd> / <kbd>Down</kbd> arrows to highlight a value.</li><li>Press <kbd>Enter</kbd> to activate or deactivate user-defined values.</li><li>When the arrows appear, use <kbd>Left</kbd> / <kbd>Right</kbd> to edit the value.</li></ol>
+<p class="callout important"><b>Important</b> Press Enter before and after adjusting a value with the left and right cursors.</p>
+</section>
+<section class="gsec" id="differential" aria-labelledby="differential-h"><h2 id="differential-h">Differential</h2>
+<p class="lead">The differential settings change the minimum and maximum lock of each differential in the car.</p>
+<article class="param" id="diff-what"><h3>What a differential does</h3>
+<p>A differential does three jobs:</p>
+<ol class="steps"><li>It transmits the engine’s power to the wheels.</li><li>It lets the wheels at each end of an axle turn at different speeds.</li><li>It acts as the final drive, reducing rotational speed one last time before power reaches the wheels.</li></ol>
+<p>Every differential in the car ranges from 0% lock (free rotation) to 100% lock (fully locked). “Lock” is the percentage to which a differential is locked under throttle, brake and gear. When a differential is locked, both wheels on that axle turn at exactly the same speed.</p>
+</article>
+<article class="param" id="diff-maps"><h3>Differential maps</h3>
+<p>Differential maps let you adjust lock pressure with a gradual progression from 0 to 100% in relation to throttle, brake and overall speed. They control how the car’s three differentials (front, centre and rear) behave.</p>
+<p class="callout note"><b>Note</b> The ECU (engine control unit) always takes the highest lock value from throttle, brake and gear, and uses that.</p>
+</article>
+<article class="param" id="diff-centre"><h3>Central differential</h3>
+<p>This map is used for conventional driving and driving in a straight line.</p>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Effect on balance</th><th scope="col">Other consequences</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease (less lock)</th><td>More oversteer</td><td>Less stable under braking</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase (more lock)</th><td>More understeer and loss of stability</td><td>More stable under braking</td></tr></tbody></table>
+</article>
+<article class="param" id="diff-centre-lfb"><h3>Central map, left-foot brake</h3>
+<p>If you use the brake and throttle at the same time, the ECU switches off the central differential map and uses this one instead. This technique is known as left-foot braking.</p>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Effect on balance</th><th scope="col">Other consequences</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease</th><td>More oversteer</td><td>Less stable under braking</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase</th><td>More understeer and loss of stability</td><td>More stable under braking</td></tr></tbody></table>
+<p class="callout important"><b>Important</b> For advanced drivers.</p>
+<p class="callout advice"><b>Advice</b> When left-foot braking, keep these values lower than the central differential values. It helps rotate the car into a corner.</p>
+<p class="callout tip"><b>Tip</b> Use a controller setup that lets you press the throttle and brake at the same time.</p>
+</article>
+<article class="param" id="diff-front"><h3>Front differential</h3>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Positive</th><th scope="col">Negative</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease</th><td>The car turns in more easily on corner entry</td><td>Less traction out of corners</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase</th><td>More traction on corner exit</td><td>Harder to turn the car in at corner entry (more locked), and more steering effort on exit</td></tr></tbody></table>
+<p class="callout advice"><b>Advice</b> Use a lower lock percentage on tarmac stages than on gravel.</p>
+</article>
+<article class="param" id="diff-rear"><h3>Rear differential</h3>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Positive</th><th scope="col">Negative</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease</th><td>A very slight increase in high-speed stability</td><td>Loss of traction</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase</th><td>More traction</td><td>Understeer in tight turns and loss of stability</td></tr></tbody></table>
+<p class="callout advice"><b>Advice</b> As a general rule, keep these values fairly high. For example, if 50% throttle is mapped to 25% lock and the differential torque is 600 Nm, the actual torque through the differential in that state is 150 Nm.</p>
+</article>
+<article class="param" id="diff-torque"><h3>Differential torque</h3>
+<p>Differential torque is the adjustment from the minimum to the maximum lock pressure of a differential, measured in newton-metres (Nm).</p>
+<p class="callout note"><b>Note</b> These values are tuned for each car and each stage. If you think they should be higher, you can adjust them in the differential maps.</p>
+</article>
+<article class="param" id="diff-torque-centre"><h3>Maximum central differential torque</h3>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Initial effect</th><th scope="col">Other consequences</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease</th><td>Stronger initial response, more sensitive steering</td><td>Increases the chance of a rollover</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase</th><td>More stable</td><td>Increases the chance of understeer</td></tr></tbody></table>
+</article>
+<article class="param" id="diff-torque-front"><h3>Maximum front differential torque</h3>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Initial effect</th><th scope="col">Other consequences</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease</th><td>Less traction on the front wheels</td><td>Easier handling in tight turns</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase</th><td>More traction on the front wheels</td><td>Harder to control the exact direction</td></tr></tbody></table>
+</article>
+<article class="param" id="diff-torque-rear"><h3>Maximum rear differential torque</h3>
+<table class="effects"><thead><tr><th scope="col">Change</th><th scope="col">Initial effect</th><th scope="col">Other consequences</th></tr></thead><tbody><tr><th scope="row"><span class="arrow" aria-hidden="true">▼</span> Decrease</th><td>Less traction</td><td>Helps prevent oversteer</td></tr><tr><th scope="row"><span class="arrow" aria-hidden="true">▲</span> Increase</th><td>More traction out of corners through the rear wheels</td><td>Can cause some oversteer</td></tr></tbody></table>
+</article>
+<article class="param" id="diff-handbrake"><h3>Handbrake</h3>
+<p>As well as applying the rear brakes, the handbrake disconnects drive from the engine to the rear wheels by opening the central differential.</p>
+<p>The percentage is how much control pressure is needed to open the central differential, which helps you pull off a clean handbrake turn.</p>
+</article>
+<article class="param" id="diff-handbrake-limit"><h3>Handbrake limit</h3>
+<p>Again a percentage of the control input needed, this time to reach the handbrake’s differential map in place of the central differential map.</p>
+</article>
+</section>
+<section class="gsec" id="suspension" aria-labelledby="suspension-h"><h2 id="suspension-h">Suspension</h2>
+<article class="param" id="susp-note"><h3>Before you start</h3>
+<p>This menu lets you change how the car rides. For both rough and smooth surfaces you can adjust the dampers and springs to get a good balance. On narrower, twistier stages you will also need to adjust the geometry and the anti-roll bars.</p>
+<p class="callout note"><b>Note</b> Any change to the suspension must be the same on both sides of the car. If you change the rebound on the front left, make the same change on the front right.</p>
+</article>
+<h3 class="sub">Dampers</h3>
+<p class="lead">Dampers absorb (dampen) the wheel’s energy when the car goes over a bump. They also control how quickly the wheel returns to the road, which would otherwise depend only on how the springs extend. All figures are in kN/m/s.</p>
+<article class="param" id="damp-comp"><h3>Compression</h3>
+<p>The energy absorbed inside the damper when the car goes over a bump or the edge of the road. Increase the value and the car feels stiffer; decrease it and the car feels softer.</p>
+<p class="callout tip"><b>Tip</b> Set compression too high and the car tends to bounce off the road. Set it too low and the damper will not absorb the energy when the car goes over a pothole.</p>
+</article>
+<article class="param" id="damp-reb"><h3>Rebound</h3>
+<p>Controls how fast the damper extends after compression, returning the tyre to the road.</p>
+<p class="callout advice"><b>Advice</b> The lower the value, the more traction the car has. Too low and the car tends to bounce.</p>
+</article>
+<article class="param" id="damp-fast"><h3>Fast compression</h3>
+<p>Works like compression and cushions the pits, potholes and bumps you meet on a stage. It has nothing to do with car speed. It describes how fast the damper compresses after a significant impact.</p>
+</article>
+<article class="param" id="damp-fastlim"><h3>Fast compression limit</h3>
+<p>The speed (in metres per second) at which your fast compression settings take over from your normal compression settings.</p>
+<p class="callout tip"><b>Tip</b> Too high and you may never reach the limit. Too low and you will always be above it.</p>
+</article>
+<h3 class="sub">Springs</h3>
+<p class="lead">The suspension has two springs. The main spring does most of the work under load. The auxiliary spring comes into play when the wheel is lightly loaded, to give extra traction, or when it is unloaded, to make sure the damper extends fully.</p>
+<article class="param" id="spring-len"><h3>Spring length</h3>
+<p>Changes the height of the chassis above the ground and the length of the suspension travel.</p>
+<p class="callout tip"><b>Tip</b> There are simpler ways to change ride height: use the ride height setting in the Geometry menu. For car setups, leaving the spring length at its default is recommended.</p>
+</article>
+<article class="param" id="spring-stiff"><h3>Spring stiffness</h3>
+<p>The force needed to compress the spring. The higher the number, the harder the spring; a lower number gives a softer spring. This affects how the car handles over potholes.</p>
+<p class="callout advice"><b>Advice</b> Stiffer springs help on higher-speed stages. In mud or snow, softer springs (a smaller number) can give you an advantage.</p>
+<p class="callout note"><b>Note</b> Auxiliary spring length and stiffness are tuned for each car, so leave them at their defaults.</p>
+</article>
+</section>
+<section class="gsec" id="geometry" aria-labelledby="geometry-h"><h2 id="geometry-h">Geometry (front and rear)</h2>
+<article class="param" id="geo-intro"><h3>About geometry</h3>
+<p>The geometry menus change the wheel alignment and the height of the chassis above the ground. They apply to the front and rear of the car.</p>
+</article>
+<article class="param" id="geo-top"><h3>Top mount position</h3>
+<p>The mounting at the top of the axle, where it attaches to the body. Move it forwards or backwards to change the pivot advance (caster).</p>
+<p class="callout advice"><b>Advice</b> The more negative the pivot advance, the better the car turns into corners. It can also increase loss of direction over potholes.</p>
+</article>
+<article class="param" id="geo-rod"><h3>Track rod length</h3>
+<p>Adjusting the track rod gives the car more or less toe-in.</p>
+</article>
+<article class="param" id="geo-height"><h3>Ride height</h3>
+<p>Adjusts the height of the chassis above the ground. Adjusting the front relative to the rear also changes the weight distribution and the tilt of the car. Raising the rear moves the centre of gravity forwards.</p>
+<p class="callout tip"><b>Tip</b> Raising the chassis gives more suspension travel and ground clearance, so the car takes less damage. Lowering it keeps the centre of gravity low, which is more stable.</p>
+</article>
+<article class="param" id="geo-camber"><h3>Camber</h3>
+<p>Adjusts the wheel’s lean angle.</p>
+<p class="callout advice"><b>Advice</b> Change the camber to suit the road surface and to make sure the tyre wears evenly across its whole tread.</p>
+</article>
+</section>
+<section class="gsec" id="arb" aria-labelledby="arb-h"><h2 id="arb-h">Anti-roll bars and steering</h2>
+<article class="param" id="arb-intro"><h3>About anti-roll bars and steering</h3>
+<p>The anti-roll bar controls how much the body rolls between the left and right wheels. Steering is the relationship between your controller’s steering input and the car’s maximum lock.</p>
+</article>
+<article class="param" id="steer-lock"><h3>Maximum steering lock</h3>
+<p>With the value at MAX and full steering input, the car’s wheels physically turn more. With the value at minimum and full steering input, the wheels turn less.</p>
+</article>
+<article class="param" id="arb-front"><h3>Front anti-roll bar stiffness</h3>
+<p>Affects how quickly the car’s weight moves across the front axle, between the two front wheels. The higher the number, the stiffer the bar and the slower the weight transfer.</p>
+<p class="callout tip"><b>Tip</b> A lower value gives a quicker initial turn-in. A higher value gives the car more stability at high speed.</p>
+</article>
+<article class="param" id="arb-rear"><h3>Rear anti-roll bar stiffness</h3>
+<p>Affects how quickly the car’s weight moves across the rear axle, between the two rear wheels. The higher the number, the stiffer the bar and the slower the weight transfer.</p>
+<p class="callout advice"><b>Advice</b> Lower (softer) values give more traction but can cost stability.</p>
+<p class="callout advice"><b>Advice</b> When it is wet, it can help to set both front and rear bars softer.</p>
+</article>
+</section>
+<section class="gsec" id="tyres" aria-labelledby="tyres-h"><h2 id="tyres-h">Tyres</h2>
+<article class="param" id="tyre-pressure"><h3>Pirelli tyres</h3>
+<p>As a tyre goes through braking, acceleration and cornering, its pressure rises as the air inside heats up and expands. The pressure in the menus is for a cold tyre.</p>
+<p class="callout tip"><b>Tip</b> On long, hot stages you may benefit from a slightly lower tyre pressure.</p>
+</article>
+</section>
+<section class="gsec" id="brakes" aria-labelledby="brakes-h"><h2 id="brakes-h">Brakes</h2>
+<article class="param" id="brake-intro"><h3>About brakes</h3>
+<p>This section lets you change the balance between the front and rear brakes and the total maximum braking pressure.</p>
+</article>
+<article class="param" id="brake-max"><h3>Maximum brake pressure</h3>
+<p>The maximum braking pressure at the wheels. Increase it too much and the wheels can lock and the car slides. On a loose, wet or icy surface you need less force to start a wheel lock.</p>
+<p class="callout tip"><b>Tip</b> If you are happy with the car’s balance, keep the front-to-rear brake distribution the same. Set the rear brake too low and the car can slide off the road when braking. Set it too high and the rear tends to lock up under braking.</p>
+</article>
+<article class="param" id="brake-dist"><h3>Brake pressure distribution</h3>
+<p>The percentage of the total braking force applied to that pair of wheels. The total always equals 1 (100%).</p>
+</article>
+<article class="param" id="brake-disc"><h3>Brake disc diameter</h3>
+<p>The size of the brake disc.</p>
+</article>
+</section>
+<section class="gsec" id="gearbox" aria-labelledby="gearbox-h"><h2 id="gearbox-h">Gearbox</h2>
+<article class="param" id="gb-intro"><h3>About the gearbox</h3>
+<p>This section lets you change the gearbox ratios for a higher top speed (with less acceleration) or a lower top speed (with more acceleration). Which you choose depends on whether the stage is fast or twisty with tight corners.</p>
+</article>
+<article class="param" id="gb-protect"><h3>Gear protector</h3>
+<p>Keeps the gearbox safe by shifting down in situations where the engine could be damaged.</p>
+</article>
+<article class="param" id="gb-ratio"><h3>Gear ratios</h3>
+<p>The ratio set changes the car’s overall gear ratios to suit different types of stage.</p>
+<table class="effects"><thead><tr><th scope="col">Setting</th><th scope="col">Top speed</th><th scope="col">Acceleration</th></tr></thead><tbody><tr><th scope="row">Long</th><td>Maximum top speed</td><td>Low</td></tr><tr><th scope="row">Medium</th><td>Average</td><td>Average</td></tr><tr><th scope="row">Short</th><td>Lowest top speed</td><td>Maximum</td></tr></tbody></table>
+<p class="callout tip"><b>Tip</b> If you run at the rev limit for a long time, you may need longer ratios: choose Medium or Long. If you never reach maximum revs in top gear, try a shorter ratio.</p>
+</article>
+</section>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <p><a href="../">Back to the stage times</a> &middot; <a href="../assets/downloads/Als-Playground-RBR-Car-Setup-Guide.pdf" download>Download this guide as a PDF</a></p>
+    </footer>
+  </main>
+  <script type="module" src="../assets/js/clock.js"></script>
+  <script>
+    (function () { var b = document.getElementById('print-btn'); if (!b) return; b.hidden = false; b.addEventListener('click', function () { window.print(); }); })();
+  </script>
+</body>
+</html>
