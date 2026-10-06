@@ -134,3 +134,21 @@ test('reads tunes that repeat each setting name with no value at the end of a se
   // A stray name with no number is fine, but a broken line is still refused.
   assert.equal(parseTune(text.replace('SpringStiffness 56000.000000', 'SpringStiffness abc')).ok, false);
 });
+
+test('reads tunes with the section name and its bracket on separate lines, and several settings per line', () => {
+  const text = fs.readFileSync(new URL('./fixtures/89_d_gravel.lsp', import.meta.url), 'utf8');
+  const r = parseTune(text);
+  assert.equal(r.ok, true, r.errors && r.errors.join(' | '));
+  assert.deepEqual(r.tune.order.slice(0, 4), ['Car', 'Drive', 'Engine', 'VehicleControlUnit']);
+  assert.equal(r.tune.sections.Drive.DropGearId, 12);
+  assert.equal(r.tune.sections.Car.MaxSteeringLock, 1.5);
+  // velocity and factor sit side by side on one line in the file
+  assert.equal(r.tune.sections.VehicleControlUnit.RearSpeedMapVelocity_03, 16.7);
+  assert.equal(r.tune.sections.VehicleControlUnit.RearSpeedMapFactor_03, 0);
+  assert.equal(r.tune.sections.TyreRB.Pressure, 220000);
+  // a name with no bracket line after it is still refused
+  assert.equal(parseTune(text.replace(/^  \("Car"\r?\n/m, '')).ok, false);
+  // and it still makes a page
+  const page = renderTunePage({ id: 'abc', driver: 'D', car_name: 'BMW M3 E36', group_tag: '', tune_name: 'x', file_name: 'x.lsp', uploaded_at: '2026-10-06T19:00:00Z', finish_ms: null, run_published: false }, r.tune, text);
+  assert.match(page, /Drop gear|DropGearId/i);
+});

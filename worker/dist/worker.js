@@ -393,7 +393,9 @@ const NUM = '[+-]?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?';
 const HEAD = /^\s*\(\("CarSetup"\s*$/;
 const TAIL = /^\s*\)\)\s*$/;
 const SECTION = /^\s*([A-Za-z][A-Za-z0-9_]{0,47})\s+\("([^"\n]{0,24})"\s*$/;
-const VALUE = new RegExp(`^\\s*([A-Za-z][A-Za-z0-9_]{0,63})\\s+(${NUM}(?:\\s+${NUM}){0,2})\\s*$`);
+const NUM_RE = new RegExp(`^${NUM}$`);
+const KEY_RE = /^[A-Za-z][A-Za-z0-9_]{0,63}$/;
+const OPEN = /^\s*\("([^"\n]{0,24})"\s*$/; // the bracket line when the section name sits on the line above
 const BARE = /^\s*([A-Za-z][A-Za-z0-9_]{0,63})\s*$/; // a setting name with no number after it
 const CLOSE = /^\s*\)\s*$/;
 const RESERVED = /^(__proto__|constructor|prototype)$/;
@@ -435,6 +437,19 @@ function parseTune(text) {
         current = m[1];
         sections[current] = Object.create(null);
         order.push(current);
+      } else if ((m = BARE.exec(raw)) && !RESERVED.test(m[1])) {
+        // Some tunes put the section name on one line and the bracket on the next:  Car / ("Car"
+        let j = i + 1;
+        while (j < last && !lines[j].trim()) j += 1;
+        if (j < last && OPEN.test(lines[j])) {
+          if (Object.prototype.hasOwnProperty.call(sections, m[1])) { fail(i + 1, `section ${m[1]} appears twice.`); continue; }
+          current = m[1];
+          sections[current] = Object.create(null);
+          order.push(current);
+          i = j;
+        } else {
+          fail(i + 1, 'expected the start of a section, such as Car ("Car".');
+        }
       } else {
         fail(i + 1, 'expected the start of a section, such as Car ("Car".');
       }
@@ -444,14 +459,28 @@ function parseTune(text) {
       // Some tuning tools append a second, empty copy of every setting name at the end of each section.
       // These lines carry no value, so they are skipped and the real values above them are kept.
       continue;
-    } else if ((m = VALUE.exec(raw)) && !RESERVED.test(m[1])) {
-      if (m[1] in sections[current]) { fail(i + 1, `${m[1]} is set twice in ${current}.`); continue; }
-      const nums = m[2].trim().split(/\s+/).map(Number);
-      if (!nums.every(Number.isFinite)) { fail(i + 1, 'a value isn’t a number.'); continue; }
-      sections[current][m[1]] = nums.length === 1 ? nums[0] : nums;
-      count += 1;
     } else {
-      fail(i + 1, 'expected a setting and its number, such as SpringLength 0.245000.');
+      // One or more settings on the line: a name followed by one to three numbers, repeated
+      // (speed maps put a velocity and its factor side by side).
+      const tokens = raw.trim().split(/\s+/);
+      let k = 0;
+      let bad = '';
+      const found = [];
+      while (k < tokens.length && !bad) {
+        const key = tokens[k];
+        if (!KEY_RE.test(key) || RESERVED.test(key)) { bad = 'expected a setting and its number, such as SpringLength 0.245000.'; break; }
+        const nums = [];
+        k += 1;
+        while (k < tokens.length && NUM_RE.test(tokens[k]) && nums.length < 3) { nums.push(Number(tokens[k])); k += 1; }
+        if (!nums.length || !nums.every(Number.isFinite)) bad = 'expected a setting and its number, such as SpringLength 0.245000.';
+        else found.push([key, nums]);
+      }
+      if (bad) { fail(i + 1, bad); continue; }
+      for (const [key, nums] of found) {
+        if (key in sections[current]) { fail(i + 1, `${key} is set twice in ${current}.`); continue; }
+        sections[current][key] = nums.length === 1 ? nums[0] : nums;
+        count += 1;
+      }
     }
     if (errors.length >= MAX_ERRORS) break;
   }
