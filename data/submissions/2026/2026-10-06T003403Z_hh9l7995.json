@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "hh9l7995",
+  "stage": "als-playground",
+  "driver": "Ethan Foster",
+  "car_id": "bmw-m3-e36-grpa",
+  "car_name": "BMW M3 E36 GrpA",
+  "cp1_ms": 134100,
+  "cp2_ms": 319800,
+  "finish_ms": 415778,
+  "entered": {
+    "cp1": "2:14,1",
+    "cp2": "5:19.8",
+    "finish": "6:55.778"
+  },
+  "uploaded_at": "2026-10-06T00:34:03.354Z",
+  "screenshot": "screenshots/2026/hh9l7995.webp",
+  "status": "published"
+}
