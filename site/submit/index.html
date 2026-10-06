@@ -91,13 +91,33 @@
             <p class="error" id="e-shot" aria-live="polite"></p>
           </div>
 
+          <div class="field" id="tune">
+            <label for="f-tune">Car tune <span class="optional">optional</span></label>
+            <div class="tune-help">
+              <p class="tune-help-title">Where to find your tune file</p>
+              <pre class="path"><code>&lt;Richard Burns Rally&gt;\SavedGames\&lt;Vehicle Name&gt;\&lt;Tune Name&gt;.lsp</code></pre>
+              <ol>
+                <li>Open <code>&lt;Richard Burns Rally&gt;</code>: the folder where you installed the game, wherever that is.</li>
+                <li>Open <code>SavedGames</code>, then the folder for the car you drove. Vehicle names vary.</li>
+                <li>Choose the <code>.lsp</code> file for the tune you used. Tune names vary.</li>
+              </ol>
+            </div>
+            <input id="f-tune" name="tune" type="file" accept=".lsp" aria-describedby="h-tune e-tune">
+            <p class="hint" id="h-tune">Skip this if you don't want to share your setup. If you add it, anyone can view and download the tune on the <a href="../tunes/">tune library</a>, shown with your name and car.</p>
+            <div class="tune-preview" id="tune-preview" hidden>
+              <div><span id="tune-info"></span> <button type="button" class="btn-link" id="tune-remove">Remove</button></div>
+              <p class="hint" id="tune-notes"></p>
+            </div>
+            <p class="error" id="e-tune" aria-live="polite"></p>
+          </div>
+
           <div class="field field-hp" aria-hidden="true">
             <label for="f-website">Leave this empty</label>
             <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
 
           <div class="field">
-            <label class="check"><input id="f-consent" name="consent" type="checkbox" aria-describedby="e-consent"> My name, and my screenshot if I add one, will be shown publicly on this board.</label>
+            <label class="check"><input id="f-consent" name="consent" type="checkbox" aria-describedby="e-consent"> My name, and my screenshot or car tune if I add them, will be shown publicly on this site. A car tune can be downloaded by anyone.</label>
             <p class="error" id="e-consent" aria-live="polite"></p>
           </div>
 

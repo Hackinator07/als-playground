@@ -2,6 +2,7 @@
 //
 // POST /submit  checks one time and, if it's good, commits it to the repo as a
 //               new file. It never edits or deletes anything that exists.
+//               It can also carry one optional car tune ({ name, text }), checked line by line and saved as tunes/<year>/<id>.lsp.
 // GET  /status  { open: true | false } so the form can say when submissions are closed.
 // GET  /time    { now: <ms since epoch> } Cloudflare's NTP-synced clock, for the rally clock on the site.
 //
@@ -16,6 +17,7 @@
 // Defaults below (REPO, SITE_URL, ...) can be overridden with text variables of the same name.
 
 import { validateSubmission, formatTime, cleanName } from '../../shared/rules.js';
+import { parseTune, cleanTuneName, TUNE_MAX_BYTES } from '../../shared/tune.js';
 
 const DEFAULTS = {
   REPO: 'Hackinator07/als-playground',
@@ -24,7 +26,7 @@ const DEFAULTS = {
   ALLOWED_ORIGINS: 'https://hackinator07.github.io',
   TURNSTILE_HOSTNAME: 'hackinator07.github.io',
 };
-const MAX_BODY = 1_000_000;          // bytes; the screenshot is capped at 600 KB before base64
+const MAX_BODY = 1_100_000;          // bytes; the screenshot is capped at 600 KB before base64, the tune at 64 KB
 const MAX_IMAGE = 600 * 1024;
 const LIMITS = { perHour: 5, perDay: 15, globalPerDay: 200 };
 
@@ -107,6 +109,10 @@ async function handleSubmit(request, env, ctx, reply) {
   const image = checkImage(body.screenshot);
   if (image.error) return reply(400, { ok: false, errors: [{ field: 'shot', message: image.error }] });
 
+  // Optional car tune: checked line by line, saved exactly as sent.
+  const tuneCheck = checkTuneUpload(body.tune);
+  if (tuneCheck.error) return reply(400, { ok: false, errors: [{ field: 'tune', message: tuneCheck.error }] });
+
   // Double-submit guard: the board can lag a minute behind, so remember recent saves too.
   const dupKey = `dup:${await sha(`${cleanName(value.driver).toLowerCase()}|${value.car_id}|${value.finish_ms}`)}`;
   if (env.RATE && await env.RATE.get(dupKey)) {
@@ -118,6 +124,7 @@ async function handleSubmit(request, env, ctx, reply) {
   const year = now.getUTCFullYear();
   const stamp = now.toISOString().replace(/\.\d+Z$/, 'Z').replace(/:/g, ''); // 2026-10-02T231000Z
   const shotPath = image.data ? `screenshots/${year}/${id}.${image.ext}` : null;
+  const tunePath = tuneCheck.tune ? `tunes/${year}/${id}.lsp` : null;
   const record = {
     schema: 1,
     id,
@@ -125,10 +132,12 @@ async function handleSubmit(request, env, ctx, reply) {
     ...value,
     uploaded_at: now.toISOString(),
     screenshot: shotPath,
+    ...(tunePath ? { tune: { file: tunePath, name: tuneCheck.tune.name } } : {}),
     status: 'published',
   };
   const files = [{ path: `data/submissions/${year}/${stamp}_${id}.json`, content: JSON.stringify(record, null, 2) + '\n', encoding: 'utf-8' }];
   if (shotPath) files.push({ path: shotPath, content: image.data, encoding: 'base64' });
+  if (tunePath) files.push({ path: tunePath, content: tuneCheck.tune.text, encoding: 'utf-8' });
 
   await commitFiles(env, files, `New time: ${value.driver}, ${formatTime(value.finish_ms)} (${value.car_name})`);
 
@@ -159,6 +168,18 @@ async function verifyTurnstile(env, token, ip) {
   const host = cfg(env, 'TURNSTILE_HOSTNAME');
   if (host && out.hostname && out.hostname !== host) return { ok: false };
   return { ok: true };
+}
+
+/** Accepts { name, text } or null/undefined (no tune). The text must read as an RBR car tune. */
+function checkTuneUpload(tune) {
+  if (tune === null || tune === undefined) return { tune: null };
+  if (typeof tune !== 'object' || typeof tune.text !== 'string' || typeof tune.name !== 'string') {
+    return { error: 'That tune file couldn’t be read. Try another one, or leave it out.' };
+  }
+  if (tune.text.length > TUNE_MAX_BYTES) return { error: 'That tune file is too big. Car tunes are small text files.' };
+  const parsed = parseTune(tune.text);
+  if (!parsed.ok) return { error: parsed.errors[0] };
+  return { tune: { name: cleanTuneName(tune.name), text: tune.text } };
 }
 
 /** Accepts { type: 'webp' | 'jpeg', data: base64 } or null. Only the first bytes are decoded. */

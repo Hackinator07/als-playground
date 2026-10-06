@@ -130,6 +130,13 @@ function checkStoredRun(run, carIds, stage) {
   if (!['published', 'hidden'].includes(run.status)) return 'status must be "published" or "hidden"';
   if (run.label !== undefined && (typeof run.label !== 'string' || run.label.length > 20)) return 'label must be text, 20 characters at most';
   if (run.note !== undefined && (typeof run.note !== 'string' || run.note.length > 200)) return 'note must be text, 200 characters at most';
+  if (run.tune !== undefined && run.tune !== null) {
+    const t = run.tune;
+    if (typeof t !== 'object') return 'tune must be an object';
+    if (typeof t.file !== 'string' || !/^tunes\/\d{4}\/[a-z0-9]{4,16}\.lsp$/.test(t.file)) return 'tune.file must look like tunes/2026/<id>.lsp';
+    if (typeof t.name !== 'string' || !t.name || t.name.length > 60) return 'tune.name must be text, 60 characters at most';
+    if (t.status !== undefined && !['published', 'hidden'].includes(t.status)) return 'tune.status must be "published" or "hidden"';
+  }
   return null;
 }
 
@@ -164,7 +171,7 @@ function validateSubmission(input, { stage, cars, existing = [] }) {
     for (const e of checkTimes({ cp1_ms: times.cp1, cp2_ms: times.cp2, finish_ms: times.finish }, stage)) add(e.field, e.message);
   }
 
-  if (src.consent !== true) add('consent', 'Tick the box to agree your name and screenshot are shown publicly.');
+  if (src.consent !== true) add('consent', 'Tick the box to agree your name, and your screenshot or tune if you add them, are shown publicly.');
 
   if (!errors.length) {
     const key = driverKey(driver);
@@ -363,11 +370,137 @@ function theoreticalBest(rows) {
   return { total: parts.reduce((a, p) => a + p.ms, 0), parts };
 }
 
+// ===== shared/tune.js =====
+// Reading and checking Richard Burns Rally car tunes (.lsp files).
+// Used by the submit page (before sending), the Worker (before saving) and the build (to draw the tune pages).
+// A tune is only ever read as text and checked line by line. It is never run.
+//
+// File shape:
+//   (("CarSetup"
+//    Car             ("Car"
+//                     MaxSteeringLock 0.751000
+//                     )
+//    WheelLF         (":-D"
+//                     vecTopMountPosition +0.551000 -2.481000 +0.725000
+//                     )
+//    ))
+
+const TUNE_MAX_BYTES = 64 * 1024;
+const TUNE_MAX_LINES = 1500;
+const MAX_ERRORS = 4;
+
+const NUM = '[+-]?\\d+(?:\\.\\d+)?(?:[eE][+-]?\\d+)?';
+const HEAD = /^\s*\(\("CarSetup"\s*$/;
+const TAIL = /^\s*\)\)\s*$/;
+const SECTION = /^\s*([A-Za-z][A-Za-z0-9_]{0,47})\s+\("([^"\n]{0,24})"\s*$/;
+const VALUE = new RegExp(`^\\s*([A-Za-z][A-Za-z0-9_]{0,63})\\s+(${NUM}(?:\\s+${NUM}){0,2})\\s*$`);
+const CLOSE = /^\s*\)\s*$/;
+const RESERVED = /^(__proto__|constructor|prototype)$/;
+
+/**
+ * Check and read a tune.
+ * Returns { ok: true, tune } or { ok: false, errors: [text] }.
+ * tune = { sections: { Name: { key: number | [numbers] } }, order: [section names], count: number of settings }
+ */
+function parseTune(text) {
+  const errors = [];
+  const fail = (line, msg) => { if (errors.length < MAX_ERRORS) errors.push(line ? `Line ${line}: ${msg}` : msg); };
+
+  if (typeof text !== 'string' || !text.trim()) return { ok: false, errors: ['That file is empty.'] };
+  if (text.length > TUNE_MAX_BYTES) return { ok: false, errors: ['That file is too big to be a car tune (over 64 KB).'] };
+  if (/[^\x09\x0A\x0D\x20-\x7E]/.test(text)) return { ok: false, errors: ['That file isn’t a plain-text car tune.'] };
+
+  const lines = text.split(/\r\n|\r|\n/);
+  if (lines.length > TUNE_MAX_LINES) return { ok: false, errors: ['That file is too long to be a car tune.'] };
+
+  let first = 0;
+  while (first < lines.length && !lines[first].trim()) first += 1;
+  let last = lines.length - 1;
+  while (last > first && !lines[last].trim()) last -= 1;
+  if (!HEAD.test(lines[first] || '')) return { ok: false, errors: ['That doesn’t look like a Richard Burns Rally car tune (it should start with ((“CarSetup”).'] };
+  if (!TAIL.test(lines[last] || '')) return { ok: false, errors: ['That tune looks cut off (it should end with a closing )).'] };
+
+  const sections = {};
+  const order = [];
+  let current = null;
+  let count = 0;
+  for (let i = first + 1; i < last; i += 1) {
+    const raw = lines[i];
+    if (!raw.trim()) continue;
+    let m;
+    if (current === null) {
+      if ((m = SECTION.exec(raw)) && !RESERVED.test(m[1])) {
+        if (Object.prototype.hasOwnProperty.call(sections, m[1])) { fail(i + 1, `section ${m[1]} appears twice.`); continue; }
+        current = m[1];
+        sections[current] = Object.create(null);
+        order.push(current);
+      } else {
+        fail(i + 1, 'expected the start of a section, such as Car ("Car".');
+      }
+    } else if (CLOSE.test(raw)) {
+      current = null;
+    } else if ((m = VALUE.exec(raw)) && !RESERVED.test(m[1])) {
+      if (m[1] in sections[current]) { fail(i + 1, `${m[1]} is set twice in ${current}.`); continue; }
+      const nums = m[2].trim().split(/\s+/).map(Number);
+      if (!nums.every(Number.isFinite)) { fail(i + 1, 'a value isn’t a number.'); continue; }
+      sections[current][m[1]] = nums.length === 1 ? nums[0] : nums;
+      count += 1;
+    } else {
+      fail(i + 1, 'expected a setting and its number, such as SpringLength 0.245000.');
+    }
+    if (errors.length >= MAX_ERRORS) break;
+  }
+  if (!errors.length && current !== null) fail(0, 'A section is missing its closing bracket.');
+  if (!errors.length && (order.length < 1 || count < 5)) fail(0, 'That tune has hardly any settings in it.');
+  if (errors.length) return { ok: false, errors };
+
+  for (const k of order) sections[k] = { ...sections[k] };
+  return { ok: true, tune: { sections, order, count } };
+}
+
+/** "My Tune.lsp" or "C:\\...\\My Tune.lsp" becomes "My Tune": safe to show and to use as a file name. */
+function cleanTuneName(fileName) {
+  const base = String(fileName ?? '').split(/[\\/]/).pop().replace(/\.lsp$/i, '');
+  const name = base.replace(/[^A-Za-z0-9 _.()+-]/g, '_').replace(/\s+/g, ' ').replace(/^[ .]+|[ .]+$/g, '').slice(0, 60);
+  return name || 'Tune';
+}
+
+/** True when the file name ends in .lsp. */
+function isLspName(fileName) {
+  return /\.lsp$/i.test(String(fileName ?? '').trim());
+}
+
+/**
+ * Things worth a second look. Returns a list of plain sentences (empty when nothing stands out).
+ * Differential throttle maps and speed factors that are all zero usually mean the tune was saved
+ * incompletely, which leaves the differentials open or unpredictable (see the setup guide).
+ */
+function checkTune(tune) {
+  const notes = [];
+  const vcu = tune?.sections?.VehicleControlUnit;
+  if (!vcu) return notes;
+  const groups = new Map();
+  for (const [key, value] of Object.entries(vcu)) {
+    const m = /^(.*)_(\d{2})$/.exec(key);
+    if (!m || typeof value !== 'number') continue;
+    if (!groups.has(m[1])) groups.set(m[1], []);
+    groups.get(m[1]).push(value);
+  }
+  for (const [name, values] of groups) {
+    if (!/DiffThrottle$|SpeedMapFactor$/.test(name)) continue;
+    if (values.length >= 3 && values.every((v) => v === 0)) {
+      notes.push(`${name} is zero at every point. Zeroed differential values leave the differentials open or unpredictable.`);
+    }
+  }
+  return notes;
+}
+
 // ===== worker/src/index.js =====
 // Al's Playground submissions Worker (Cloudflare Workers, free plan).
 //
 // POST /submit  checks one time and, if it's good, commits it to the repo as a
 //               new file. It never edits or deletes anything that exists.
+//               It can also carry one optional car tune ({ name, text }), checked line by line and saved as tunes/<year>/<id>.lsp.
 // GET  /status  { open: true | false } so the form can say when submissions are closed.
 // GET  /time    { now: <ms since epoch> } Cloudflare's NTP-synced clock, for the rally clock on the site.
 //
@@ -389,7 +522,7 @@ const DEFAULTS = {
   ALLOWED_ORIGINS: 'https://hackinator07.github.io',
   TURNSTILE_HOSTNAME: 'hackinator07.github.io',
 };
-const MAX_BODY = 1_000_000;          // bytes; the screenshot is capped at 600 KB before base64
+const MAX_BODY = 1_100_000;          // bytes; the screenshot is capped at 600 KB before base64, the tune at 64 KB
 const MAX_IMAGE = 600 * 1024;
 const LIMITS = { perHour: 5, perDay: 15, globalPerDay: 200 };
 
@@ -472,6 +605,10 @@ async function handleSubmit(request, env, ctx, reply) {
   const image = checkImage(body.screenshot);
   if (image.error) return reply(400, { ok: false, errors: [{ field: 'shot', message: image.error }] });
 
+  // Optional car tune: checked line by line, saved exactly as sent.
+  const tuneCheck = checkTuneUpload(body.tune);
+  if (tuneCheck.error) return reply(400, { ok: false, errors: [{ field: 'tune', message: tuneCheck.error }] });
+
   // Double-submit guard: the board can lag a minute behind, so remember recent saves too.
   const dupKey = `dup:${await sha(`${cleanName(value.driver).toLowerCase()}|${value.car_id}|${value.finish_ms}`)}`;
   if (env.RATE && await env.RATE.get(dupKey)) {
@@ -483,6 +620,7 @@ async function handleSubmit(request, env, ctx, reply) {
   const year = now.getUTCFullYear();
   const stamp = now.toISOString().replace(/\.\d+Z$/, 'Z').replace(/:/g, ''); // 2026-10-02T231000Z
   const shotPath = image.data ? `screenshots/${year}/${id}.${image.ext}` : null;
+  const tunePath = tuneCheck.tune ? `tunes/${year}/${id}.lsp` : null;
   const record = {
     schema: 1,
     id,
@@ -490,10 +628,12 @@ async function handleSubmit(request, env, ctx, reply) {
     ...value,
     uploaded_at: now.toISOString(),
     screenshot: shotPath,
+    ...(tunePath ? { tune: { file: tunePath, name: tuneCheck.tune.name } } : {}),
     status: 'published',
   };
   const files = [{ path: `data/submissions/${year}/${stamp}_${id}.json`, content: JSON.stringify(record, null, 2) + '\n', encoding: 'utf-8' }];
   if (shotPath) files.push({ path: shotPath, content: image.data, encoding: 'base64' });
+  if (tunePath) files.push({ path: tunePath, content: tuneCheck.tune.text, encoding: 'utf-8' });
 
   await commitFiles(env, files, `New time: ${value.driver}, ${formatTime(value.finish_ms)} (${value.car_name})`);
 
@@ -524,6 +664,18 @@ async function verifyTurnstile(env, token, ip) {
   const host = cfg(env, 'TURNSTILE_HOSTNAME');
   if (host && out.hostname && out.hostname !== host) return { ok: false };
   return { ok: true };
+}
+
+/** Accepts { name, text } or null/undefined (no tune). The text must read as an RBR car tune. */
+function checkTuneUpload(tune) {
+  if (tune === null || tune === undefined) return { tune: null };
+  if (typeof tune !== 'object' || typeof tune.text !== 'string' || typeof tune.name !== 'string') {
+    return { error: 'That tune file couldn’t be read. Try another one, or leave it out.' };
+  }
+  if (tune.text.length > TUNE_MAX_BYTES) return { error: 'That tune file is too big. Car tunes are small text files.' };
+  const parsed = parseTune(tune.text);
+  if (!parsed.ok) return { error: parsed.errors[0] };
+  return { tune: { name: cleanTuneName(tune.name), text: tune.text } };
 }
 
 /** Accepts { type: 'webp' | 'jpeg', data: base64 } or null. Only the first bytes are decoded. */

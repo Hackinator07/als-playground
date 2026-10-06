@@ -111,6 +111,50 @@ test('a good time is committed as one new file, and passes the build check', asy
   assert.ok(!('turnstile' in rec) && !('website' in rec) && !('consent' in rec));
 });
 
+const TUNE = fs.readFileSync(new URL('./fixtures/gravel_gem_GDA_AlsPlayground.lsp', import.meta.url), 'utf8');
+
+test('a car tune goes in the same commit, saved exactly as sent', async () => {
+  const w = fakeWorld();
+  const r = await call(env(), { body: good({ tune: { name: 'My Tune', text: TUNE } }) });
+  assert.equal(r.status, 200, JSON.stringify(r.body));
+  assert.equal(w.commits.length, 1);
+  assert.equal(w.blobs.length, 2);
+  const tuneEntry = w.trees[0].tree.find((t) => t.path.startsWith('tunes/'));
+  assert.match(tuneEntry.path, new RegExp(`^tunes/\\d{4}/${r.body.id}\\.lsp$`));
+  const blob = w.blobs[w.trees[0].tree.indexOf(tuneEntry)];
+  assert.equal(blob.content, TUNE);
+  const rec = JSON.parse(w.blobs[0].content);
+  assert.deepEqual(rec.tune, { file: tuneEntry.path, name: 'My Tune' });
+  assert.equal(checkStoredRun(rec, carIds, stage), null);
+});
+
+test('the tune is optional: without one nothing changes', async () => {
+  const w = fakeWorld();
+  for (const tune of [undefined, null]) {
+    const r = await call(env(), { body: good({ tune, driver: `Jane ${tune === null ? 'Null' : 'Undef'}` }) });
+    assert.equal(r.status, 200, JSON.stringify(r.body));
+  }
+  assert.ok(w.trees.every((t) => t.tree.length === 1));
+  assert.ok(w.blobs.every((b) => !('tune' in JSON.parse(b.content))));
+});
+
+test('a bad tune is refused and nothing is saved', async () => {
+  const w = fakeWorld();
+  for (const tune of [{ name: 'x', text: 'hello' }, { name: 'x', text: TUNE.replace('0.751000', 'nope') }, { name: 'x', text: 'a'.repeat(70000) }, { name: 5, text: TUNE }, 'text', { name: 'x' }]) {
+    const r = await call(env(), { body: good({ tune }) });
+    assert.equal(r.status, 400, JSON.stringify(tune).slice(0, 40));
+    assert.equal(r.body.errors[0].field, 'tune');
+  }
+  assert.equal(w.commits.length, 0);
+});
+
+test('tune names are cleaned before they are saved', async () => {
+  const w = fakeWorld();
+  const r = await call(env(), { body: good({ tune: { name: 'C:\\Games\\E<v>il.lsp', text: TUNE } }) });
+  assert.equal(r.status, 200);
+  assert.equal(JSON.parse(w.blobs[0].content).tune.name, 'E_v_il');
+});
+
 test('a screenshot goes in the same commit', async () => {
   const w = fakeWorld();
   const r = await call(env(), { body: good({ screenshot: { type: 'webp', data: WEBP } }) });

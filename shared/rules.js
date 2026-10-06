@@ -126,6 +126,13 @@ export function checkStoredRun(run, carIds, stage) {
   if (!['published', 'hidden'].includes(run.status)) return 'status must be "published" or "hidden"';
   if (run.label !== undefined && (typeof run.label !== 'string' || run.label.length > 20)) return 'label must be text, 20 characters at most';
   if (run.note !== undefined && (typeof run.note !== 'string' || run.note.length > 200)) return 'note must be text, 200 characters at most';
+  if (run.tune !== undefined && run.tune !== null) {
+    const t = run.tune;
+    if (typeof t !== 'object') return 'tune must be an object';
+    if (typeof t.file !== 'string' || !/^tunes\/\d{4}\/[a-z0-9]{4,16}\.lsp$/.test(t.file)) return 'tune.file must look like tunes/2026/<id>.lsp';
+    if (typeof t.name !== 'string' || !t.name || t.name.length > 60) return 'tune.name must be text, 60 characters at most';
+    if (t.status !== undefined && !['published', 'hidden'].includes(t.status)) return 'tune.status must be "published" or "hidden"';
+  }
   return null;
 }
 
@@ -160,7 +167,7 @@ export function validateSubmission(input, { stage, cars, existing = [] }) {
     for (const e of checkTimes({ cp1_ms: times.cp1, cp2_ms: times.cp2, finish_ms: times.finish }, stage)) add(e.field, e.message);
   }
 
-  if (src.consent !== true) add('consent', 'Tick the box to agree your name and screenshot are shown publicly.');
+  if (src.consent !== true) add('consent', 'Tick the box to agree your name, and your screenshot or tune if you add them, are shown publicly.');
 
   if (!errors.length) {
     const key = driverKey(driver);

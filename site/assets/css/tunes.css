@@ -1,0 +1,57 @@
+/* Vehicle tune library and tune pages. Builds on style.css and guide.css. */
+.tunes-board { overflow: visible; }
+.tunes-board .band { border-radius: 3px 3px 0 0; }
+.tune-count { margin: 0; padding: 6px 12px 0; min-height: 22px; font-size: 12.5px; color: var(--muted); }
+.tunes-table { margin-top: 4px; }
+.tunes-table th { text-align: left; padding: 7px 8px; background: var(--spruce); color: var(--spruce-text); font-weight: 600; font-size: 12.5px; border-right: 1px solid #3A5648; }
+.tunes-table th:last-child { border-right: 0; }
+.tunes-table td { padding: 8px; }
+.tunes-table tbody tr:nth-child(odd) { background: var(--row); }
+.tunes-table tbody tr:nth-child(even) { background: var(--row-alt); }
+.tunes-table tbody tr:hover { background: var(--row-hover); }
+.tunes-table .c-driver a, .tunes-table .c-tune a { font-weight: 700; color: var(--spruce); text-decoration: none; }
+.tunes-table .c-driver a:hover, .tunes-table .c-tune a:hover { text-decoration: underline; color: var(--maple-dark); }
+.tunes-table .c-time, .tunes-table .c-date { white-space: nowrap; }
+.tunes-table .c-act { white-space: nowrap; }
+.tunes-table .c-act a { display: inline-block; margin-right: 10px; }
+.tunes-table .c-act .dl { padding: 3px 10px; margin: 0; border: 1px solid var(--spruce); border-radius: 4px; color: var(--spruce); text-decoration: none; font-weight: 600; background: #fff; }
+.tunes-table .c-act .dl:hover { background: var(--row-alt); }
+.none { color: var(--muted); }
+.empty { margin: 0; padding: 22px 12px; text-align: center; color: var(--muted); }
+.tunes-note { margin: 0; padding: 10px 12px 14px; font-size: 12.5px; color: var(--muted); border-top: 1px solid var(--line); }
+.tunes-note code, .tune-page code, .values code { font: 600 12px/1.2 ui-monospace, SFMono-Regular, Consolas, monospace; padding: 1px 5px; background: #F2EFE6; border: 1px solid var(--line); border-radius: 3px; overflow-wrap: anywhere; }
+
+.tune-facts { display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 0; padding: 8px 12px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+.tune-facts b { margin-right: 5px; font-size: 11px; letter-spacing: 0.8px; text-transform: uppercase; color: var(--muted); }
+.param h3 .what { margin-left: 8px; font-size: 12px; font-weight: 600; white-space: nowrap; }
+.table-scroll { overflow-x: auto; margin: 4px 0 12px; }
+.values { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.values th, .values td { padding: 6px 9px; text-align: left; vertical-align: top; border: 1px solid var(--line); }
+.values thead th { background: var(--spruce); color: var(--spruce-text); font-size: 12.5px; font-weight: 600; border-color: var(--spruce); white-space: nowrap; }
+.values tbody th { background: var(--row-alt); font-weight: 600; min-width: 190px; }
+.values tbody th a { color: var(--text); text-decoration: underline; text-decoration-color: #BDB8AB; text-underline-offset: 2px; }
+.values tbody th a:hover { color: var(--maple-dark); text-decoration-color: var(--maple); }
+.values .key { display: block; margin-top: 1px; font: 400 11px/1.3 ui-monospace, SFMono-Regular, Consolas, monospace; color: var(--muted); font-weight: 400; overflow-wrap: anywhere; }
+.values .differs { background: #FBE9DA; box-shadow: 0 0 0 3px #FBE9DA; border-radius: 2px; }
+.values.curve tbody th { min-width: 0; white-space: nowrap; }
+.values.curve td { text-align: right; }
+.values.other td:last-child { text-align: right; }
+.keys { margin: 0 0 10px; font-size: 12px; color: var(--muted); }
+.charts { display: flex; flex-wrap: wrap; gap: 10px 16px; margin: 4px 0 10px; }
+.chart { margin: 0; flex: 0 1 200px; }
+.chart svg { display: block; width: 100%; max-width: 200px; height: auto; }
+.chart figcaption { margin-top: 2px; font-size: 12px; color: var(--muted); }
+.raw summary { cursor: pointer; font-weight: 600; color: var(--maple-dark); }
+.raw pre { margin: 10px 0 0; padding: 12px; max-height: 480px; overflow: auto; background: #1C1C1A; color: #EDEBE3; border-radius: 4px; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
+
+@media (max-width: 640px) {
+  .tunes-table .c-date, .tunes-table th.c-date { display: none; }
+  .tunes-table { font-size: 12.5px; }
+  .tunes-table td, .tunes-table th { padding: 7px 5px; }
+  .tunes-table .c-act a { margin-right: 6px; }
+  .values { font-size: 13px; }
+  .values tbody th { min-width: 130px; }
+}
+@media print {
+  .raw pre { max-height: none; }
+}

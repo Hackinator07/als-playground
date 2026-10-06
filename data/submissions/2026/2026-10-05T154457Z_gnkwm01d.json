@@ -15,5 +15,9 @@
   },
   "uploaded_at": "2026-10-05T15:44:57.941Z",
   "screenshot": "screenshots/2026/gnkwm01d.webp",
+  "tune": {
+    "file": "tunes/2026/gnkwm01d.lsp",
+    "name": "gravel_gem_GDA_AlsPlayground"
+  },
   "status": "published"
 }

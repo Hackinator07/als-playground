@@ -2,6 +2,7 @@
 // Until data/stage.json has a submit_url, the form runs in test mode: it checks
 // everything the same way but saves nothing.
 import { parseTime, formatReadback, validateSubmission, formatTime } from '../../shared/rules.js';
+import { parseTune, cleanTuneName, isLspName, checkTune, TUNE_MAX_BYTES } from '../../shared/tune.js';
 
 const $ = (id) => document.getElementById(id);
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
@@ -21,6 +22,7 @@ const state = {
   testMode: true,
   open: true,
   image: null, // { type: 'webp' | 'jpeg', data: base64, bytes, width, height }
+  tune: null,  // { name, text, count, sections, notes } once a car tune file has been read
   token: '',
   widgetId: null,
   touched: new Set(),
@@ -249,7 +251,7 @@ function readForm() {
 function setError(field, message) {
   const el = $(`e-${field}`);
   if (el) el.textContent = message || '';
-  const input = { driver: 'f-driver', car: 'f-car', cp1: 'f-cp1', cp2: 'f-cp2', finish: 'f-finish', consent: 'f-consent', shot: 'f-shot' }[field];
+  const input = { driver: 'f-driver', car: 'f-car', cp1: 'f-cp1', cp2: 'f-cp2', finish: 'f-finish', consent: 'f-consent', shot: 'f-shot', tune: 'f-tune' }[field];
   if (input) $(input).setAttribute('aria-invalid', message ? 'true' : 'false');
 }
 
@@ -358,6 +360,38 @@ function clearImage(resetInput = true) {
 }
 $('shot-remove').addEventListener('click', () => { clearImage(true); setError('shot', ''); });
 
+// ------------------------------------------------------------ car tune (optional)
+
+$('f-tune').addEventListener('change', async (e) => {
+  const file = e.target.files[0];
+  clearTune(false);
+  if (!file) return;
+  try {
+    if (!isLspName(file.name)) throw new Error('Choose the .lsp file for your tune.');
+    if (file.size > TUNE_MAX_BYTES) throw new Error('That file is too big to be a car tune (over 64 KB).');
+    const text = await file.text();
+    const read = parseTune(text);
+    if (!read.ok) throw new Error(read.errors[0]);
+    state.tune = { name: cleanTuneName(file.name), text, count: read.tune.count, sections: read.tune.order.length, notes: checkTune(read.tune) };
+    $('tune-info').textContent = `${state.tune.name}: ${state.tune.count} settings found in ${state.tune.sections} sections.`;
+    $('tune-notes').textContent = state.tune.notes.join(' ');
+    $('tune-preview').hidden = false;
+    setError('tune', '');
+  } catch (err) {
+    clearTune(true);
+    setError('tune', err.message || 'Couldn’t read that file. Try another tune, or leave it out.');
+  }
+});
+
+function clearTune(resetInput = true) {
+  state.tune = null;
+  $('tune-preview').hidden = true;
+  $('tune-info').textContent = '';
+  $('tune-notes').textContent = '';
+  if (resetInput) $('f-tune').value = '';
+}
+$('tune-remove').addEventListener('click', () => { clearTune(true); setError('tune', ''); });
+
 // ------------------------------------------------------------ sending
 
 $('submit-form').addEventListener('submit', async (e) => {
@@ -398,6 +432,7 @@ $('submit-form').addEventListener('submit', async (e) => {
         website: $('f-website').value,
         turnstile: state.token,
         screenshot: state.image ? { type: state.image.type, data: state.image.data } : null,
+        tune: state.tune ? { name: state.tune.name, text: state.tune.text } : null,
       }),
     });
     const body = await res.json().catch(() => ({}));
