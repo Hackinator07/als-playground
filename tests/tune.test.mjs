@@ -121,3 +121,16 @@ test('every tune file in the repo is referenced by a run and reads cleanly', () 
     assert.equal(parseTune(fs.readFileSync(`${dir}/${f}`, 'utf8')).ok, true, f);
   }
 });
+
+test('reads tunes that repeat each setting name with no value at the end of a section', () => {
+  const text = fs.readFileSync(new URL('./fixtures/gravel_GDA-22-03.07_Vasgabi.lsp', import.meta.url), 'utf8');
+  const r = parseTune(text);
+  assert.equal(r.ok, true, r.errors && r.errors.join(' | '));
+  assert.equal(r.tune.sections.Car.MaxSteeringLock, 0.751);
+  assert.equal(r.tune.sections.Car.FrontRollBarStiffness, 13800);
+  assert.equal(r.tune.sections.TyreLB.Pressure, 180000);
+  // The empty repeats add nothing: same count as the values above them.
+  assert.equal(Object.keys(r.tune.sections.Car).length, 3);
+  // A stray name with no number is fine, but a broken line is still refused.
+  assert.equal(parseTune(text.replace('SpringStiffness 56000.000000', 'SpringStiffness abc')).ok, false);
+});

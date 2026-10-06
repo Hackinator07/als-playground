@@ -21,6 +21,7 @@ const HEAD = /^\s*\(\("CarSetup"\s*$/;
 const TAIL = /^\s*\)\)\s*$/;
 const SECTION = /^\s*([A-Za-z][A-Za-z0-9_]{0,47})\s+\("([^"\n]{0,24})"\s*$/;
 const VALUE = new RegExp(`^\\s*([A-Za-z][A-Za-z0-9_]{0,63})\\s+(${NUM}(?:\\s+${NUM}){0,2})\\s*$`);
+const BARE = /^\s*([A-Za-z][A-Za-z0-9_]{0,63})\s*$/; // a setting name with no number after it
 const CLOSE = /^\s*\)\s*$/;
 const RESERVED = /^(__proto__|constructor|prototype)$/;
 
@@ -66,6 +67,10 @@ export function parseTune(text) {
       }
     } else if (CLOSE.test(raw)) {
       current = null;
+    } else if ((m = BARE.exec(raw)) && !RESERVED.test(m[1])) {
+      // Some tuning tools append a second, empty copy of every setting name at the end of each section.
+      // These lines carry no value, so they are skipped and the real values above them are kept.
+      continue;
     } else if ((m = VALUE.exec(raw)) && !RESERVED.test(m[1])) {
       if (m[1] in sections[current]) { fail(i + 1, `${m[1]} is set twice in ${current}.`); continue; }
       const nums = m[2].trim().split(/\s+/).map(Number);
