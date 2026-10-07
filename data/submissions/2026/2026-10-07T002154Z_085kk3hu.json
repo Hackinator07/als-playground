@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "085kk3hu",
+  "stage": "als-playground",
+  "driver": "RGG",
+  "car_id": "ford-fiesta-rally4",
+  "car_name": "Ford Fiesta Rally4",
+  "cp1_ms": 139000,
+  "cp2_ms": 327600,
+  "finish_ms": 426059,
+  "entered": {
+    "cp1": "2:19.0",
+    "cp2": "5:27.6",
+    "finish": "7:06.059"
+  },
+  "uploaded_at": "2026-10-07T00:21:54.678Z",
+  "screenshot": "screenshots/2026/085kk3hu.webp",
+  "status": "published"
+}
