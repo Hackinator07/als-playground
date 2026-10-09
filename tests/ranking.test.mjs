@@ -152,6 +152,31 @@ test('realPlacings: place among each real stage, with the runs either side', asy
   assert.deepEqual(realPlacings(390000, runs).map((x) => x.place), [1, 1]);
 });
 
+test('realPlacings only compares against the same LSPR year', async () => {
+  const { realPlacings } = await import('../shared/rules.js');
+  const mk = (id, ms, year, stage) => ({ id, driver: id, finish_ms: ms, uploaded_at: '2026-10-10T23:10:00.000Z', label: `LSPR ${year}`, note: `Real LSPR ${year} ${stage} time` });
+  const runs = [mk('a', 400000, '2024', 'SS1'), mk('b', 380000, '2026', 'SS12'), mk('c', 500000, '2026', 'SS12')];
+  assert.deepEqual(realPlacings(450000, runs).map((x) => [x.stage, x.place, x.of]), [['SS1', 2, 1]]);
+  assert.deepEqual(realPlacings(450000, runs, '2026').map((x) => [x.stage, x.place, x.of]), [['SS12', 2, 2]]);
+  assert.deepEqual(realPlacings(450000, [mk('a', 400000, '2024', 'SS1')], '2026'), []);
+});
+
+test('inSource filters by year and the combined board keeps one best time per driver across years', async () => {
+  const { inSource, rankRuns } = await import('../shared/rules.js');
+  const mk = (id, driver, ms, year) => ({ id, driver, finish_ms: ms, uploaded_at: '2026-10-10T23:10:00.000Z', label: `LSPR ${year}`, note: `Real LSPR ${year} SS1 time` });
+  const a24 = mk('a24', 'Ann Lee', 400000, '2024'), a26 = mk('a26', 'Ann Lee', 390000, '2026'), b24 = mk('b24', 'Bob', 410000, '2024');
+  const v = { id: 'v', driver: 'Vic', finish_ms: 420000, uploaded_at: '2026-10-03T01:00:00.000Z' };
+  assert.equal(inSource(a26, 'lspr2026'), true);
+  assert.equal(inSource(a24, 'lspr2026'), false);
+  assert.equal(inSource(a24, 'real'), true);
+  assert.equal(inSource(v, 'virtual'), true);
+  assert.equal(inSource(v, ''), true);
+  const all = rankRuns([a24, a26, b24, v]).rows.map((r) => r.run.id);
+  assert.deepEqual(all, ['a26', 'b24', 'v']);
+  assert.deepEqual(rankRuns([a24, a26, b24, v], { source: 'lspr2024' }).rows.map((r) => r.run.id), ['a24', 'b24']);
+  assert.deepEqual(rankRuns([a24, b24, v], { source: 'lspr2026' }).rows, []);
+});
+
 test('theoreticalBest adds the fastest sector of each part, skipping missing ones', async () => {
   const { theoreticalBest } = await import('../shared/rules.js');
   const row = (id, s, up = '2026-10-03T01:00:00.000Z') => ({ run: { id, uploaded_at: up }, sectors: s });

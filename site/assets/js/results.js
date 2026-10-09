@@ -1,6 +1,6 @@
 // Results page: loads the data, ranks it with shared/rules.js and draws the table.
 import {
-  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag, realPlacings, theoreticalBest,
+  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag, inSource, realPlacings, theoreticalBest,
 } from '../../shared/rules.js';
 
 const SAMPLES = [
@@ -11,9 +11,11 @@ const SAMPLES = [
 const params = new URLSearchParams(location.search);
 const sample = (params.get('sample') || '').toLowerCase();
 const highlightId = params.get('highlight') || '';
-// ?runs=virtual | lspr picks the Virtual / LSPR 2024 switch (shareable links)
-const SOURCE_PARAM = { virtual: 'virtual', lspr: 'real' };
-const SOURCE_NAME = { virtual: 'virtual', real: 'LSPR 2024' };
+// ?runs=virtual | lspr2024 | lspr2026 picks the Virtual / LSPR 2024 / LSPR 2026 switch (shareable links).
+// ?runs=lspr is the older link for LSPR 2024 and keeps working. The first name listed for a source is the one written to the address bar.
+const SOURCE_PARAM = { virtual: 'virtual', lspr2024: 'lspr2024', lspr2026: 'lspr2026', lspr: 'lspr2024' };
+const SOURCE_NAME = { virtual: 'virtual', lspr2024: 'LSPR 2024', lspr2026: 'LSPR 2026' };
+const LSPR_YEARS = ['2024', '2026'];
 
 const state = {
   stage: null,
@@ -109,7 +111,13 @@ function renderStage() {
   const s = state.stage;
   document.title = `${s.name} stage times`;
   $('stage-name').textContent = s.name;
-  $('stage-meta').textContent = [s.event, s.location, `${s.length_km} km`, s.surface].filter(Boolean).join(' · ');
+  const meta = $('stage-meta');
+  const place = [s.location, `${s.length_km} km`, s.surface].filter(Boolean).join(' · ');
+  if (Array.isArray(s.events) && s.events.length) {
+    meta.innerHTML = `<span class="meta-events">${s.events.map((e) => `<span class="meta-event meta-${esc(e.year)}"><b>${esc(e.label)}</b> ${esc(e.stages)}</span>`).join('')}</span><span class="meta-place">${esc(place)}</span>`;
+  } else {
+    meta.textContent = [s.event, place].filter(Boolean).join(' · ');
+  }
   if (s.repo_url) $('repo-link').href = s.repo_url;
   if (state.generatedAt && !sample) {
     const t = zonedStamp(state.generatedAt, tz());
@@ -173,7 +181,7 @@ function render() {
 function renderSummary(rows) {
   const el = $('summary');
   if (state.runs.length === 0) { el.textContent = ''; return; }
-  const pool = state.source ? state.runs.filter((r) => runTag(r, tz()).kind === state.source) : state.runs;
+  const pool = state.source ? state.runs.filter((r) => inSource(r, state.source, tz())) : state.runs;
   const drivers = new Set(pool.map((r) => driverKey(r.driver))).size;
   const runsWord = pool.length === 1 ? 'time' : 'times';
   const driversWord = drivers === 1 ? 'driver' : 'drivers';
@@ -211,8 +219,10 @@ function renderMine() {
   } else if (me) {
     text += ` is saved. Your best is still <strong>${formatTime(me.run.finish_ms)}</strong> (P${me.pos} of ${v.length} in Virtual).`;
   }
-  const pl = realPlacings(run.finish_ms, state.runs);
-  if (pl.length) text += ` In 2024 it would have been ${pl.map(placingText).join('; ')}.`;
+  for (const year of LSPR_YEARS) {
+    const pl = realPlacings(run.finish_ms, state.runs, year);
+    if (pl.length) text += ` In ${year} it would have been ${pl.map(placingText).join('; ')}.`;
+  }
   el.innerHTML = text;
   el.hidden = false;
 }
@@ -236,7 +246,7 @@ function rowHtml(row, i, ctx) {
     : '';
   const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
     <td class="c-pos">${pos}</td>
-    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind}">${esc(t.text)}</span>`; })()}<span class="car-sub">${esc(run.car_name)}</span></td>
+    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind} label-${t.key}">${esc(t.text)}</span>`; })()}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car">${esc(run.car_name)}${tag}</td>
     <td class="c-time${fast1}">${formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
@@ -258,9 +268,13 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     const isBest = t === best;
     return `<div><h3>${label}</h3><div class="val${isBest ? ' fastest' : ''}">${formatTime(t)}<span class="gap">${isBest ? 'fastest' : '+' + formatDiff(t - best)}</span></div></div>`;
   };
-  const placings = runTag(run, tz()).kind === 'virtual' ? realPlacings(run.finish_ms, state.runs) : [];
-  const vs2024 = placings.length
-    ? `<div class="detail-wide"><h3>If driven at LSPR 2024</h3><div class="val">${placings.map(placingText).join('<br>')}</div></div>`
+  const vsReal = runTag(run, tz()).kind === 'virtual'
+    ? LSPR_YEARS.map((year) => {
+      const placings = realPlacings(run.finish_ms, state.runs, year);
+      return placings.length
+        ? `<div class="detail-wide"><h3>If driven at LSPR ${year}</h3><div class="val">${placings.map(placingText).join('<br>')}</div></div>`
+        : '';
+    }).join('')
     : '';
   const runsNote = historyHtml(run, driverRuns);
   const shot = run.screenshot
@@ -273,7 +287,7 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     <div class="only-phone"><h3>Car</h3><div class="val">${esc(run.car_name)}${group ? ` <span class="tag">${esc(state.groupTag.get(group) || group)}</span>` : ''}</div></div>
     <div class="only-phone"><h3>Diff. Prev</h3><div class="val">${formatDiff(diffPrev)}</div></div>
     <div><h3>Uploaded</h3><div class="val">${up.date} ${up.time} ${up.zone}<span class="gap">${up.utc}</span></div></div>
-    ${vs2024}
+    ${vsReal}
     ${runsNote}
     ${run.note ? `<div class="detail-note"><h3>Note</h3><div class="val">${esc(run.note)}</div></div>` : ''}
     ${shot}
@@ -290,13 +304,13 @@ function historyHtml(run, driverRuns) {
   let best = Infinity;
   const rows = mine.map((r) => {
     const tag = runTag(r, tz());
-    const when = tag.kind === 'real' ? esc((/LSPR 2024 (SS\d+)/.exec(r.note || '') || [])[1] || tag.text) : zonedStamp(r.uploaded_at, tz()).date;
+    const when = tag.kind === 'real' ? esc((/LSPR \d{4} (SS\d+)/.exec(r.note || '') || [])[1] || tag.text) : zonedStamp(r.uploaded_at, tz()).date;
     const change = Number.isFinite(best)
       ? (r.finish_ms < best ? `<span class="hist-better">−${formatDiff(best - r.finish_ms)}</span>` : `<span class="hist-worse">+${formatDiff(r.finish_ms - best)}</span>`)
       : '';
     best = Math.min(best, r.finish_ms);
     const cls = [r.id === run.id ? 'hist-this' : '', r.finish_ms === fastest ? 'hist-best' : ''].join(' ').trim();
-    return `<tr${cls ? ` class="${cls}"` : ''}><td><span class="label label-${tag.kind}">${esc(tag.text)}</span> ${when}</td><td class="hist-car">${esc(r.car_name)}</td><td class="hist-t">${formatTime(r.finish_ms)}</td><td class="hist-t">${change}</td></tr>`;
+    return `<tr${cls ? ` class="${cls}"` : ''}><td><span class="label label-${tag.kind} label-${tag.key}">${esc(tag.text)}</span> ${when}</td><td class="hist-car">${esc(r.car_name)}</td><td class="hist-t">${formatTime(r.finish_ms)}</td><td class="hist-t">${change}</td></tr>`;
   }).join('');
   const link = state.view === 'best' ? ` · <button type="button" class="btn-link" data-action="all-runs">Show all runs on the board</button>` : '';
   return `<div class="detail-wide"><h3>${driverRuns} runs by ${esc(run.driver)}${link}</h3>

@@ -217,16 +217,16 @@ function byFinishThenUpload(a, b) {
 function rankRuns(runs, options = {}) {
   const { view = 'best', group = '', carGroup = new Map(), source = '' } = options;
 
-  // source: '' all runs, 'virtual' RBR runs only, 'real' curated real-world results only (see runTag)
-  const inSource = source ? runs.filter((r) => runTag(r).kind === source) : runs;
+  // source: '' all runs, 'virtual' RBR runs only, 'real' any curated real-world result, 'lspr2024' / 'lspr2026' one year only (see runTag)
+  const inSourceRuns = source ? runs.filter((r) => inSource(r, source)) : runs;
 
   const runsByDriver = new Map();
-  for (const r of inSource) {
+  for (const r of inSourceRuns) {
     const k = driverKey(r.driver);
     runsByDriver.set(k, (runsByDriver.get(k) || 0) + 1);
   }
 
-  let pool = group ? inSource.filter((r) => carGroup.get(r.car_id) === group) : inSource.slice();
+  let pool = group ? inSourceRuns.filter((r) => carGroup.get(r.car_id) === group) : inSourceRuns.slice();
 
   if (view === 'best') {
     const best = new Map();
@@ -307,34 +307,57 @@ function zonedStamp(iso, timeZone = 'America/Chicago') {
 
 /**
  * The tag shown beside a driver's name. Curated real-world times carry their own
- * label (e.g. "LSPR 2024"); every other run is a virtual one and is tagged
+ * label (e.g. "LSPR 2024", "LSPR 2026"); every other run is a virtual one and is tagged
  * "RBR <year>", the year it was uploaded in the display time zone.
- * Returns { text, kind } with kind "virtual" (RBR runs) or "real".
+ * Returns { text, kind, year, key }:
+ *   kind "virtual" (RBR runs) or "real"
+ *   year the LSPR year ("2024", "2026") for real runs, otherwise null
+ *   key  "virtual", "lspr2024", "lspr2026" ("lspr" alone when a label has no year); used for the colour and the source filter
  */
 function runTag(run, timeZone = 'America/Chicago') {
   const text = run.label || `RBR ${zonedStamp(run.uploaded_at, timeZone).date.slice(0, 4)}`;
-  return { text, kind: /^RBR\b/.test(text) ? 'virtual' : 'real' };
+  const kind = /^RBR\b/.test(text) ? 'virtual' : 'real';
+  const year = kind === 'real' ? ((/\b(\d{4})\b/.exec(text) || [])[1] || null) : null;
+  return { text, kind, year, key: kind === 'virtual' ? 'virtual' : `lspr${year || ''}` };
+}
+
+/**
+ * Does a run belong to a source filter? source: '' everything, 'virtual', 'real' (any LSPR year),
+ * or one year such as 'lspr2024' / 'lspr2026'.
+ */
+function inSource(run, source, timeZone = 'America/Chicago') {
+  if (!source) return true;
+  const t = runTag(run, timeZone);
+  return source === 'real' ? t.kind === 'real' : t.key === source;
 }
 
 // ---------------------------------------------------------------- real-world comparison
 
-/** The real event a curated run came from, e.g. "SS1" / "SS10" (from its note), or null. */
-function realStage(run) {
+/** The real event a curated run came from: { year: '2024', stage: 'SS1' } (from its note), or null. */
+function realEvent(run) {
   if (runTag(run).kind !== 'real') return null;
-  const m = /LSPR 2024 (SS\d+)/.exec(run.note || '');
-  return m ? m[1] : null;
+  const m = /LSPR (\d{4}) (SS\d+)/.exec(run.note || '');
+  return m ? { year: m[1], stage: m[2] } : null;
+}
+
+/** The real stage a curated run came from, e.g. "SS1" / "SS10" (from its note), or null. */
+function realStage(run) {
+  const e = realEvent(run);
+  return e ? e.stage : null;
 }
 
 /**
- * Where a finish time would have placed among the real results, per real stage.
+ * Where a finish time would have placed among the real results of one LSPR year (2024 unless told otherwise),
+ * per real stage.
  * Returns [{ stage: 'SS1', place, of, faster: run|null, slower: run|null }] in stage order,
  * where faster / slower are the real runs just ahead of / just behind that time.
  */
-function realPlacings(finishMs, runs) {
+function realPlacings(finishMs, runs, year = '2024') {
   const byStage = new Map();
   for (const r of runs) {
-    const s = realStage(r);
-    if (!s) continue;
+    const e = realEvent(r);
+    if (!e || e.year !== year) continue;
+    const s = e.stage;
     if (!byStage.has(s)) byStage.set(s, []);
     byStage.get(s).push(r);
   }

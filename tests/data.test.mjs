@@ -53,9 +53,10 @@ test('stored run: each kind of damage is caught', () => {
 
 test('runTag: curated labels kept, everything else tagged RBR <year> in Central time', async () => {
   const { runTag } = await import('../shared/rules.js');
-  assert.deepEqual(runTag({ label: 'LSPR 2024', uploaded_at: '2026-10-02T23:10:00.000Z' }), { text: 'LSPR 2024', kind: 'real' });
-  assert.deepEqual(runTag({ uploaded_at: '2026-10-03T01:21:00.000Z' }), { text: 'RBR 2026', kind: 'virtual' });
-  assert.deepEqual(runTag({ uploaded_at: '2027-01-01T03:00:00.000Z' }), { text: 'RBR 2026', kind: 'virtual' });   // still 31 Dec in Chicago
+  assert.deepEqual(runTag({ label: 'LSPR 2024', uploaded_at: '2026-10-02T23:10:00.000Z' }), { text: 'LSPR 2024', kind: 'real', year: '2024', key: 'lspr2024' });
+  assert.deepEqual(runTag({ label: 'LSPR 2026', uploaded_at: '2026-10-10T23:10:00.000Z' }), { text: 'LSPR 2026', kind: 'real', year: '2026', key: 'lspr2026' });
+  assert.deepEqual(runTag({ uploaded_at: '2026-10-03T01:21:00.000Z' }), { text: 'RBR 2026', kind: 'virtual', year: null, key: 'virtual' });
+  assert.deepEqual(runTag({ uploaded_at: '2027-01-01T03:00:00.000Z' }), { text: 'RBR 2026', kind: 'virtual', year: null, key: 'virtual' });   // still 31 Dec in Chicago
 });
 
 test('stored real results may lack a checkpoint 2 time', async () => {

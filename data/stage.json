@@ -1,7 +1,11 @@
 {
   "id": "als-playground",
   "name": "Al's Playground",
-  "event": "LSPR 2024 SS1/10",
+  "event": "LSPR 2024 SS1/10 · LSPR 2026 SS12/14/16",
+  "events": [
+    { "year": "2024", "label": "LSPR 2024", "stages": "SS1 / SS10" },
+    { "year": "2026", "label": "LSPR 2026", "stages": "SS12 / SS14 / SS16" }
+  ],
   "location": "Baraga County, Michigan",
   "length_km": 12.5,
   "surface": "Gravel",

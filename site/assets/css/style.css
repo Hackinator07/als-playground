@@ -8,6 +8,8 @@
   --maple-dark: #A9521A;      /* links */
   --pine: #2E6B45;            /* submit buttons: green so they stand apart from the maple band (white text about 6:1) */
   --pine-hover: #24573A;
+  --lspr26-bg: #DCEFE3;       /* "LSPR 2026" tag: pale pine (text 6:1 or better) */
+  --lspr26-text: #1F5B38;
   --rbr-bg: #E2EBF3;          /* "RBR <year>" tag on virtual runs */
   --rbr-text: #24506E;
   --row: #FFFFFF;
@@ -63,6 +65,12 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .band { background: var(--maple); color: var(--maple-text); text-align: center; padding: 8px 12px; }
 .band h1 { margin: 0; font-size: 22px; font-weight: 700; line-height: 1.25; }
 .stage-meta { margin: 0; padding: 7px 12px; text-align: center; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line); }
+.stage-meta .meta-events { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 10px; margin-bottom: 4px; }
+.stage-meta .meta-event { display: inline-block; padding: 3px 12px; border-radius: 3px; border-left: 4px solid var(--maple); background: #FBEFE4; color: var(--text); font-size: 13.5px; }
+.stage-meta .meta-event b { margin-right: 4px; color: #7A3A0E; }
+.stage-meta .meta-event.meta-2026 { border-left-color: var(--pine); background: var(--lspr26-bg); }
+.stage-meta .meta-event.meta-2026 b { color: var(--lspr26-text); }
+.stage-meta .meta-place { display: block; }
 
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px; border-bottom: 1px solid var(--line); }
 .btn-submit {
@@ -125,6 +133,7 @@ select { padding-right: 24px; }
   display: inline-block; padding: 0 5px; border-radius: 3px; background: var(--row-mine); color: #7A3A0E;
   font-size: 11px; line-height: 16px; font-weight: 600; white-space: nowrap; vertical-align: 1px;
 }
+.label-lspr2026 { background: var(--lspr26-bg); color: var(--lspr26-text); }   /* LSPR 2026: green, as LSPR 2024 is maple */
 .label-virtual { background: var(--rbr-bg); color: var(--rbr-text); }   /* RBR runs: slate blue, apart from the maple LSPR tags */
 .detail-note { grid-column: span 2; }
 .finish { font-weight: 700; color: var(--spruce); }
@@ -202,6 +211,7 @@ select { padding-right: 24px; }
   .titlebar-game { display: none; }
   .band h1 { font-size: 20px; }
   .stage-meta { font-size: 12px; }
+  .meta-event { flex: 1 1 100%; }
   .controls { gap: 8px; padding: 10px 8px; }
   .btn-submit { flex: 1 1 100%; text-align: center; padding: 10px 16px; }
   .control-search { margin-left: 0; flex: 1 1 100%; }
@@ -209,7 +219,7 @@ select { padding-right: 24px; }
   .seg { flex: 1 1 auto; }
   .seg button { flex: 1 1 50%; }
   .seg-source { flex: 1 1 100%; }
-  .seg-source button { flex: 1 1 33%; }
+  .seg-source button { flex: 1 1 25%; padding-left: 4px; padding-right: 4px; }
 
   .results { table-layout: fixed; font-size: 11.5px; }
   .results th { font-size: 11px; padding: 6px 2px; }
