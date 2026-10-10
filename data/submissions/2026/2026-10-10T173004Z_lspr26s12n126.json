@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n126",
+  "stage": "als-playground",
+  "driver": "Sean Donnelly",
+  "car_id": "renault-clio-rally3",
+  "car_name": "Renault Clio Rally3",
+  "cp1_ms": 165000,
+  "cp2_ms": 346400,
+  "finish_ms": 443800,
+  "entered": {
+    "cp1": "2:45.0",
+    "cp2": "5:46.4",
+    "finish": "7:23.8"
+  },
+  "uploaded_at": "2026-10-10T17:30:04.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #126, 2024 Renault Clio Rally3, co-driver Carl Williamson"
+}

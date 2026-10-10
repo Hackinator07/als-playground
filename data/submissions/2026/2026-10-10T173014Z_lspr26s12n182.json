@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n182",
+  "stage": "als-playground",
+  "driver": "Mika Block",
+  "car_id": "peugeot-208-rally4",
+  "car_name": "Peugeot 208 Rally4",
+  "cp1_ms": 176000,
+  "cp2_ms": 361600,
+  "finish_ms": 461800,
+  "entered": {
+    "cp1": "2:56.0",
+    "cp2": "6:01.6",
+    "finish": "7:41.8"
+  },
+  "uploaded_at": "2026-10-10T17:30:14.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #182, 2025 Peugeot 208 Rally4, co-driver Gary McElhinney"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n580",
+  "stage": "als-playground",
+  "driver": "Vincent Lalande",
+  "car_id": "peugeot-208-rally4",
+  "car_name": "Peugeot 208 Rally4",
+  "cp1_ms": 172800,
+  "cp2_ms": 356200,
+  "finish_ms": 454000,
+  "entered": {
+    "cp1": "2:52.8",
+    "cp2": "5:56.2",
+    "finish": "7:34.0"
+  },
+  "uploaded_at": "2026-10-10T17:30:06.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #580, 2025 Peugeot 208 Rally4, co-driver Fabian Craen"
+}

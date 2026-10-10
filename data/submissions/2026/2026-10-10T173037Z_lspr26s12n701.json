@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n701",
+  "stage": "als-playground",
+  "driver": "Jason Cook",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 191800,
+  "cp2_ms": 390900,
+  "finish_ms": 497400,
+  "entered": {
+    "cp1": "3:11.8",
+    "cp2": "6:30.9",
+    "finish": "8:17.4"
+  },
+  "uploaded_at": "2026-10-10T17:30:37.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #701, 2004 Subaru WRX, co-driver Maggie Tu"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n287",
+  "stage": "als-playground",
+  "driver": "Noah Simone",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2001 Ford Focus ZX3",
+  "cp1_ms": 221600,
+  "cp2_ms": 439200,
+  "finish_ms": 559600,
+  "entered": {
+    "cp1": "3:41.6",
+    "cp2": "7:19.2",
+    "finish": "9:19.6"
+  },
+  "uploaded_at": "2026-10-10T17:30:59.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #287, co-driver Jennifer Falkner. This vehicle has no Richard Burns Rally version."
+}

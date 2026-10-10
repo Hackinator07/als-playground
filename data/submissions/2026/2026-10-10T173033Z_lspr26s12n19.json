@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n19",
+  "stage": "als-playground",
+  "driver": "Evan Mosley",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 186700,
+  "cp2_ms": 385200,
+  "finish_ms": 493200,
+  "entered": {
+    "cp1": "3:06.7",
+    "cp2": "6:25.2",
+    "finish": "8:13.2"
+  },
+  "uploaded_at": "2026-10-10T17:30:33.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #19, 2002 Subaru WRX, co-driver Brandon Opperthauser"
+}

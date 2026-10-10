@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n797",
+  "stage": "als-playground",
+  "driver": "Ryan Pryzbylkowski",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 185000,
+  "cp2_ms": 383000,
+  "finish_ms": 491300,
+  "entered": {
+    "cp1": "3:05.0",
+    "cp2": "6:23.0",
+    "finish": "8:11.3"
+  },
+  "uploaded_at": "2026-10-10T17:30:31.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #797, 2001 Subaru Impreza 3.0RS, co-driver Betsy Nguyen"
+}

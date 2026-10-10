@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n265",
+  "stage": "als-playground",
+  "driver": "Luis Perocarpi",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2025 MINI Countryman JCW",
+  "cp1_ms": 196500,
+  "cp2_ms": 408100,
+  "finish_ms": 522300,
+  "entered": {
+    "cp1": "3:16.5",
+    "cp2": "6:48.1",
+    "finish": "8:42.3"
+  },
+  "uploaded_at": "2026-10-10T17:30:47.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #265, co-driver Carlos Schrunder. This vehicle has no Richard Burns Rally version."
+}

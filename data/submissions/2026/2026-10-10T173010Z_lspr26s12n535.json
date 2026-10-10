@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n535",
+  "stage": "als-playground",
+  "driver": "Connor Himes",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 172900,
+  "cp2_ms": 359600,
+  "finish_ms": 458400,
+  "entered": {
+    "cp1": "2:52.9",
+    "cp2": "5:59.6",
+    "finish": "7:38.4"
+  },
+  "uploaded_at": "2026-10-10T17:30:10.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #535, 2001 Subaru Impreza, co-driver Charlotte Himes-Nykanen"
+}

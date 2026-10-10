@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n51",
+  "stage": "als-playground",
+  "driver": "Todd Hartmann",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 175400,
+  "cp2_ms": 368600,
+  "finish_ms": 475600,
+  "entered": {
+    "cp1": "2:55.4",
+    "cp2": "6:08.6",
+    "finish": "7:55.6"
+  },
+  "uploaded_at": "2026-10-10T17:30:19.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #51, 2010 Ford Fiesta, co-driver Shawn Callahan"
+}

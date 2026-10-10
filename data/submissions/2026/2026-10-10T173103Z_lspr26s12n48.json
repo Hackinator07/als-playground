@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n48",
+  "stage": "als-playground",
+  "driver": "John Barnett",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2008 Lexus IS250",
+  "cp1_ms": 230200,
+  "cp2_ms": 464000,
+  "finish_ms": 592500,
+  "entered": {
+    "cp1": "3:50.2",
+    "cp2": "7:44.0",
+    "finish": "9:52.5"
+  },
+  "uploaded_at": "2026-10-10T17:31:03.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #48, co-driver Lucas Laeser. This vehicle has no Richard Burns Rally version."
+}

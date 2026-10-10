@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n460",
+  "stage": "als-playground",
+  "driver": "Josh Kemp",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 179200,
+  "cp2_ms": 383200,
+  "finish_ms": 493100,
+  "entered": {
+    "cp1": "2:59.2",
+    "cp2": "6:23.2",
+    "finish": "8:13.1"
+  },
+  "uploaded_at": "2026-10-10T17:30:32.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #460, 2004 Subaru WRX, co-driver Danielle Kemp"
+}

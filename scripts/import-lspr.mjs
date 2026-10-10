@@ -44,12 +44,19 @@ export function planImport(spec, { cars, stage, existing }) {
     if (seen.has(`${label}|${id}`) || finishes.has(`${label}|${driverKey(row.driver)}|${t.finish}`)) { out.skipped.push({ where, why: 'already imported' }); continue; }
     seen.add(`${label}|${id}`);
     const precision = spec.timed_to === 'tenth' ? ', timed to the tenth' : '';
+    // Same wording as the 2024 rows: a car with an RBR counterpart names the real car in the note; a car without one is stored under its real name.
+    const noRbr = car.id.startsWith('no-rbr-version');
+    const carName = noRbr ? row.car : car.name;
+    const who = row.codriver ? `co-driver ${row.codriver}` : '';
+    const note = noRbr
+      ? `Real LSPR ${year} ${row.stage} time${precision}: car #${row.number}${who ? `, ${who}` : ''}. This vehicle has no Richard Burns Rally version.`
+      : `Real LSPR ${year} ${row.stage} time${precision}: car #${row.number}, ${row.car}${who ? `, ${who}` : ''}`;
     const run = {
-      schema: 1, id, stage: stage.id, driver: row.driver, car_id: car.id, car_name: car.name,
+      schema: 1, id, stage: stage.id, driver: row.driver, car_id: car.id, car_name: carName,
       cp1_ms: t.cp1, cp2_ms: t.cp2, finish_ms: t.finish,
       entered: { cp1: row.cp1, cp2: row.cp2, finish: row.finish },
-      uploaded_at: new Date(spec.uploaded_at).toISOString(), screenshot: null, status: 'published', label,
-      note: `Real LSPR ${year} ${row.stage} time${precision}: car #${row.number}, ${row.car}${row.codriver ? `, co-driver ${row.codriver}` : ''}`,
+      uploaded_at: new Date(Date.parse(spec.uploaded_at) + out.write.length * 1000).toISOString(), screenshot: null, status: 'published', label,
+      note,
     };
     const problem = checkStoredRun(run, carIds, stage);
     if (problem) { out.errors.push({ where, why: problem }); continue; }
@@ -66,7 +73,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   const cars = JSON.parse(fs.readFileSync(path.join(root, 'data/cars.json'), 'utf8')).cars;
   const dir = path.join(root, 'data/submissions');
   const existing = [];
-  for (const y of fs.existsSync(dir) ? fs.readdirSync(dir) : []) {
+  for (const y of fs.existsSync(dir) ? fs.readdirSync(dir).filter((n) => fs.statSync(path.join(dir, n)).isDirectory()) : []) {
     for (const f of fs.readdirSync(path.join(dir, y))) if (f.endsWith('.json')) existing.push(JSON.parse(fs.readFileSync(path.join(dir, y, f), 'utf8')));
   }
   const plan = planImport(spec, { cars, stage, existing });
@@ -76,7 +83,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
   plan.flagged.forEach((s) => console.log('FLAG   ', s.where, '-', s.car, '-', s.why));
   plan.errors.forEach((s) => console.log('ERROR  ', s.where, '-', s.why));
   if (process.argv.includes('--write')) {
-    if (plan.flagged.length || plan.errors.length) { console.error('\nNothing written: fix the flagged / error rows first (add carMap entries or correct the times).'); process.exit(1); }
+    if (plan.errors.length || (plan.flagged.length && !process.argv.includes('--skip-flagged'))) { console.error('\nNothing written: fix the flagged / error rows first (add carMap entries or correct the times), or pass --skip-flagged to write the rest.'); process.exit(1); }
     const out = path.join(dir, String(new Date(spec.uploaded_at).getUTCFullYear()));
     fs.mkdirSync(out, { recursive: true });
     for (const r of plan.write) fs.writeFileSync(path.join(out, `${r.uploaded_at.replace(/:/g, '').replace(/\.\d+Z$/, 'Z')}_${r.id}.json`), JSON.stringify(r, null, 2) + '\n');

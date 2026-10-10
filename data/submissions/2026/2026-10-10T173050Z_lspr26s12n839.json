@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n839",
+  "stage": "als-playground",
+  "driver": "Kevin Kahl",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2017 Subaru WRX",
+  "cp1_ms": 206700,
+  "cp2_ms": 419300,
+  "finish_ms": 528400,
+  "entered": {
+    "cp1": "3:26.7",
+    "cp2": "6:59.3",
+    "finish": "8:48.4"
+  },
+  "uploaded_at": "2026-10-10T17:30:50.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #839, co-driver Samantha Jacques. This vehicle has no Richard Burns Rally version."
+}

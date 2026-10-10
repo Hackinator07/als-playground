@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n432",
+  "stage": "als-playground",
+  "driver": "Tom Mayer",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 178500,
+  "cp2_ms": 373300,
+  "finish_ms": 477200,
+  "entered": {
+    "cp1": "2:58.5",
+    "cp2": "6:13.3",
+    "finish": "7:57.2"
+  },
+  "uploaded_at": "2026-10-10T17:30:20.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #432, 2002 Subaru WRX, co-driver Dillon McKenna"
+}

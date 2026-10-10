@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n922",
+  "stage": "als-playground",
+  "driver": "Corey Morris",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2014 Subaru WRX STi",
+  "cp1_ms": 205900,
+  "cp2_ms": 412100,
+  "finish_ms": 531700,
+  "entered": {
+    "cp1": "3:25.9",
+    "cp2": "6:52.1",
+    "finish": "8:51.7"
+  },
+  "uploaded_at": "2026-10-10T17:30:53.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #922, co-driver Zane Morris. This vehicle has no Richard Burns Rally version."
+}

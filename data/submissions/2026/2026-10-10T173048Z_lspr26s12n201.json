@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n201",
+  "stage": "als-playground",
+  "driver": "Adam VanDamme",
+  "car_id": "vw-golf-ii-gti-16v-grpa",
+  "car_name": "VW Golf II GTI 16V GrpA",
+  "cp1_ms": 200400,
+  "cp2_ms": 411300,
+  "finish_ms": 524300,
+  "entered": {
+    "cp1": "3:20.4",
+    "cp2": "6:51.3",
+    "finish": "8:44.3"
+  },
+  "uploaded_at": "2026-10-10T17:30:48.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #201, 1985 Volkswagen Golf, co-driver Morgan Engle"
+}

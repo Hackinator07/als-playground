@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n721",
+  "stage": "als-playground",
+  "driver": "Luke Quilliams",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2002 Ford Focus",
+  "cp1_ms": 237100,
+  "cp2_ms": 470300,
+  "finish_ms": 591500,
+  "entered": {
+    "cp1": "3:57.1",
+    "cp2": "7:50.3",
+    "finish": "9:51.5"
+  },
+  "uploaded_at": "2026-10-10T17:31:02.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #721, co-driver Eric Dieterich. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n450",
+  "stage": "als-playground",
+  "driver": "Nikhil Thakur",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 221700,
+  "cp2_ms": 437000,
+  "finish_ms": 552700,
+  "entered": {
+    "cp1": "3:41.7",
+    "cp2": "7:17.0",
+    "finish": "9:12.7"
+  },
+  "uploaded_at": "2026-10-10T17:30:56.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #450, 2015 Ford Fiesta ST, co-driver Zachary Goldstein"
+}

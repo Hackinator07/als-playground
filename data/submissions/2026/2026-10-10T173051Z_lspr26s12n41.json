@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n41",
+  "stage": "als-playground",
+  "driver": "Chris Sladek",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2017 Honda Civic",
+  "cp1_ms": 220400,
+  "cp2_ms": 425400,
+  "finish_ms": 530800,
+  "entered": {
+    "cp1": "3:40.4",
+    "cp2": "7:05.4",
+    "finish": "8:50.8"
+  },
+  "uploaded_at": "2026-10-10T17:30:51.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #41, co-driver John Sharps. This vehicle has no Richard Burns Rally version."
+}

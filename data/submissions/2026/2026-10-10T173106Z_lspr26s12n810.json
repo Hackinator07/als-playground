@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n810",
+  "stage": "als-playground",
+  "driver": "Bradley Hayosh",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2018 Subaru STi",
+  "cp1_ms": 240300,
+  "cp2_ms": 482300,
+  "finish_ms": 611200,
+  "entered": {
+    "cp1": "4:00.3",
+    "cp2": "8:02.3",
+    "finish": "10:11.2"
+  },
+  "uploaded_at": "2026-10-10T17:31:06.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #810, co-driver Neil Moser. This vehicle has no Richard Burns Rally version."
+}

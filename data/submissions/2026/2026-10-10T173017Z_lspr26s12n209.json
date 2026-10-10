@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n209",
+  "stage": "als-playground",
+  "driver": "Madelyn Tabor",
+  "car_id": "ford-fiesta-rally3",
+  "car_name": "Ford Fiesta Rally3",
+  "cp1_ms": 175300,
+  "cp2_ms": 365700,
+  "finish_ms": 468700,
+  "entered": {
+    "cp1": "2:55.3",
+    "cp2": "6:05.7",
+    "finish": "7:48.7"
+  },
+  "uploaded_at": "2026-10-10T17:30:17.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #209, 2025 Ford Fiesta Rally3, co-driver Sophia McKee"
+}

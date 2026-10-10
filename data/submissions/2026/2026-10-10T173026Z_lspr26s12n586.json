@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n586",
+  "stage": "als-playground",
+  "driver": "Zachary Jacques",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2015 Subaru WRX",
+  "cp1_ms": 182000,
+  "cp2_ms": 383700,
+  "finish_ms": 487300,
+  "entered": {
+    "cp1": "3:02.0",
+    "cp2": "6:23.7",
+    "finish": "8:07.3"
+  },
+  "uploaded_at": "2026-10-10T17:30:26.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #586, co-driver Ronald Jacques. This vehicle has no Richard Burns Rally version."
+}
