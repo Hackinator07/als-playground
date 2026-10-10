@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n622",
+  "stage": "als-playground",
+  "driver": "Larry Parker",
+  "car_id": "porsche-911-sc-3-0-grp4",
+  "car_name": "Porsche 911 SC 3.0 Grp4",
+  "cp1_ms": 219300,
+  "cp2_ms": 442800,
+  "finish_ms": 569200,
+  "entered": {
+    "cp1": "3:39.3",
+    "cp2": "7:22.8",
+    "finish": "9:29.2"
+  },
+  "uploaded_at": "2026-10-10T17:30:02.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #622, 1981 Porsche 911 SC, co-driver Elisha Papanicolaou"
+}

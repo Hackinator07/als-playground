@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s12n243",
+  "stage": "als-playground",
+  "driver": "Patrick Gruszka",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 162200,
+  "cp2_ms": 340200,
+  "finish_ms": 433800,
+  "entered": {
+    "cp1": "2:42.2",
+    "cp2": "5:40.2",
+    "finish": "7:13.8"
+  },
+  "uploaded_at": "2026-10-10T17:30:00.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS12 time, timed to the tenth: car #243, 2025 Hyundai i20 Rally2, co-driver John Hall"
+}
