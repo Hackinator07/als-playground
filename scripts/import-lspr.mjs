@@ -33,6 +33,7 @@ export function planImport(spec, { cars, stage, existing }) {
     const t = {};
     let bad = null;
     for (const k of ['cp1', 'cp2', 'finish']) {
+      if (k !== 'finish' && (row[k] === null || row[k] === '')) { t[k] = null; continue; }   // checkpoint not published
       const p = parseTime(row[k]);
       if (!p.ok) bad = `${k}: ${p.error}`; else t[k] = p.ms;
     }
@@ -54,7 +55,7 @@ export function planImport(spec, { cars, stage, existing }) {
     const run = {
       schema: 1, id, stage: stage.id, driver: row.driver, car_id: car.id, car_name: carName,
       cp1_ms: t.cp1, cp2_ms: t.cp2, finish_ms: t.finish,
-      entered: { cp1: row.cp1, cp2: row.cp2, finish: row.finish },
+      entered: { cp1: row.cp1 || null, cp2: row.cp2 || null, finish: row.finish },
       uploaded_at: new Date(Date.parse(spec.uploaded_at) + out.write.length * 1000).toISOString(), screenshot: null, status: 'published', label,
       note,
     };
@@ -77,7 +78,7 @@ if (process.argv[1] === fileURLToPath(import.meta.url)) {
     for (const f of fs.readdirSync(path.join(dir, y))) if (f.endsWith('.json')) existing.push(JSON.parse(fs.readFileSync(path.join(dir, y, f), 'utf8')));
   }
   const plan = planImport(spec, { cars, stage, existing });
-  const fmt = (r) => `${r.id}  ${r.driver}  ${r.car_name}  ${r.entered.cp1} / ${r.entered.cp2} / ${r.entered.finish}`;
+  const fmt = (r) => `${r.id}  ${r.driver}  ${r.car_name}  ${r.entered.cp1 ?? '—'} / ${r.entered.cp2 ?? '—'} / ${r.entered.finish}`;
   plan.write.forEach((r) => console.log('write  ', fmt(r)));
   plan.skipped.forEach((s) => console.log('skip   ', s.where, '-', s.why));
   plan.flagged.forEach((s) => console.log('FLAG   ', s.where, '-', s.car, '-', s.why));

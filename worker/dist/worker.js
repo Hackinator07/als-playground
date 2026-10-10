@@ -118,12 +118,13 @@ function checkStoredRun(run, carIds, stage) {
   if (!carIds.has(run.car_id)) return `unknown car_id "${run.car_id}"`;
   if (typeof run.car_name !== 'string' || !run.car_name) return 'missing car_name';
   for (const k of ['cp1_ms', 'cp2_ms', 'finish_ms']) {
-    if (k === 'cp2_ms' && run[k] === null) continue;        // stored real results only: no checkpoint 2 time
+    if ((k === 'cp1_ms' || k === 'cp2_ms') && run[k] === null) continue;   // stored real results only: a checkpoint the organisers didn't publish
     if (!Number.isInteger(run[k]) || run[k] <= 0) return `${k} must be a positive whole number`;
   }
-  const timeErr = run.cp2_ms === null
-    ? checkTimes({ ...run, cp2_ms: (run.cp1_ms + run.finish_ms) / 2 }, stage)
-    : checkTimes(run, stage);
+  if (run.cp1_ms === null && run.cp2_ms === null) return 'at least one checkpoint time is needed';
+  const cp1 = run.cp1_ms === null ? run.cp2_ms / 2 : run.cp1_ms;
+  const cp2 = run.cp2_ms === null ? (cp1 + run.finish_ms) / 2 : run.cp2_ms;
+  const timeErr = checkTimes({ ...run, cp1_ms: cp1, cp2_ms: cp2 }, stage);
   if (timeErr.length) return timeErr[0].message;
   if (typeof run.uploaded_at !== 'string' || Number.isNaN(Date.parse(run.uploaded_at))) return 'bad uploaded_at';
   if (run.screenshot !== null && run.screenshot !== undefined && typeof run.screenshot !== 'string') return 'bad screenshot';
@@ -269,6 +270,7 @@ function rankRuns(runs, options = {}) {
 
 /** Sector times from cumulative checkpoints: [S1, S2, S3]. */
 function sectorsOf(run) {
+  if (run.cp1_ms === null || run.cp1_ms === undefined) return [null, null, run.finish_ms - run.cp2_ms];   // only checkpoint 2 was published
   if (run.cp2_ms === null || run.cp2_ms === undefined) return [run.cp1_ms, null, null];
   return [run.cp1_ms, run.cp2_ms - run.cp1_ms, run.finish_ms - run.cp2_ms];
 }

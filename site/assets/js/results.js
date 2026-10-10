@@ -248,7 +248,7 @@ function rowHtml(row, i, ctx) {
     <td class="c-pos">${pos}</td>
     <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind} label-${t.key}">${esc(t.text)}</span>`; })()}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car">${esc(run.car_name)}${tag}</td>
-    <td class="c-time${fast1}">${formatTime(run.cp1_ms)}</td>
+    <td class="c-time${fast1}">${run.cp1_ms === null ? '—' : formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
     <td class="c-time c-finish finish">${formatTime(run.finish_ms)}</td>
     <td class="c-diff c-prev">${formatDiff(diffPrev)}</td>

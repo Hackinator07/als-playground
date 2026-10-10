@@ -40,3 +40,14 @@ test('import: bad times are reported', () => {
   assert.equal(p.write.length, 0);
   assert.equal(p.errors.length, 2);
 });
+
+test('import: a run with only checkpoint 2 published is accepted and shows blanks for the rest', async () => {
+  const { sectorsOf, checkStoredRun } = await import('../shared/rules.js');
+  const p = planImport(spec([row({ cp1: null, cp2: '5:47.4', finish: '8:45.4' })]), { cars, stage, existing: [] });
+  assert.equal(p.write.length, 1);
+  const r = p.write[0];
+  assert.equal(r.cp1_ms, null);
+  assert.equal(r.entered.cp1, null);
+  assert.deepEqual(sectorsOf(r), [null, null, 8 * 60000 + 45400 - 347400]);
+  assert.equal(checkStoredRun({ ...r, cp2_ms: null }, new Set(cars.map((c) => c.id)), stage), 'at least one checkpoint time is needed');
+});
