@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n45",
+  "stage": "als-playground",
+  "driver": "Grzegorz Bugaj",
+  "car_id": "subaru-impreza-n14-n4",
+  "car_name": "Subaru Impreza N14 N4",
+  "cp1_ms": 170500,
+  "cp2_ms": 360900,
+  "finish_ms": 462600,
+  "entered": {
+    "cp1": "2:50.5",
+    "cp2": "6:00.9",
+    "finish": "7:42.6"
+  },
+  "uploaded_at": "2026-10-10T20:35:14.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #45, 2011 Subaru STi, co-driver Elizabeth Dziubanski"
+}

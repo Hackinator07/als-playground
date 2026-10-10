@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n127",
+  "stage": "als-playground",
+  "driver": "Levi Johnson",
+  "car_id": "bmw-m3-e30-grpa",
+  "car_name": "BMW M3 E30 GrpA",
+  "cp1_ms": 190100,
+  "cp2_ms": 404000,
+  "finish_ms": 509600,
+  "entered": {
+    "cp1": "3:10.1",
+    "cp2": "6:44.0",
+    "finish": "8:29.6"
+  },
+  "uploaded_at": "2026-10-10T20:35:38.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #127, 1986 BMW 325, co-driver Lars Anderson"
+}

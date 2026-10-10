@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n407",
+  "stage": "als-playground",
+  "driver": "Nicholas Tippmann",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 184300,
+  "cp2_ms": 393500,
+  "finish_ms": 495600,
+  "entered": {
+    "cp1": "3:04.3",
+    "cp2": "6:33.5",
+    "finish": "8:15.6"
+  },
+  "uploaded_at": "2026-10-10T20:35:27.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #407, 2019 Ford Fiesta ST, co-driver David Tippmann"
+}

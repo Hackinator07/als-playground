@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n530",
+  "stage": "als-playground",
+  "driver": "Nolan Abell",
+  "car_id": "ford-fiesta-r5",
+  "car_name": "Ford Fiesta R5",
+  "cp1_ms": 173200,
+  "cp2_ms": 361000,
+  "finish_ms": 459000,
+  "entered": {
+    "cp1": "2:53.2",
+    "cp2": "6:01.0",
+    "finish": "7:39.0"
+  },
+  "uploaded_at": "2026-10-10T20:35:13.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #530, 2016 Ford Fiesta R5, co-driver Leah Brisset"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n210",
+  "stage": "als-playground",
+  "driver": "Henry Tabor",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 189700,
+  "cp2_ms": 398900,
+  "finish_ms": 504400,
+  "entered": {
+    "cp1": "3:09.7",
+    "cp2": "6:38.9",
+    "finish": "8:24.4"
+  },
+  "uploaded_at": "2026-10-10T20:35:34.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #210, 2015 Ford Fiesta ST, co-driver Dylan Hooker"
+}

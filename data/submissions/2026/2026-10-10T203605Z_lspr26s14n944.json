@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n944",
+  "stage": "als-playground",
+  "driver": "Matthew Heirtzler",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "1984 Porsche 944",
+  "cp1_ms": 216400,
+  "cp2_ms": 488600,
+  "finish_ms": 630900,
+  "entered": {
+    "cp1": "3:36.4",
+    "cp2": "8:08.6",
+    "finish": "10:30.9"
+  },
+  "uploaded_at": "2026-10-10T20:36:05.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #944, co-driver Soren Olsen. This vehicle has no Richard Burns Rally version."
+}

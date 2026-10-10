@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n950",
+  "stage": "als-playground",
+  "driver": "Jason Kodat",
+  "car_id": "ford-fiesta-r2",
+  "car_name": "Ford Fiesta R2",
+  "cp1_ms": 205800,
+  "cp2_ms": 456800,
+  "finish_ms": 576400,
+  "entered": {
+    "cp1": "3:25.8",
+    "cp2": "7:36.8",
+    "finish": "9:36.4"
+  },
+  "uploaded_at": "2026-10-10T20:35:58.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #950, 2015 Ford Fiesta ST, co-driver Phil Marsh"
+}

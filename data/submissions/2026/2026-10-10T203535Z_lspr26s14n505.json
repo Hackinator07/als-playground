@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n505",
+  "stage": "als-playground",
+  "driver": "Josh Nykanen",
+  "car_id": "vw-golf-ii-gti-16v-grpa",
+  "car_name": "VW Golf II GTI 16V GrpA",
+  "cp1_ms": 192700,
+  "cp2_ms": 400700,
+  "finish_ms": 505100,
+  "entered": {
+    "cp1": "3:12.7",
+    "cp2": "6:40.7",
+    "finish": "8:25.1"
+  },
+  "uploaded_at": "2026-10-10T20:35:35.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #505, 1987 Volkswagen Golf GTI, co-driver Elliot Prusi"
+}

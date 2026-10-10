@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n787",
+  "stage": "als-playground",
+  "driver": "Gabriel Nieves",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2023 Acura Integra",
+  "cp1_ms": 191400,
+  "cp2_ms": 414300,
+  "finish_ms": 526500,
+  "entered": {
+    "cp1": "3:11.4",
+    "cp2": "6:54.3",
+    "finish": "8:46.5"
+  },
+  "uploaded_at": "2026-10-10T20:35:49.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #787, co-driver Patrick Connolly. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n597",
+  "stage": "als-playground",
+  "driver": "Robert Dupree",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "1991 Mitsubishi Eclipse GSX",
+  "cp1_ms": 192800,
+  "cp2_ms": 413000,
+  "finish_ms": 523600,
+  "entered": {
+    "cp1": "3:12.8",
+    "cp2": "6:53.0",
+    "finish": "8:43.6"
+  },
+  "uploaded_at": "2026-10-10T20:35:46.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #597, co-driver Kevin Dobrowolski. This vehicle has no Richard Burns Rally version."
+}

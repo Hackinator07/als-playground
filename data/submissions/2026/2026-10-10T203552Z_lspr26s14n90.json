@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n90",
+  "stage": "als-playground",
+  "driver": "Alec Martell",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 206500,
+  "cp2_ms": 433500,
+  "finish_ms": 549100,
+  "entered": {
+    "cp1": "3:26.5",
+    "cp2": "7:13.5",
+    "finish": "9:09.1"
+  },
+  "uploaded_at": "2026-10-10T20:35:52.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #90, 2003 Subaru Impreza WRX, co-driver Morgan Sheahan"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n25",
+  "stage": "als-playground",
+  "driver": "Seamus Burke",
+  "car_id": "ford-escort-mk-ii-rs-grp4",
+  "car_name": "Ford Escort Mk II RS Grp4",
+  "cp1_ms": 183100,
+  "cp2_ms": 393800,
+  "finish_ms": 500800,
+  "entered": {
+    "cp1": "3:03.1",
+    "cp2": "6:33.8",
+    "finish": "8:20.8"
+  },
+  "uploaded_at": "2026-10-10T20:35:32.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #25, 1977 Ford Escort, co-driver Martin Brady"
+}

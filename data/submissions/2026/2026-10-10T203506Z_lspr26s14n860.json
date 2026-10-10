@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n860",
+  "stage": "als-playground",
+  "driver": "Danny Shalev",
+  "car_id": "peugeot-208-rally4",
+  "car_name": "Peugeot 208 Rally4",
+  "cp1_ms": 167800,
+  "cp2_ms": 348800,
+  "finish_ms": 445700,
+  "entered": {
+    "cp1": "2:47.8",
+    "cp2": "5:48.8",
+    "finish": "7:25.7"
+  },
+  "uploaded_at": "2026-10-10T20:35:06.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #860, 2025 Peugeot 208 Rally4, co-driver Glen Ray"
+}

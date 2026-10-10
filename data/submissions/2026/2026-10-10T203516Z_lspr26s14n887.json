@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n887",
+  "stage": "als-playground",
+  "driver": "Jimmy Pelizzari",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 173800,
+  "cp2_ms": 372700,
+  "finish_ms": 470800,
+  "entered": {
+    "cp1": "2:53.8",
+    "cp2": "6:12.7",
+    "finish": "7:50.8"
+  },
+  "uploaded_at": "2026-10-10T20:35:16.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #887, 2002 Subaru WRX, co-driver Bryce Proseus"
+}

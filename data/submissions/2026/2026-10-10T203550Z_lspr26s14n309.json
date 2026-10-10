@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n309",
+  "stage": "als-playground",
+  "driver": "Erik Buetow",
+  "car_id": "subaru-impreza-n14-n4",
+  "car_name": "Subaru Impreza N14 N4",
+  "cp1_ms": 191300,
+  "cp2_ms": 413600,
+  "finish_ms": 533400,
+  "entered": {
+    "cp1": "3:11.3",
+    "cp2": "6:53.6",
+    "finish": "8:53.4"
+  },
+  "uploaded_at": "2026-10-10T20:35:50.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #309, 2008 Subaru Impreza, co-driver Jordan Buetow"
+}

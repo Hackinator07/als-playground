@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n417",
+  "stage": "als-playground",
+  "driver": "Aoife Raftery",
+  "car_id": "ford-fiesta-rally3",
+  "car_name": "Ford Fiesta Rally3",
+  "cp1_ms": 163600,
+  "cp2_ms": 341100,
+  "finish_ms": 435400,
+  "entered": {
+    "cp1": "2:43.6",
+    "cp2": "5:41.1",
+    "finish": "7:15.4"
+  },
+  "uploaded_at": "2026-10-10T20:35:04.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #417, 2021 Ford Fiesta Rally3, co-driver Hannah McKillop"
+}

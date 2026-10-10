@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n817",
+  "stage": "als-playground",
+  "driver": "Michael Miller",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "1991 Mitsubishi Galant 6R4",
+  "cp1_ms": 224700,
+  "cp2_ms": 474700,
+  "finish_ms": 598200,
+  "entered": {
+    "cp1": "3:44.7",
+    "cp2": "7:54.7",
+    "finish": "9:58.2"
+  },
+  "uploaded_at": "2026-10-10T20:36:00.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #817, co-driver Angelica Miller. This vehicle has no Richard Burns Rally version."
+}

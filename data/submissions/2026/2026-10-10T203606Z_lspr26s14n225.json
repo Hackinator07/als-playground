@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n225",
+  "stage": "als-playground",
+  "driver": "Joe Boburka",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "1995 Ford Escort",
+  "cp1_ms": 282700,
+  "cp2_ms": 578800,
+  "finish_ms": 738200,
+  "entered": {
+    "cp1": "4:42.7",
+    "cp2": "9:38.8",
+    "finish": "12:18.2"
+  },
+  "uploaded_at": "2026-10-10T20:36:06.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #225, co-driver Seth Rowley. This vehicle has no Richard Burns Rally version."
+}

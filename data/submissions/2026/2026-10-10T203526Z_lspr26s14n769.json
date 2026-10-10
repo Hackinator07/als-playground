@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n769",
+  "stage": "als-playground",
+  "driver": "Andy Cowan",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "1990 Volkswagen Jetta VR6",
+  "cp1_ms": 189500,
+  "cp2_ms": 391800,
+  "finish_ms": 494600,
+  "entered": {
+    "cp1": "3:09.5",
+    "cp2": "6:31.8",
+    "finish": "8:14.6"
+  },
+  "uploaded_at": "2026-10-10T20:35:26.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #769, co-driver Tiago Lourenco. This vehicle has no Richard Burns Rally version."
+}

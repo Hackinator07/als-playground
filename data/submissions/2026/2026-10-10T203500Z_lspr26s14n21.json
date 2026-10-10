@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n21",
+  "stage": "als-playground",
+  "driver": "Conner Martell",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "Subaru WRX ARA24",
+  "cp1_ms": 146600,
+  "cp2_ms": 307400,
+  "finish_ms": 390700,
+  "entered": {
+    "cp1": "2:26.6",
+    "cp2": "5:07.4",
+    "finish": "6:30.7"
+  },
+  "uploaded_at": "2026-10-10T20:35:00.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #21, co-driver Ross Whittock. This vehicle has no Richard Burns Rally version."
+}

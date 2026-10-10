@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n103",
+  "stage": "als-playground",
+  "driver": "Seth Quintero",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2026 Toyota GR Corolla Rally RC2",
+  "cp1_ms": 151400,
+  "cp2_ms": 316100,
+  "finish_ms": 402800,
+  "entered": {
+    "cp1": "2:31.4",
+    "cp2": "5:16.1",
+    "finish": "6:42.8"
+  },
+  "uploaded_at": "2026-10-10T20:35:01.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #103, co-driver James Morgan. This vehicle has no Richard Burns Rally version."
+}

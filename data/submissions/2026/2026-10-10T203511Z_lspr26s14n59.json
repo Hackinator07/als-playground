@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n59",
+  "stage": "als-playground",
+  "driver": "Patrick Moro",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2025 Chevrolet Sonic LT1",
+  "cp1_ms": 168700,
+  "cp2_ms": 356400,
+  "finish_ms": 454700,
+  "entered": {
+    "cp1": "2:48.7",
+    "cp2": "5:56.4",
+    "finish": "7:34.7"
+  },
+  "uploaded_at": "2026-10-10T20:35:11.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #59, co-driver Ole Holter. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n198",
+  "stage": "als-playground",
+  "driver": "Art Gruszka",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 172700,
+  "cp2_ms": 366800,
+  "finish_ms": 473100,
+  "entered": {
+    "cp1": "2:52.7",
+    "cp2": "6:06.8",
+    "finish": "7:53.1"
+  },
+  "uploaded_at": "2026-10-10T20:35:18.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #198, 2021 Hyundai i20 Rally2, co-driver Lukasz Wronski"
+}

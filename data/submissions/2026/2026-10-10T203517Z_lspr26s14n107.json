@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n107",
+  "stage": "als-playground",
+  "driver": "Richo Healey",
+  "car_id": "ford-fiesta-rally3-evo",
+  "car_name": "Ford Fiesta rally3 evo",
+  "cp1_ms": 178100,
+  "cp2_ms": 371500,
+  "finish_ms": 471800,
+  "entered": {
+    "cp1": "2:58.1",
+    "cp2": "6:11.5",
+    "finish": "7:51.8"
+  },
+  "uploaded_at": "2026-10-10T20:35:17.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #107, 2022 Ford Fiesta Rally3 Evo, co-driver Michelle Miller"
+}

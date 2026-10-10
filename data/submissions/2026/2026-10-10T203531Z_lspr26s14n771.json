@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n771",
+  "stage": "als-playground",
+  "driver": "James Pryzbylkowski",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 187100,
+  "cp2_ms": 393500,
+  "finish_ms": 500000,
+  "entered": {
+    "cp1": "3:07.1",
+    "cp2": "6:33.5",
+    "finish": "8:20.0"
+  },
+  "uploaded_at": "2026-10-10T20:35:31.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #771, 2004 Subaru WRX, co-driver Ethan Curtis"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n986",
+  "stage": "als-playground",
+  "driver": "Chris Nonack",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2013 Scion 2GR-86",
+  "cp1_ms": 181700,
+  "cp2_ms": 394000,
+  "finish_ms": 498600,
+  "entered": {
+    "cp1": "3:01.7",
+    "cp2": "6:34.0",
+    "finish": "8:18.6"
+  },
+  "uploaded_at": "2026-10-10T20:35:29.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #986, co-driver Sara Nonack. This vehicle has no Richard Burns Rally version."
+}
