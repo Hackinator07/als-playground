@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s14n983",
+  "stage": "als-playground",
+  "driver": "Bryce Murphy",
+  "car_id": "toyota-celica-tct-ta64-grpb",
+  "car_name": "Toyota Celica TCT (TA64) GrpB",
+  "cp1_ms": 240000,
+  "cp2_ms": 495900,
+  "finish_ms": 625400,
+  "entered": {
+    "cp1": "4:00.0",
+    "cp2": "8:15.9",
+    "finish": "10:25.4"
+  },
+  "uploaded_at": "2026-10-10T20:35:00.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #983, 1983 Toyota Celica, co-driver Braxton Murphy"
+}
