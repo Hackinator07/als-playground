@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n273",
+  "stage": "als-playground",
+  "driver": "William Tung",
+  "car_id": "peugeot-208-rally4",
+  "car_name": "Peugeot 208 Rally4",
+  "cp1_ms": 172700,
+  "cp2_ms": 359100,
+  "finish_ms": 455900,
+  "entered": {
+    "cp1": "2:52.7",
+    "cp2": "5:59.1",
+    "finish": "7:35.9"
+  },
+  "uploaded_at": "2026-10-10T23:05:08.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #273, 2025 Peugeot 208 Rally4, co-driver Michael Szewczyk"
+}

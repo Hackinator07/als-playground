@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n313",
+  "stage": "als-playground",
+  "driver": "Nick Pysklyvets",
+  "car_id": "no-rbr-version-4wd",
+  "car_name": "2015 Subaru WRX STi",
+  "cp1_ms": 180900,
+  "cp2_ms": 373300,
+  "finish_ms": 476600,
+  "entered": {
+    "cp1": "3:00.9",
+    "cp2": "6:13.3",
+    "finish": "7:56.6"
+  },
+  "uploaded_at": "2026-10-10T23:05:14.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #313, co-driver Roman Romanchuk. This vehicle has no Richard Burns Rally version."
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n135",
+  "stage": "als-playground",
+  "driver": "Roberto Yglesias",
+  "car_id": "ford-fiesta-rally3",
+  "car_name": "Ford Fiesta Rally3",
+  "cp1_ms": 170300,
+  "cp2_ms": 355600,
+  "finish_ms": 454100,
+  "entered": {
+    "cp1": "2:50.3",
+    "cp2": "5:55.6",
+    "finish": "7:34.1"
+  },
+  "uploaded_at": "2026-10-10T23:05:07.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #135, 2025 Ford Fiesta Rally3, co-driver Krista Skucas"
+}

@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n157",
+  "stage": "als-playground",
+  "driver": "Lia Block",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 151400,
+  "cp2_ms": 334200,
+  "finish_ms": 468300,
+  "entered": {
+    "cp1": "2:31.4",
+    "cp2": "5:34.2",
+    "finish": "7:48.3"
+  },
+  "uploaded_at": "2026-10-10T23:05:12.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #157, 2023 Hyundai i20 N Rally2, co-driver Alessandro Gelsomino"
+}

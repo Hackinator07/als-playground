@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n612",
+  "stage": "als-playground",
+  "driver": "Matthew Nykanen",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2006 Lexus IS350",
+  "cp1_ms": 225600,
+  "cp2_ms": 427500,
+  "finish_ms": 535400,
+  "entered": {
+    "cp1": "3:45.6",
+    "cp2": "7:07.5",
+    "finish": "8:55.4"
+  },
+  "uploaded_at": "2026-10-10T23:05:27.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #612, co-driver Michael Farrow. This vehicle has no Richard Burns Rally version."
+}

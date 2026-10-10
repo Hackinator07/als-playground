@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n567",
+  "stage": "als-playground",
+  "driver": "David Quillen",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2025 MINI JCW",
+  "cp1_ms": 183400,
+  "cp2_ms": 377100,
+  "finish_ms": 480100,
+  "entered": {
+    "cp1": "3:03.4",
+    "cp2": "6:17.1",
+    "finish": "8:00.1"
+  },
+  "uploaded_at": "2026-10-10T23:05:16.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #567, co-driver Drew Quillen. This vehicle has no Richard Burns Rally version."
+}

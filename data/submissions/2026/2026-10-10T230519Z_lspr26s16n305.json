@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n305",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2013 Subaru BRZ",
+  "cp1_ms": 188900,
+  "cp2_ms": 387500,
+  "finish_ms": 493600,
+  "entered": {
+    "cp1": "3:08.9",
+    "cp2": "6:27.5",
+    "finish": "8:13.6"
+  },
+  "uploaded_at": "2026-10-10T23:05:19.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #305, co-driver Cray Dumeah. This vehicle has no Richard Burns Rally version."
+}

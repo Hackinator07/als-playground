@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "id": "lspr26s16n418",
+  "stage": "als-playground",
+  "driver": "Tim Wickberg",
+  "car_id": "no-rbr-version-rwd",
+  "car_name": "2016 Subaru BRZ FA24D",
+  "cp1_ms": 191900,
+  "cp2_ms": 393700,
+  "finish_ms": 501200,
+  "entered": {
+    "cp1": "3:11.9",
+    "cp2": "6:33.7",
+    "finish": "8:21.2"
+  },
+  "uploaded_at": "2026-10-10T23:05:21.000Z",
+  "screenshot": null,
+  "status": "published",
+  "label": "LSPR 2026",
+  "note": "Real LSPR 2026 SS16 time, timed to the tenth: car #418, co-driver Matthew Trott. This vehicle has no Richard Burns Rally version."
+}
