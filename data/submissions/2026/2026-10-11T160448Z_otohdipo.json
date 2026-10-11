@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "otohdipo",
+  "stage": "als-playground",
+  "driver": "Jack Pullen",
+  "car_id": "renault-twingo-r1",
+  "car_name": "Renault Twingo R1",
+  "cp1_ms": 151600,
+  "cp2_ms": 348000,
+  "finish_ms": 454105,
+  "entered": {
+    "cp1": "2:31.6",
+    "cp2": "5:48.0",
+    "finish": "7:34.105"
+  },
+  "uploaded_at": "2026-10-11T16:04:48.640Z",
+  "screenshot": "screenshots/2026/otohdipo.webp",
+  "status": "published"
+}
