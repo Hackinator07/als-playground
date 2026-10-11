@@ -3,8 +3,8 @@
   "id": "lspr24n135",
   "stage": "als-playground",
   "driver": "Roberto Yglesias",
-  "car_id": "ford-fiesta-r2",
-  "car_name": "Ford Fiesta R2",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2017 Ford Fiesta ST",
   "cp1_ms": 166700,
   "cp2_ms": 385000,
   "finish_ms": 487400,
@@ -17,5 +17,5 @@
   "screenshot": null,
   "status": "published",
   "label": "LSPR 2024",
-  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #135, 2017 Ford Fiesta ST, co-driver Sara Nonack"
+  "note": "Real LSPR 2024 SS1 time, timed to the tenth: car #135, co-driver Sara Nonack. This vehicle has no Richard Burns Rally version."
 }

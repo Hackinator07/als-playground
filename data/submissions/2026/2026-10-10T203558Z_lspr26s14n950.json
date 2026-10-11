@@ -3,8 +3,8 @@
   "id": "lspr26s14n950",
   "stage": "als-playground",
   "driver": "Jason Kodat",
-  "car_id": "ford-fiesta-r2",
-  "car_name": "Ford Fiesta R2",
+  "car_id": "no-rbr-version-fwd",
+  "car_name": "2015 Ford Fiesta ST",
   "cp1_ms": 205800,
   "cp2_ms": 456800,
   "finish_ms": 576400,
@@ -17,5 +17,5 @@
   "screenshot": null,
   "status": "published",
   "label": "LSPR 2026",
-  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #950, 2015 Ford Fiesta ST, co-driver Phil Marsh"
+  "note": "Real LSPR 2026 SS14 time, timed to the tenth: car #950, co-driver Phil Marsh. This vehicle has no Richard Burns Rally version."
 }
