@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "m5ga3hgi",
+  "stage": "als-playground",
+  "driver": "Max Mitchell",
+  "car_id": "hyundai-i20-coupe-wrc-2020",
+  "car_name": "Hyundai i20 Coupe WRC 2020",
+  "cp1_ms": 120000,
+  "cp2_ms": 287000,
+  "finish_ms": 370304,
+  "entered": {
+    "cp1": "2:00.0",
+    "cp2": "4:47.0",
+    "finish": "6:10.304"
+  },
+  "uploaded_at": "2026-10-12T22:43:33.957Z",
+  "screenshot": "screenshots/2026/m5ga3hgi.jpg",
+  "status": "published"
+}
