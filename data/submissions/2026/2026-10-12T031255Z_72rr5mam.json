@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "72rr5mam",
+  "stage": "als-playground",
+  "driver": "J Roundtree",
+  "car_id": "ford-fiesta-rally2",
+  "car_name": "Ford Fiesta Rally2",
+  "cp1_ms": 129600,
+  "cp2_ms": 308600,
+  "finish_ms": 399162,
+  "entered": {
+    "cp1": "2:09.6",
+    "cp2": "5:08.6",
+    "finish": "6:39.162"
+  },
+  "uploaded_at": "2026-10-12T03:12:55.652Z",
+  "screenshot": "screenshots/2026/72rr5mam.webp",
+  "status": "published"
+}
