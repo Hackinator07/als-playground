@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "sakhoxfg",
+  "stage": "als-playground",
+  "driver": "J Roundtree",
+  "car_id": "ford-fiesta-wrc-2019",
+  "car_name": "Ford Fiesta WRC 2019",
+  "cp1_ms": 122800,
+  "cp2_ms": 292200,
+  "finish_ms": 381730,
+  "entered": {
+    "cp1": "2:02.8",
+    "cp2": "4:52.2",
+    "finish": "6:21.730"
+  },
+  "uploaded_at": "2026-10-13T00:04:40.219Z",
+  "screenshot": "screenshots/2026/sakhoxfg.webp",
+  "status": "published"
+}
