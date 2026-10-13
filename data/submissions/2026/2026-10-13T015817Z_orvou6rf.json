@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "orvou6rf",
+  "stage": "als-playground",
+  "driver": "Ethan Foster",
+  "car_id": "ford-fiesta-wrc-2019",
+  "car_name": "Ford Fiesta WRC 2019",
+  "cp1_ms": 119100,
+  "cp2_ms": 287200,
+  "finish_ms": 375609,
+  "entered": {
+    "cp1": "1:59.1",
+    "cp2": "4:47.2",
+    "finish": "6:15.609"
+  },
+  "uploaded_at": "2026-10-13T01:58:17.411Z",
+  "screenshot": "screenshots/2026/orvou6rf.webp",
+  "status": "published"
+}
