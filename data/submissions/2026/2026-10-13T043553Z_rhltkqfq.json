@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "rhltkqfq",
+  "stage": "als-playground",
+  "driver": "J Roundtree",
+  "car_id": "hyundai-i20-coupe-wrc-2021",
+  "car_name": "Hyundai i20 Coupe WRC 2021",
+  "cp1_ms": 117500,
+  "cp2_ms": 285600,
+  "finish_ms": 370049,
+  "entered": {
+    "cp1": "1:57.5",
+    "cp2": "4:45.6",
+    "finish": "6:10.049"
+  },
+  "uploaded_at": "2026-10-13T04:35:53.451Z",
+  "screenshot": "screenshots/2026/rhltkqfq.webp",
+  "status": "published"
+}
