@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "oyp6u4z5",
+  "stage": "als-playground",
+  "driver": "Jack Pullen",
+  "car_id": "bmw-m3-e36-grpa",
+  "car_name": "BMW M3 E36 GrpA",
+  "cp1_ms": 134500,
+  "cp2_ms": 320300,
+  "finish_ms": 414161,
+  "entered": {
+    "cp1": "2:14.5",
+    "cp2": "5:20.3",
+    "finish": "6:54.161"
+  },
+  "uploaded_at": "2026-10-13T22:07:27.996Z",
+  "screenshot": "screenshots/2026/oyp6u4z5.webp",
+  "status": "published"
+}
