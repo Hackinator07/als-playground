@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "7yd49m9c",
+  "stage": "als-playground",
+  "driver": "Max Mitchell",
+  "car_id": "skoda-fabia-rs-rally2",
+  "car_name": "Skoda Fabia RS Rally2",
+  "cp1_ms": 122000,
+  "cp2_ms": 290500,
+  "finish_ms": 372431,
+  "entered": {
+    "cp1": "2:02.0",
+    "cp2": "4:50.5",
+    "finish": "6:12.431"
+  },
+  "uploaded_at": "2026-10-14T18:27:31.750Z",
+  "screenshot": "screenshots/2026/7yd49m9c.jpg",
+  "status": "published"
+}
