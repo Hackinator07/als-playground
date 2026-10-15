@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "eeiddxdj",
+  "stage": "als-playground",
+  "driver": "Jason Hack",
+  "car_id": "subaru-impreza-gda-wrc2003-s9",
+  "car_name": "Subaru Impreza GDA WRC2003 (S9)",
+  "cp1_ms": 132100,
+  "cp2_ms": 319800,
+  "finish_ms": 415802,
+  "entered": {
+    "cp1": "2:12.100",
+    "cp2": "5:19.800",
+    "finish": "6:55.802"
+  },
+  "uploaded_at": "2026-10-15T21:30:58.665Z",
+  "screenshot": "screenshots/2026/eeiddxdj.webp",
+  "status": "published"
+}
