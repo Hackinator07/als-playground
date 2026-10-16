@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "d8mdzmj6",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 127300,
+  "cp2_ms": 303700,
+  "finish_ms": 393308,
+  "entered": {
+    "cp1": "2:07.3",
+    "cp2": "5:03.7",
+    "finish": "6:33.308"
+  },
+  "uploaded_at": "2026-10-16T05:21:27.299Z",
+  "screenshot": "screenshots/2026/d8mdzmj6.webp",
+  "status": "published"
+}
