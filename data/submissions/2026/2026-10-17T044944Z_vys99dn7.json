@@ -5,16 +5,16 @@
   "driver": "Charlie Hannigan",
   "car_id": "ford-fiesta-wrc-2019",
   "car_name": "Ford Fiesta WRC 2019",
-  "cp1_ms": 176418,
-  "cp2_ms": 322330,
+  "cp1_ms": 116418,
+  "cp2_ms": 302107,
   "finish_ms": 396450,
   "entered": {
-    "cp1": "2:56.418",
-    "cp2": "5:22.330",
+    "cp1": "1:56.418",
+    "cp2": "5:02.107",
     "finish": "6:36.45"
   },
   "uploaded_at": "2026-10-17T04:49:44.746Z",
   "screenshot": null,
   "status": "published",
-  "note": "Checkpoint 2 estimated from the finish time: the submitted 6:00.00 left a 36 s sector 3"
+  "note": "Checkpoint 1 set to 1:56.418 and checkpoint 2 estimated from the finish time (submitted splits were wrong)"
 }
