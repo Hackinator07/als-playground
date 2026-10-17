@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "l6kfnz0s",
+  "stage": "als-playground",
+  "driver": "Ethan Foster",
+  "car_id": "hyundai-i20-coupe-wrc-2021",
+  "car_name": "Hyundai i20 Coupe WRC 2021",
+  "cp1_ms": 116300,
+  "cp2_ms": 281600,
+  "finish_ms": 364018,
+  "entered": {
+    "cp1": "1:56.3",
+    "cp2": "4:41.6",
+    "finish": "6:04.018"
+  },
+  "uploaded_at": "2026-10-17T04:09:54.102Z",
+  "screenshot": "screenshots/2026/l6kfnz0s.webp",
+  "status": "published"
+}
