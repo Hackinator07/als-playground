@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "vys99dn7",
+  "stage": "als-playground",
+  "driver": "Charlie Hannigan",
+  "car_id": "ford-fiesta-wrc-2019",
+  "car_name": "Ford Fiesta WRC 2019",
+  "cp1_ms": 176418,
+  "cp2_ms": 360000,
+  "finish_ms": 396450,
+  "entered": {
+    "cp1": "2:56.418",
+    "cp2": "6:00.00",
+    "finish": "6:36.45"
+  },
+  "uploaded_at": "2026-10-17T04:49:44.746Z",
+  "screenshot": null,
+  "status": "published"
+}
