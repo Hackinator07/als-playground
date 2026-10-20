@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "56qk9al9",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "audi-sport-quattro-grpb",
+  "car_name": "Audi Sport quattro GrpB",
+  "cp1_ms": 121300,
+  "cp2_ms": 306200,
+  "finish_ms": 394246,
+  "entered": {
+    "cp1": "2:01.3",
+    "cp2": "5:06.2",
+    "finish": "6:34.246"
+  },
+  "uploaded_at": "2026-10-20T03:24:22.453Z",
+  "screenshot": "screenshots/2026/56qk9al9.webp",
+  "status": "published"
+}
