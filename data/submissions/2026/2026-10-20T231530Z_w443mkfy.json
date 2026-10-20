@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "w443mkfy",
+  "stage": "als-playground",
+  "driver": "Romulo Chagas",
+  "car_id": "ford-fiesta-rally3-evo",
+  "car_name": "Ford Fiesta rally3 evo",
+  "cp1_ms": 130800,
+  "cp2_ms": 311500,
+  "finish_ms": 405471,
+  "entered": {
+    "cp1": "2:10.8",
+    "cp2": "5:11.5",
+    "finish": "6:45.471"
+  },
+  "uploaded_at": "2026-10-20T23:15:30.097Z",
+  "screenshot": "screenshots/2026/w443mkfy.webp",
+  "status": "published"
+}
