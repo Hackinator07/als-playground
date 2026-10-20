@@ -5,15 +5,16 @@
   "driver": "Charlie Hannigan",
   "car_id": "hyundai-i20-coupe-wrc-2021",
   "car_name": "Hyundai i20 Coupe WRC 2021",
-  "cp1_ms": 160274,
-  "cp2_ms": 360234,
+  "cp1_ms": 122739,
+  "cp2_ms": 294438,
   "finish_ms": 380468,
   "entered": {
-    "cp1": "2:40.274",
-    "cp2": "6:00.234",
+    "cp1": "2:02.739",
+    "cp2": "4:54.438",
     "finish": "6:20.468"
   },
   "uploaded_at": "2026-10-19T16:17:23.989Z",
   "screenshot": "screenshots/2026/pk1pllbh.jpg",
-  "status": "published"
+  "status": "published",
+  "note": "Checkpoint 1 and 2 estimated from the finish time (submitted splits were entered incorrectly)"
 }
