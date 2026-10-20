@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "fbmhnoig",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "audi-sport-quattro-grpb",
+  "car_name": "Audi Sport quattro GrpB",
+  "cp1_ms": 121600,
+  "cp2_ms": 293700,
+  "finish_ms": 376712,
+  "entered": {
+    "cp1": "2:01.6",
+    "cp2": "4:53.7",
+    "finish": "6:16.712"
+  },
+  "uploaded_at": "2026-10-20T04:22:34.450Z",
+  "screenshot": "screenshots/2026/fbmhnoig.webp",
+  "status": "published"
+}
