@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "rsg6z09m",
+  "stage": "als-playground",
+  "driver": "Romulo Chagas",
+  "car_id": "ford-fiesta-rally3",
+  "car_name": "Ford Fiesta Rally3",
+  "cp1_ms": 135800,
+  "cp2_ms": 319200,
+  "finish_ms": 415506,
+  "entered": {
+    "cp1": "2:15.800",
+    "cp2": "5:19.200",
+    "finish": "6:55.506"
+  },
+  "uploaded_at": "2026-10-20T21:32:00.702Z",
+  "screenshot": "screenshots/2026/rsg6z09m.webp",
+  "status": "published"
+}
