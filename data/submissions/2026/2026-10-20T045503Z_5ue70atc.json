@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "5ue70atc",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "hyundai-i20-coupe-wrc-2021",
+  "car_name": "Hyundai i20 Coupe WRC 2021",
+  "cp1_ms": 120900,
+  "cp2_ms": 288300,
+  "finish_ms": 371584,
+  "entered": {
+    "cp1": "2:00.9",
+    "cp2": "4:48.3",
+    "finish": "6:11.584"
+  },
+  "uploaded_at": "2026-10-20T04:55:03.836Z",
+  "screenshot": "screenshots/2026/5ue70atc.webp",
+  "status": "published"
+}
