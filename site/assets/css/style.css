@@ -71,6 +71,7 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .stage-meta .meta-event.meta-2026 { border-left-color: var(--pine); background: var(--lspr26-bg); }
 .stage-meta .meta-event.meta-2026 b { color: var(--lspr26-text); }
 .stage-meta .meta-place { display: block; }
+.stage-meta .meta-viewer { color: var(--maple-dark); font-weight: 600; white-space: nowrap; }
 
 .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; padding: 12px; border-bottom: 1px solid var(--line); }
 .btn-submit {
