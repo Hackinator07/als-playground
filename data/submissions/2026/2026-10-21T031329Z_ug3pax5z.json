@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "ug3pax5z",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "hyundai-i20-coupe-wrc-2017",
+  "car_name": "Hyundai i20 Coupe WRC 2017",
+  "cp1_ms": 120500,
+  "cp2_ms": 287700,
+  "finish_ms": 369391,
+  "entered": {
+    "cp1": "2:00.5",
+    "cp2": "4:47.7",
+    "finish": "6:09.391"
+  },
+  "uploaded_at": "2026-10-21T03:13:29.801Z",
+  "screenshot": "screenshots/2026/ug3pax5z.webp",
+  "status": "published"
+}
