@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "47kw4csc",
+  "stage": "als-playground",
+  "driver": "Romulo Chagas",
+  "car_id": "ford-fiesta-wrc-2019",
+  "car_name": "Ford Fiesta WRC 2019",
+  "cp1_ms": 119100,
+  "cp2_ms": 289600,
+  "finish_ms": 377756,
+  "entered": {
+    "cp1": "1:59.1",
+    "cp2": "4:49.6",
+    "finish": "6:17.756"
+  },
+  "uploaded_at": "2026-10-21T00:59:00.998Z",
+  "screenshot": "screenshots/2026/47kw4csc.webp",
+  "status": "published"
+}
