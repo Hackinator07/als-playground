@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "aytwfqbz",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "porsche-911-gt3-rs-2010-rgt",
+  "car_name": "Porsche 911 GT3 RS (2010) RGT",
+  "cp1_ms": 135500,
+  "cp2_ms": 315200,
+  "finish_ms": 403713,
+  "entered": {
+    "cp1": "2:15.5",
+    "cp2": "5:15.2",
+    "finish": "6:43.713"
+  },
+  "uploaded_at": "2026-10-21T02:58:01.771Z",
+  "screenshot": "screenshots/2026/aytwfqbz.webp",
+  "status": "published"
+}
