@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "kimg2jo5",
+  "stage": "als-playground",
+  "driver": "Johann Von Vorst",
+  "car_id": "peugeot-306-maxi-kit-car",
+  "car_name": "Peugeot 306 Maxi Kit Car",
+  "cp1_ms": 132800,
+  "cp2_ms": 309800,
+  "finish_ms": 396579,
+  "entered": {
+    "cp1": "2:12.8",
+    "cp2": "5:09.8",
+    "finish": "6:36.579"
+  },
+  "uploaded_at": "2026-10-21T19:32:53.594Z",
+  "screenshot": "screenshots/2026/kimg2jo5.webp",
+  "status": "published"
+}
