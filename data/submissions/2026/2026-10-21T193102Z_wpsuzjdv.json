@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "wpsuzjdv",
+  "stage": "als-playground",
+  "driver": "Johann Von Vorst",
+  "car_id": "bmw-m1-grpb",
+  "car_name": "BMW M1 GrpB",
+  "cp1_ms": 126600,
+  "cp2_ms": 305500,
+  "finish_ms": 390733,
+  "entered": {
+    "cp1": "2:06.6",
+    "cp2": "5:05.5",
+    "finish": "6:30.733"
+  },
+  "uploaded_at": "2026-10-21T19:31:02.230Z",
+  "screenshot": "screenshots/2026/wpsuzjdv.webp",
+  "status": "published"
+}
