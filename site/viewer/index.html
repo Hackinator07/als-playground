@@ -38,11 +38,14 @@ input[type=range]{accent-color:var(--maple);width:120px}
 #dist input{width:100%}
 .km{font:400 12px var(--mono);color:var(--birch);min-width:62px;text-align:right}
 #toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(120px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--spruce-2);border:1px solid var(--maple);border-radius:4px;padding:8px 12px;font:400 12px var(--mono);color:var(--birch);user-select:all;overflow-wrap:anywhere;z-index:4}
+#tpad{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:calc(150px + env(safe-area-inset-bottom,0px));display:grid;grid-template-columns:repeat(2,64px);gap:8px;z-index:3}
+#tpad button{height:56px;padding:0;touch-action:none;user-select:none;-webkit-user-select:none;background:#22392dd9}
+#tpad button.on{background:var(--maple);color:#1a0d05}
 #load{position:fixed;inset:0;display:grid;place-items:center;background:var(--spruce);z-index:5;text-align:center;padding:0 16px}
 #load h2{font:700 44px/1 var(--display);text-transform:uppercase;margin:0 0 8px;letter-spacing:.02em}
 #load p{margin:0;color:var(--needle);font:400 13px var(--mono)}
 .help{flex-basis:100%;font:400 11px var(--mono);color:var(--needle)}.help b{font-weight:400}
-@media (max-width:560px){#map{width:96px;height:140px}.top h1{font-size:20px}input[type=range]{width:90px}}
+@media (max-width:560px){#map{width:96px;height:140px}.top{max-width:calc(100% - 96px - 48px)}.read{top:calc(env(safe-area-inset-top,0px) + 106px)}.top h1{font-size:20px}input[type=range]{width:90px}}
 </style>
 
 </head>
@@ -51,6 +54,7 @@ input[type=range]{accent-color:var(--maple);width:120px}
 <div id="load"><div><h2>Al's Playground</h2><p id="lmsg">Loading stage…</p></div></div>
 <div class="top"><a class="back" href="https://hackinator07.github.io/als-playground/">&larr; Stage times</a><h1>Al's Playground</h1><div class="sub" id="ver">LSPR · Baraga County, MI</div></div>
 <div class="read" id="read"><b id="rkm">0.00 km</b><span id="rinfo"></span></div>
+<div id="tpad" hidden aria-label="Fly controls"><button data-m="f1">Fwd</button><button data-m="f-1">Back</button><button data-m="u1">Up</button><button data-m="u-1">Down</button></div>
 <div id="toast" role="status" hidden></div>
 <canvas id="map" width="300" height="440" aria-label="Stage map; click to jump"></canvas>
 <div class="bar">
@@ -194,7 +198,10 @@ function nearest(x,y){let best=1e18,bi=0;for(let i=0;i<L.length;i++){const dx=L[
 const ride=new BABYLON.FreeCamera('ride',BABYLON.Vector3.Zero(),scene);
 ride.minZ=0.2;ride.fov=1.05;
 const fly=new BABYLON.UniversalCamera('fly',new BABYLON.Vector3(0,30,0),scene);
-fly.inputs.removeByType('FreeCameraGamepadInput');fly.minZ=0.3;fly.fov=1.0;fly.speed=1.2;fly.angularSensibility=1600;fly.inertia=0.8;
+fly.inputs.removeByType('FreeCameraGamepadInput');
+const isTouch=matchMedia('(pointer:coarse)').matches;
+if(isTouch){fly.inputs.removeByType('FreeCameraTouchInput');fly.inputs.removeByType('FreeCameraMouseInput');}
+let tmove={f:0,u:0};fly.minZ=0.3;fly.fov=1.0;fly.speed=1.2;fly.angularSensibility=1600;fly.inertia=0.8;
 fly.keysUp=[87,38];fly.keysDown=[83,40];fly.keysLeft=[65,37];fly.keysRight=[68,39];fly.keysUpward=[69];fly.keysDownward=[81];
 let mode='ride', dist=0, playing=false, yaw=0, pitch=-0.05, kmh=90;
 const cam=()=>mode==='ride'?ride:fly;
@@ -207,8 +214,11 @@ function placeRide(){
 }
 // drag-to-look in ride mode
 let drag=null;
-canvas.addEventListener('pointerdown',e=>{if(mode==='ride'){drag={x:e.clientX,y:e.clientY,yaw,pitch};canvas.setPointerCapture(e.pointerId);}});
-canvas.addEventListener('pointermove',e=>{if(drag){yaw=drag.yaw+(e.clientX-drag.x)*0.005;pitch=Math.max(-1.2,Math.min(1.2,drag.pitch-(e.clientY-drag.y)*0.005));}});
+canvas.addEventListener('pointerdown',e=>{if(mode==='ride'){drag={x:e.clientX,y:e.clientY,yaw,pitch};canvas.setPointerCapture(e.pointerId);}
+  else if(isTouch){drag={x:e.clientX,y:e.clientY,ry:fly.rotation.y,rx:fly.rotation.x,fly:1};canvas.setPointerCapture(e.pointerId);}});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;
+  if(drag.fly){fly.rotation.y=drag.ry+(e.clientX-drag.x)*0.005;fly.rotation.x=Math.max(-1.5,Math.min(1.5,drag.rx+(e.clientY-drag.y)*0.005));return;}
+  yaw=drag.yaw+(e.clientX-drag.x)*0.005;pitch=Math.max(-1.2,Math.min(1.2,drag.pitch-(e.clientY-drag.y)*0.005));});
 canvas.addEventListener('pointerup',()=>{drag=null;});
 canvas.addEventListener('dblclick',()=>{yaw=0;pitch=-0.05;});
 let shift=false;window.addEventListener('keydown',e=>{if(e.key==='Shift')shift=true;if(e.key===' '&&mode==='ride'){e.preventDefault();setPlay(!playing);}});
@@ -218,7 +228,7 @@ function setMode(m){
   if(m===mode)return;
   if(m==='fly'){fly.position=ride.position.add(new BABYLON.Vector3(0,6,0));fly.rotation=ride.rotation.clone();ride.detachControl();scene.activeCamera=fly;fly.attachControl(canvas,true);setPlay(false);}
   else{fly.detachControl();const p=fly.position;dist=nearest(p.x+O[0],p.z+O[1]).d;yaw=0;pitch=-0.05;scene.activeCamera=ride;}
-  mode=m;setHelp();$('mRide').setAttribute('aria-pressed',m==='ride');$('mFly').setAttribute('aria-pressed',m==='fly');$('play').disabled=m!=='ride';
+  mode=m;setHelp();$('tpad').hidden=!(isTouch&&m==='fly');placePad();tmove={f:0,u:0};$('mRide').setAttribute('aria-pressed',m==='ride');$('mFly').setAttribute('aria-pressed',m==='fly');$('play').disabled=m!=='ride';
   canvas.focus();
 }
 const touch=matchMedia('(pointer:coarse)').matches;
@@ -226,7 +236,7 @@ function setHelp(){
   $('help').innerHTML=mode==='ride'
     ?(touch?'<b>Ride</b> follows the road at driver eye height. Tap Play to drive, drag to look around, slide Road or tap the map to jump.'
            :'<b>Ride</b> follows the road at driver eye height. Space or Play to drive, drag to look around, double-click to look ahead again. Slide Road, use the buttons or click the map to jump.')
-    :(touch?'<b>Fly</b> moves freely. Drag to look and steer; tap Ride to drop back onto the road.'
+    :(touch?'<b>Fly</b> moves freely. Drag to look around. Hold the arrows to move: Fwd and Back, Up and Down. Tap Ride to drop back onto the road.'
            :'<b>Fly</b> moves freely. W A S D or arrows to move, E up, Q down, hold Shift to go fast, drag to look. Gamepad: left stick move, right stick look, triggers down/up, RB fast. Ride drops you back onto the road.');
 }
 function setPlay(v){playing=v&&mode==='ride';$('play').setAttribute('aria-pressed',playing);$('play').textContent=playing?'Pause':'Play';}
@@ -297,7 +307,7 @@ let last=performance.now(),acc=0,uiAcc=0;
 scene.onBeforeRenderObservable.add(()=>{
   const now=performance.now(),dt=Math.min(0.1,(now-last)/1000);last=now;
   if(mode==='ride'){if(playing){dist+=kmh/3.6*dt;if(dist>=LEN){dist=LEN;setPlay(false);}}placeRide();}
-  else{fly.speed=(shift?4.5:1.2)*Math.max(0.6,fog[1]/700);padFly(dt);}
+  else{fly.speed=(shift?4.5:1.2)*Math.max(0.6,fog[1]/700);padFly(dt);if(tmove.f||tmove.u){const v=22*Math.max(0.6,fog[1]/700)*dt;fly.position.addInPlace(fly.getDirection(BABYLON.Axis.Z).scale(tmove.f*v));fly.position.y+=tmove.u*v;}}
   acc+=dt;if(acc>0.25){acc=0;stream();}
   uiAcc+=dt;if(uiAcc>0.15){uiAcc=0;
     const p=cam().position,x=p.x+O[0],y=p.z+O[1];const n=mode==='ride'?{d:dist,off:0}:nearest(x,y);
@@ -315,6 +325,11 @@ await new Promise(res=>{const iv=setInterval(()=>{stream();const near=tiles.filt
 engine.runRenderLoop(()=>scene.render());
 scene.executeWhenReady(()=>{$('load').hidden=true;canvas.focus();});
 window.addEventListener('resize',()=>engine.resize());
+function placePad(){$('tpad').style.bottom=(document.querySelector('.bar').offsetHeight+10)+'px';}
+window.addEventListener('resize',placePad);
+document.querySelectorAll('#tpad button').forEach(b=>{const k=b.dataset.m[0],v=+b.dataset.m.slice(1);
+  const on=e=>{e.preventDefault();tmove[k]=v;b.classList.add('on');},off=()=>{if(tmove[k]===v)tmove[k]=0;b.classList.remove('on');};
+  b.addEventListener('pointerdown',on);['pointerup','pointercancel','pointerleave'].forEach(t=>b.addEventListener(t,off));b.addEventListener('contextmenu',e=>e.preventDefault());});
 window.__als={scene,engine,tiles,setMode,go:d=>{dist=d;},setView};
 })().catch(e=>{document.getElementById('lmsg').textContent='The stage could not load: '+e.message;console.error(e);});
 </script>
