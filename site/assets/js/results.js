@@ -120,9 +120,10 @@ function renderStage() {
   const meta = $('stage-meta');
   const place = [s.location, `${s.length_km} km`, s.surface].filter(Boolean).join(' · ');
   if (Array.isArray(s.events) && s.events.length) {
-    meta.innerHTML = `<span class="meta-events">${s.events.map((e) => `<span class="meta-event meta-${esc(e.year)}"><b>${esc(e.label)}</b> ${esc(e.stages)}</span>`).join('')}</span><span class="meta-place">${esc(place)}</span>`;
+    meta.innerHTML = `<span class="meta-events">${s.events.map((e) => `<span class="meta-event meta-${esc(e.year)}"><b>${esc(e.label)}</b> ${esc(e.stages)}</span>`).join('')}</span><span class="meta-place">${esc(place)} · <a class="meta-viewer" href="viewer/">Ride the stage in 3D</a></span>`;
   } else {
-    meta.textContent = [s.event, place].filter(Boolean).join(' · ');
+    meta.textContent = [s.event, place].filter(Boolean).join(' · ') + ' · ';
+    const a = document.createElement('a'); a.className = 'meta-viewer'; a.href = 'viewer/'; a.textContent = 'Ride the stage in 3D'; meta.append(a);
   }
   if (s.repo_url) $('repo-link').href = s.repo_url;
   if (state.generatedAt && !sample) {
