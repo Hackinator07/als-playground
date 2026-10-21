@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "d7pcpbz9",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "bmw-m3-e36-grpa",
+  "car_name": "BMW M3 E36 GrpA",
+  "cp1_ms": 134800,
+  "cp2_ms": 318600,
+  "finish_ms": 408158,
+  "entered": {
+    "cp1": "2:14.8",
+    "cp2": "5:18.6",
+    "finish": "6:48.158"
+  },
+  "uploaded_at": "2026-10-21T02:30:03.993Z",
+  "screenshot": "screenshots/2026/d7pcpbz9.webp",
+  "status": "published"
+}
