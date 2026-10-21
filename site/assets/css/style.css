@@ -107,6 +107,8 @@ select { padding-right: 24px; }
   border-right: 1px solid rgba(241, 238, 228, 0.18);
 }
 .results th:last-child { border-right: 0; }
+.results th a.th-viewer { color: inherit; text-decoration: underline dotted; text-underline-offset: 3px; }
+.results th a.th-viewer:hover { text-decoration-style: solid; }
 .results th .short { display: none; }
 .results td { padding: 5px 6px; vertical-align: middle; border-bottom: 1px solid #E6E9E1; }
 .results tbody tr.run { cursor: pointer; }
