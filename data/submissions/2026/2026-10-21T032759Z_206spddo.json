@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "206spddo",
+  "stage": "als-playground",
+  "driver": "Johann Von Vorst",
+  "car_id": "hyundai-i20-coupe-wrc-2017",
+  "car_name": "Hyundai i20 Coupe WRC 2017",
+  "cp1_ms": 114100,
+  "cp2_ms": 276600,
+  "finish_ms": 355575,
+  "entered": {
+    "cp1": "1:54.1",
+    "cp2": "4:36.6",
+    "finish": "5:55.575"
+  },
+  "uploaded_at": "2026-10-21T03:27:59.488Z",
+  "screenshot": "screenshots/2026/206spddo.webp",
+  "tune": {
+    "file": "tunes/2026/206spddo.lsp",
+    "name": "15_d_gravel"
+  },
+  "status": "published"
+}
