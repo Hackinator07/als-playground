@@ -185,3 +185,21 @@ test('theoreticalBest adds the fastest sector of each part, skipping missing one
   assert.deepEqual(t.parts.map((p) => p.run.id), ['b', 'c', 'a']);
   assert.equal(theoreticalBest([row('b', [140000, null, null])]), null);
 });
+
+test('best per car: one row per driver and car, with the gap to the driver\'s own best', async () => {
+  const { rankRuns, carKey } = await import('../shared/rules.js');
+  const mk = (id, driver, car, ms, extra = {}) => ({ id, driver, car_id: car, car_name: car, finish_ms: ms, uploaded_at: '2026-10-10T20:00:00.000Z', ...extra });
+  const runs = [
+    mk('a1', 'Ann Lee', 'rally1', 400000), mk('a2', 'Ann Lee', 'rally1', 405000), mk('a3', 'Ann Lee', 'quattro', 406000),
+    mk('b1', 'Bob', 'quattro', 403000),
+  ];
+  const r = rankRuns(runs, { view: 'car' });
+  assert.deepEqual(r.rows.map((x) => [x.run.id, x.pos, x.ownGap]), [['a1', 1, 0], ['b1', 2, 0], ['a3', 3, 6000]]);
+  assert.deepEqual(rankRuns(runs, { view: 'car', car: 'quattro' }).rows.map((x) => [x.run.id, x.ownGap]), [['b1', 0], ['a3', 0]]);
+  assert.deepEqual(rankRuns(runs, { view: 'best' }).rows.map((x) => x.run.id), ['a1', 'b1']);
+  assert.deepEqual(rankRuns(runs, { view: 'all', car: 'rally1' }).rows.map((x) => x.run.id), ['a1', 'a2']);
+  // real LSPR cars share one placeholder id, so the real car name keeps them apart
+  const real = [mk('x1', 'Cy', 'no-rbr-version-4wd', 400000, { car_name: '2015 Subaru WRX' }), mk('x2', 'Cy', 'no-rbr-version-4wd', 410000, { car_name: '2018 Subaru STi' })];
+  assert.equal(rankRuns(real, { view: 'car' }).rows.length, 2);
+  assert.notEqual(carKey(real[0]), carKey(real[1]));
+});

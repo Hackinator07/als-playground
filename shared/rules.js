@@ -193,6 +193,14 @@ export function validateSubmission(input, { stage, cars, existing = [] }) {
 
 // ---------------------------------------------------------------- ranking
 
+/**
+ * Which car a run counts as for "best per car". Real LSPR cars with no RBR version are all stored under a
+ * placeholder id (no-rbr-version-4wd and so on), so for those the real car name is part of the key.
+ */
+export function carKey(run) {
+  return String(run.car_id).startsWith('no-rbr-version') ? `${run.car_id}|${run.car_name}` : run.car_id;
+}
+
 function byFinishThenUpload(a, b) {
   if (a.finish_ms !== b.finish_ms) return a.finish_ms - b.finish_ms;
   return Date.parse(a.uploaded_at) - Date.parse(b.uploaded_at);
@@ -201,18 +209,20 @@ function byFinishThenUpload(a, b) {
 /**
  * Rank runs for display.
  * runs:    published runs (from results.json)
- * options: { view: 'best' | 'all', group: '' | group name, carGroup: Map car_id -> group }
+ * options: { view: 'best' | 'car' | 'all', group: '' | group name, car: '' | car_id, carGroup: Map car_id -> group }
  *
- * - The class filter is applied first, so "best per driver" in Group A is
+ * - The class and car filters are applied first, so "best per driver" in Group A is
  *   each driver's best Group A run.
  * - Best per driver keeps each driver's fastest run (earliest upload on a tie).
+ * - Best per car keeps each driver's fastest run in each car (see carKey), and tells every
+ *   row how far it is behind that driver's fastest row (ownGap, 0 on their best).
  * - Sorted by finish, ties by upload time. Competition ranking: 1, 2, 2, 4.
  * - Diffs use finish only. Leader shows 0 in both; a tie shows 0 Diff. Prev.
  *
  * Returns { rows, fastestCp1, fastestCp2, fastestSectors, runsByDriver }.
  */
 export function rankRuns(runs, options = {}) {
-  const { view = 'best', group = '', carGroup = new Map(), source = '' } = options;
+  const { view = 'best', group = '', car = '', carGroup = new Map(), source = '' } = options;
 
   // source: '' all runs, 'virtual' RBR runs only, 'real' any curated real-world result, 'lspr2024' / 'lspr2026' one year only (see runTag)
   const inSourceRuns = source ? runs.filter((r) => inSource(r, source)) : runs;
@@ -224,6 +234,7 @@ export function rankRuns(runs, options = {}) {
   }
 
   let pool = group ? inSourceRuns.filter((r) => carGroup.get(r.car_id) === group) : inSourceRuns.slice();
+  if (car) pool = pool.filter((r) => r.car_id === car);
 
   if (view === 'best') {
     const best = new Map();
@@ -233,9 +244,19 @@ export function rankRuns(runs, options = {}) {
       if (!cur || byFinishThenUpload(r, cur) < 0) best.set(k, r);
     }
     pool = [...best.values()];
+  } else if (view === 'car') {
+    const best = new Map();
+    for (const r of pool) {
+      const k = `${driverKey(r.driver)}|${carKey(r)}`;
+      const cur = best.get(k);
+      if (!cur || byFinishThenUpload(r, cur) < 0) best.set(k, r);
+    }
+    pool = [...best.values()];
   }
 
   pool.sort(byFinishThenUpload);
+  const ownBest = new Map();
+  for (const r of pool) { const k = driverKey(r.driver); if (!ownBest.has(k)) ownBest.set(k, r.finish_ms); }
 
   const rows = [];
   for (let i = 0; i < pool.length; i++) {
@@ -248,6 +269,7 @@ export function rankRuns(runs, options = {}) {
       diffPrev: prev ? run.finish_ms - prev.run.finish_ms : 0,
       diffFirst: i > 0 ? run.finish_ms - pool[0].finish_ms : 0,
       sectors: sectorsOf(run),
+      ownGap: run.finish_ms - ownBest.get(driverKey(run.driver)),
       driverRuns: runsByDriver.get(driverKey(run.driver)) || 1,
     });
   }

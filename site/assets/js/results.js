@@ -16,15 +16,19 @@ const highlightId = params.get('highlight') || '';
 const SOURCE_PARAM = { virtual: 'virtual', lspr2024: 'lspr2024', lspr2026: 'lspr2026', lspr: 'lspr2024' };
 const SOURCE_NAME = { virtual: 'virtual', lspr2024: 'LSPR 2024', lspr2026: 'LSPR 2026' };
 const LSPR_YEARS = ['2024', '2026'];
+// ?view=car opens Best per car and ?car=<car id> picks a car (shareable links).
+const VIEWS = ['best', 'car', 'all'];
 
 const state = {
   stage: null,
   groups: [],          // [{name, tag}] in dropdown order
   carGroup: new Map(), // car_id -> group name
+  carName: new Map(),  // car_id -> name (original RBR cars only: the Car filter never offers real LSPR cars)
   groupTag: new Map(), // group name -> short tag
   runs: [],
   generatedAt: null,
-  view: 'best',
+  view: VIEWS.includes((params.get('view') || '').toLowerCase()) ? params.get('view').toLowerCase() : 'best',
+  car: params.get('car') || '',
   source: SOURCE_PARAM[(params.get('runs') || '').toLowerCase()] || '',
   group: '',
   search: '',
@@ -77,6 +81,7 @@ async function load() {
     state.groups = cars.groups;
     state.carGroup = new Map(cars.cars.map((c) => [c.id, c.group]));
     state.groupTag = new Map(cars.groups.map((g) => [g.name, g.tag]));
+    state.carName = new Map(cars.cars.filter((c) => c.active !== false && !c.id.startsWith('no-rbr-version')).map((c) => [c.id, c.name]));
     state.runs = Array.isArray(results.runs) ? results.runs : [];
     state.generatedAt = results.generated_at || null;
     renderStage();
@@ -134,13 +139,37 @@ function renderClassOptions() {
     .map((g) => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
   sel.value = used.has(keep) ? keep : '';
   state.group = sel.value;
+  renderCarOptions();
+}
+
+/** Car filter: original RBR cars that have at least one time (inside the chosen drivetrain), grouped by drivetrain. */
+function renderCarOptions() {
+  const used = new Set(state.runs.map((r) => r.car_id));
+  const sel = $('f-car');
+  const opts = state.groups
+    .filter((g) => !state.group || g.name === state.group)
+    .map((g) => {
+      const cars = [...state.carName].filter(([id]) => used.has(id) && state.carGroup.get(id) === g.name).sort((a, b) => a[1].localeCompare(b[1]));
+      return cars.length ? `<optgroup label="${esc(g.name)}">${cars.map(([id, name]) => `<option value="${esc(id)}">${esc(name)}</option>`).join('')}</optgroup>` : '';
+    }).join('');
+  sel.innerHTML = `<option value="">All cars</option>${opts}`;
+  const ok = [...sel.options].some((o) => o.value === state.car);
+  sel.value = ok ? state.car : '';
+  state.car = sel.value;
+}
+
+function syncUrl() {
+  const url = new URL(location.href);
+  if (state.view === 'best') url.searchParams.delete('view'); else url.searchParams.set('view', state.view);
+  if (state.car) url.searchParams.set('car', state.car); else url.searchParams.delete('car');
+  history.replaceState(null, '', url);
 }
 
 // ------------------------------------------------------------ the table
 
 function render() {
   const { rows, fastestCp1, fastestCp2, fastestSectors } = rankRuns(state.runs, {
-    view: state.view, group: state.group, carGroup: state.carGroup, source: state.source,
+    view: state.view, group: state.group, car: state.car, carGroup: state.carGroup, source: state.source,
   });
 
   const q = driverKey(state.search);
@@ -155,6 +184,10 @@ function render() {
 
   if (state.runs.length === 0) {
     setMessage(`<strong>No times yet. Be the first.</strong>Drive ${esc(state.stage?.name || 'the stage')}, then post your checkpoint and finish times.<br><a class="btn-submit" href="submit/">Submit a time</a>`);
+    return;
+  }
+  if (rows.length === 0 && state.car) {
+    setMessage(`<strong>No ${state.source ? esc(SOURCE_NAME[state.source]) + ' ' : ''}times in the ${esc(state.carName.get(state.car) || 'selected car')} yet.</strong><button type="button" class="btn-plain" data-action="all-cars">Show all cars</button>`);
     return;
   }
   if (rows.length === 0 && state.source && !state.group) {
@@ -187,14 +220,15 @@ function renderSummary(rows) {
   const driversWord = drivers === 1 ? 'driver' : 'drivers';
   const kind = state.source ? `${SOURCE_NAME[state.source]} ` : '';
   let text = `${pool.length} ${kind}${runsWord} from ${drivers} ${driversWord}`;
-  if (state.group) text += ` · ${rows.length} ${state.view === 'best' ? (rows.length === 1 ? 'driver' : 'drivers') : (rows.length === 1 ? 'time' : 'times')} in ${state.group}`;
-  text += state.view === 'best' ? ' · best time per driver' : ' · every run';
+  const scope = state.car ? `the ${state.carName.get(state.car) || 'selected car'}` : state.group;
+  if (scope) text += ` · ${rows.length} ${state.view === 'all' ? (rows.length === 1 ? 'time' : 'times') : (rows.length === 1 ? 'driver' : 'drivers')} in ${scope}`;
+  text += state.view === 'best' ? ' · best time per driver' : state.view === 'car' ? (state.car ? ' · best time per driver in this car' : ' · best time per driver in each car') : ' · every run';
   el.innerHTML = esc(text) + pendingNote();
 }
 
 function renderTheory() {
   const el = $('theory');
-  const all = rankRuns(state.runs, { view: 'all', group: state.group, carGroup: state.carGroup, source: state.source }).rows;
+  const all = rankRuns(state.runs, { view: 'all', group: state.group, car: state.car, carGroup: state.carGroup, source: state.source }).rows;
   const t = all.length >= 2 ? theoreticalBest(all) : null;
   if (!t) { el.hidden = true; return; }
   const names = t.parts.map((p, i) => `<span class="theory-part">S${i + 1} ${esc(p.run.driver)} <span class="theory-ms">${formatTime(p.ms)}</span></span>`).join('');
@@ -233,7 +267,9 @@ function pendingNote() {
 }
 
 function rowHtml(row, i, ctx) {
-  const { run, pos, diffPrev, diffFirst, driverRuns } = row;
+  const { run, pos, diffPrev, diffFirst, driverRuns, ownGap } = row;
+  const own = state.view === 'car' && ownGap > 0
+    ? ` <span class="gap-own" title="Slower than ${esc(run.driver)}'s fastest run in another car">+${(ownGap / 1000).toFixed(3)}<span class="gap-own-full"> vs own best</span></span>` : '';
   const group = state.carGroup.get(run.car_id);
   const tag = group ? `<span class="tag" title="${esc(group)}">${esc(state.groupTag.get(group) || group)}</span>` : '';
   const up = zonedStamp(run.uploaded_at, tz());
@@ -246,7 +282,7 @@ function rowHtml(row, i, ctx) {
     : '';
   const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
     <td class="c-pos">${pos}</td>
-    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind} label-${t.key}">${esc(t.text)}</span>`; })()}<span class="car-sub">${esc(run.car_name)}</span></td>
+    <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind} label-${t.key}">${esc(t.text)}</span>`; })()}${own}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car">${esc(run.car_name)}${tag}</td>
     <td class="c-time${fast1}">${run.cp1_ms === null ? '—' : formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
@@ -312,7 +348,7 @@ function historyHtml(run, driverRuns) {
     const cls = [r.id === run.id ? 'hist-this' : '', r.finish_ms === fastest ? 'hist-best' : ''].join(' ').trim();
     return `<tr${cls ? ` class="${cls}"` : ''}><td><span class="label label-${tag.kind} label-${tag.key}">${esc(tag.text)}</span> ${when}</td><td class="hist-car">${esc(r.car_name)}</td><td class="hist-t">${formatTime(r.finish_ms)}</td><td class="hist-t">${change}</td></tr>`;
   }).join('');
-  const link = state.view === 'best' ? ` · <button type="button" class="btn-link" data-action="all-runs">Show all runs on the board</button>` : '';
+  const link = state.view !== 'all' ? ` · <button type="button" class="btn-link" data-action="all-runs">Show all runs on the board</button>` : '';
   return `<div class="detail-wide"><h3>${driverRuns} runs by ${esc(run.driver)}${link}</h3>
     <table class="history"><thead><tr><th>When</th><th class="hist-car">Car</th><th class="hist-t">Finish</th><th class="hist-t">vs. best before</th></tr></thead><tbody>${rows}</tbody></table></div>`;
 }
@@ -332,6 +368,7 @@ $('rows').addEventListener('click', (e) => {
   const action = e.target.closest('[data-action]')?.dataset.action;
   if (action === 'all-runs') { setView('all'); return; }
   if (action === 'all-sources') { setSource(''); return; }
+  if (action === 'all-cars') { state.car = ''; renderCarOptions(); syncUrl(); render(); return; }
   if (action === 'all-classes') { $('f-class').value = ''; state.group = ''; render(); return; }
   if (action === 'clear-search') { $('f-search').value = ''; state.search = ''; render(); return; }
   const tr = e.target.closest('tr.run');
@@ -348,6 +385,7 @@ $('rows').addEventListener('keydown', (e) => {
 function setView(view) {
   state.view = view;
   document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === view)));
+  syncUrl();
   render();
 }
 document.querySelectorAll('[data-view]').forEach((b) => b.addEventListener('click', () => setView(b.dataset.view)));
@@ -364,7 +402,9 @@ function setSource(source, { draw = true } = {}) {
 document.querySelectorAll('[data-source]').forEach((b) => b.addEventListener('click', () => setSource(b.dataset.source)));
 setSource(state.source, { draw: false });
 
-$('f-class').addEventListener('change', (e) => { state.group = e.target.value; render(); });
+$('f-class').addEventListener('change', (e) => { state.group = e.target.value; renderCarOptions(); syncUrl(); render(); });
+$('f-car').addEventListener('change', (e) => { state.car = e.target.value; syncUrl(); render(); });
+document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
 $('f-search').addEventListener('input', (e) => { state.search = e.target.value; render(); });
 phone.addEventListener('change', () => { if (state.stage) render(); });
 $('show-all').addEventListener('click', () => { state.showAll = true; render(); });

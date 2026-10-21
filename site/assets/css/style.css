@@ -124,6 +124,7 @@ select { padding-right: 24px; }
 .results th.c-time, .results th.c-diff { text-align: center; }
 
 .driver-name { font-weight: 700; overflow-wrap: anywhere; }
+.gap-own { display: inline-block; margin-left: 4px; padding: 0 6px; border: 1px solid var(--line); border-radius: 3px; background: #fff; color: var(--muted); font-size: 11px; font-weight: 600; white-space: nowrap; font-variant-numeric: tabular-nums; }
 .car-sub { display: none; color: var(--muted); font-size: 12px; }
 .tag {
   display: inline-block; margin-left: 6px; padding: 0 5px; border: 1px solid #B9C4B2; border-radius: 3px;
@@ -234,6 +235,8 @@ select { padding-right: 24px; }
   .c-diff { width: 52px; }
   .results td:last-of-type { padding-right: 6px; }
   .driver-name { font-size: 12.5px; }
+  .gap-own-full { display: none; }
+  .gap-own { margin-left: 3px; padding: 0 4px; font-size: 10px; }
   .car-sub { display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-size: 11px; }
   .detail td { padding: 10px 8px 12px 12px; }
   .detail .only-phone { display: block; }
