@@ -1,6 +1,6 @@
 // Results page: loads the data, ranks it with shared/rules.js and draws the table.
 import {
-  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag, inSource, realPlacings, theoreticalBest,
+  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag, inSource, realPlacings, theoreticalBest, carKey,
 } from '../../shared/rules.js';
 
 const SAMPLES = [
@@ -23,7 +23,8 @@ const state = {
   stage: null,
   groups: [],          // [{name, tag}] in dropdown order
   carGroup: new Map(), // car_id -> group name
-  carName: new Map(),  // car_id -> name (original RBR cars only: the Car filter never offers real LSPR cars)
+  rbrCars: new Map(),  // car_id -> name, the active RBR cars
+  carName: new Map(),  // Car filter value (carKey) -> name: RBR cars plus the real LSPR cars that have times
   groupTag: new Map(), // group name -> short tag
   runs: [],
   generatedAt: null,
@@ -81,7 +82,7 @@ async function load() {
     state.groups = cars.groups;
     state.carGroup = new Map(cars.cars.map((c) => [c.id, c.group]));
     state.groupTag = new Map(cars.groups.map((g) => [g.name, g.tag]));
-    state.carName = new Map(cars.cars.filter((c) => c.active !== false && !c.id.startsWith('no-rbr-version')).map((c) => [c.id, c.name]));
+    state.rbrCars = new Map(cars.cars.filter((c) => c.active !== false && !c.id.startsWith('no-rbr-version')).map((c) => [c.id, c.name]));
     state.runs = Array.isArray(results.runs) ? results.runs : [];
     state.generatedAt = results.generated_at || null;
     renderStage();
@@ -142,16 +143,29 @@ function renderClassOptions() {
   renderCarOptions();
 }
 
-/** Car filter: original RBR cars that have at least one time (inside the chosen drivetrain), grouped by drivetrain. */
+/**
+ * Car filter: every car that has at least one time (inside the chosen drivetrain), grouped by drivetrain.
+ * Original RBR cars come first; real LSPR cars with no RBR version follow, listed by their real name.
+ */
 function renderCarOptions() {
-  const used = new Set(state.runs.map((r) => r.car_id));
-  const sel = $('f-car');
+  const rbr = new Map();   // key -> { name, group }
+  const real = new Map();
+  for (const r of state.runs) {
+    const key = carKey(r);
+    const group = state.carGroup.get(r.car_id);
+    if (!group) continue;
+    if (key.includes('|')) real.set(key, { name: r.car_name, group });
+    else if (state.rbrCars.has(key)) rbr.set(key, { name: state.rbrCars.get(key), group });
+  }
+  state.carName = new Map([...rbr, ...real].map(([k, v]) => [k, v.name]));
+  const optgroup = (label, map, group) => {
+    const cars = [...map].filter(([, v]) => v.group === group).sort((a, b) => a[1].name.localeCompare(b[1].name));
+    return cars.length ? `<optgroup label="${esc(label)}">${cars.map(([key, v]) => `<option value="${esc(key)}">${esc(v.name)}</option>`).join('')}</optgroup>` : '';
+  };
   const opts = state.groups
     .filter((g) => !state.group || g.name === state.group)
-    .map((g) => {
-      const cars = [...state.carName].filter(([id]) => used.has(id) && state.carGroup.get(id) === g.name).sort((a, b) => a[1].localeCompare(b[1]));
-      return cars.length ? `<optgroup label="${esc(g.name)}">${cars.map(([id, name]) => `<option value="${esc(id)}">${esc(name)}</option>`).join('')}</optgroup>` : '';
-    }).join('');
+    .map((g) => optgroup(g.name, rbr, g.name) + optgroup(`${g.name} · real LSPR cars`, real, g.name)).join('');
+  const sel = $('f-car');
   sel.innerHTML = `<option value="">All cars</option>${opts}`;
   const ok = [...sel.options].some((o) => o.value === state.car);
   sel.value = ok ? state.car : '';

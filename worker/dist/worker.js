@@ -213,7 +213,7 @@ function byFinishThenUpload(a, b) {
 /**
  * Rank runs for display.
  * runs:    published runs (from results.json)
- * options: { view: 'best' | 'car' | 'all', group: '' | group name, car: '' | car_id, carGroup: Map car_id -> group }
+ * options: { view: 'best' | 'car' | 'all', group: '' | group name, car: '' | carKey (a car_id, or car_id|real name for LSPR cars with no RBR version), carGroup: Map car_id -> group }
  *
  * - The class and car filters are applied first, so "best per driver" in Group A is
  *   each driver's best Group A run.
@@ -238,7 +238,7 @@ function rankRuns(runs, options = {}) {
   }
 
   let pool = group ? inSourceRuns.filter((r) => carGroup.get(r.car_id) === group) : inSourceRuns.slice();
-  if (car) pool = pool.filter((r) => r.car_id === car);
+  if (car) pool = pool.filter((r) => carKey(r) === car);
 
   if (view === 'best') {
     const best = new Map();

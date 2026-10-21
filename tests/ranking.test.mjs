@@ -203,3 +203,10 @@ test('best per car: one row per driver and car, with the gap to the driver\'s ow
   assert.equal(rankRuns(real, { view: 'car' }).rows.length, 2);
   assert.notEqual(carKey(real[0]), carKey(real[1]));
 });
+
+test('car filter accepts a real LSPR car by its carKey', async () => {
+  const { rankRuns, carKey } = await import('../shared/rules.js');
+  const mk = (id, name, ms) => ({ id, driver: id, car_id: 'no-rbr-version-4wd', car_name: name, finish_ms: ms, uploaded_at: '2026-10-10T20:00:00.000Z' });
+  const runs = [mk('a', '2015 Subaru WRX', 400000), mk('b', '2018 Subaru STi', 410000), mk('c', '2015 Subaru WRX', 420000)];
+  assert.deepEqual(rankRuns(runs, { view: 'all', car: carKey(runs[0]) }).rows.map((x) => x.run.id), ['a', 'c']);
+});
