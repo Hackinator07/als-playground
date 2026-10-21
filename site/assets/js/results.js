@@ -282,8 +282,13 @@ function pendingNote() {
 
 function rowHtml(row, i, ctx) {
   const { run, pos, diffPrev, diffFirst, driverRuns, ownGap } = row;
-  const own = state.view === 'car' && ownGap > 0
-    ? ` <span class="gap-own" title="Slower than ${esc(run.driver)}'s fastest run in another car">+${(ownGap / 1000).toFixed(3)}<span class="gap-own-full"> vs own best</span></span>` : '';
+  // Best per car and All runs: how far this run is behind the same driver's fastest run on the board (within the
+  // current filters). Best per driver never shows it: every row there is the driver's best.
+  const ownTitle = state.view === 'car'
+    ? `Slower than ${run.driver}'s fastest run in another car`
+    : `${(ownGap / 1000).toFixed(3)} s behind ${run.driver}'s best run`;
+  const own = state.view !== 'best' && ownGap > 0
+    ? ` <span class="gap-own" title="${esc(ownTitle)}">+${(ownGap / 1000).toFixed(3)}<span class="gap-own-full"> vs own best</span></span>` : '';
   const group = state.carGroup.get(run.car_id);
   const tag = group ? `<span class="tag" title="${esc(group)}">${esc(state.groupTag.get(group) || group)}</span>` : '';
   const up = zonedStamp(run.uploaded_at, tz());
