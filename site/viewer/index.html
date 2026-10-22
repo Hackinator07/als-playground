@@ -99,7 +99,8 @@ body.fpv.compact #osd .l,body.fpv.compact #osd .r{top:calc(env(safe-area-inset-t
 (async function(){
 const $=id=>document.getElementById(id);
 const DATA='data/';
-const man=await (await fetch(DATA+'manifest.json')).json();
+const man=await (await fetch(DATA+'manifest.json',{cache:'no-cache'})).json();
+const VQ='?v='+encodeURIComponent((man.version||'0')+(man.rev?'r'+man.rev:''));
 $('ver').textContent=`LSPR · Baraga County, MI · build ${man.version}`;
 let imp=/-US$/i.test(navigator.language||'');try{const u=localStorage.getItem('alsUnits');if(u)imp=u==='mi';}catch(e){}
 const fmtDist=m=>imp?(m/1609.344).toFixed(2)+' mi':(m/1000).toFixed(2)+' km';
@@ -148,12 +149,13 @@ gl_FragColor=vec4(mix(c,fogColor,f),1.0);}`;
 
 const texCache={};
 function tex(name){
-  if(!texCache[name]){const t=new BABYLON.Texture(DATA+'tex/'+name+'.webp',scene,false,true,BABYLON.Texture.TRILINEAR_SAMPLINGMODE);
+  if(!texCache[name]){const t=new BABYLON.Texture(DATA+'tex/'+name+'.webp'+VQ,scene,false,true,BABYLON.Texture.TRILINEAR_SAMPLINGMODE);
     t.anisotropicFilteringLevel=8;texCache[name]=t;}
   return texCache[name];
 }
 let fog=[250,700], bright=1.0;
 const matCache={};
+const CULL=/^object:ALS-FC3S-(BODY|WHEEL)$/;
 function mat(i){
   if(matCache[i])return matCache[i];
   const md=man.materials[i];
@@ -162,7 +164,10 @@ function mat(i){
     uniforms:['worldViewProjection','worldView','fogColor','fogRange','bright'],samplers:md.ground?['t1','t2']:['t1'],
     defines:md.ground?['#define GROUND']:[]});
   m.setTexture('t1',tex(md.tex[0])); if(md.ground)m.setTexture('t2',tex(md.tex[1]));
-  m.backFaceCulling=false; m.setColor3('fogColor',SKY);
+  // two-sided by default (cards, tape). The FC3S body / wheels are closed shells with an inner skin (hood, bumpers):
+  // drawn two-sided, the light-grey inner skin showed through the paint, so they are culled like the game does.
+  m.backFaceCulling=CULL.test(md.name); if(m.backFaceCulling)m.sideOrientation=BABYLON.Material.CounterClockWiseSideOrientation;
+  m.setColor3('fogColor',SKY);
   m.onBindObservable.add(()=>{const e=m.getEffect();e.setFloat2('fogRange',fog[0],fog[1]);e.setFloat('bright',bright);});
   return matCache[i]=m;
 }
@@ -173,7 +178,7 @@ let inflight=0;
 async function loadTile(t){
   t.state=1;inflight++;
   try{
-    const r=await fetch(DATA+'tiles/'+t.id+(man.tileExt||'.bin.gz'));let buf=new Uint8Array(await r.arrayBuffer());
+    const r=await fetch(DATA+'tiles/'+t.id+(man.tileExt||'.bin.gz')+VQ);let buf=new Uint8Array(await r.arrayBuffer());
     if(buf[0]===0x1f&&buf[1]===0x8b){buf=new Uint8Array(await new Response(new Blob([buf]).stream().pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());}
     if(t.state!==1){return;}
     const ab=buf.buffer;let off=0;
