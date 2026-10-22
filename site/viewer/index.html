@@ -338,7 +338,7 @@ scene.onBeforeRenderObservable.add(()=>{
   if(mode==='ride'){if(playing){dist+=kmh/3.6*dt;if(dist>=LEN){dist=LEN;setPlay(false);}}placeRide();}
   else{fly.speed=(shift?4.5:1.2)*Math.max(0.6,fog[1]/700);padFly(dt);if(tmove.f||tmove.s||tmove.u){const v=22*Math.max(0.6,fog[1]/700)*dt;fly.position.addInPlace(fly.getDirection(BABYLON.Axis.Z).scale(tmove.f*v)).addInPlace(fly.getDirection(BABYLON.Axis.X).scale(tmove.s*v));fly.position.y+=tmove.u*v;}
     gAcc+=dt;if(gAcc>0.1){gAcc=0;probeGround(fly.position);}
-    if(gY!==null&&fly.position.y<gY+1.5)fly.position.y=gY+1.5;
+    if(fpv&&gY!==null&&fly.position.y<gY+0.5)fly.position.y=gY+0.5;
     if(fpv&&dt>0){const P=fly.position.clone();
       if(lastP){const d=P.subtract(lastP).scale(1/dt),r=fly.getDirection(BABYLON.Axis.X);
         const k=Math.min(1,dt*6);vh+=(Math.hypot(d.x,d.y,d.z)-vh)*k;vs+=(BABYLON.Vector3.Dot(d,r)-vs)*k;}
