@@ -45,6 +45,17 @@ input[type=range]{accent-color:var(--maple);width:120px}
 #rise{right:max(20px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:10px}
 #rise button{width:64px;height:58px;padding:0;font-size:22px;line-height:1;touch-action:none;background:#22392dd9}
 #rise button.on{background:var(--maple);color:#1a0d05}
+#osd{position:fixed;inset:0;pointer-events:none;z-index:2;font:500 13px/1.55 var(--mono);color:#fff;text-shadow:0 0 2px #000,0 0 4px #000a;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+#osd .g{position:absolute;background:#ffffff59}
+#osd .v{top:0;bottom:0;width:1px}#osd .h{left:0;right:0;height:1px}
+#osd .x{position:absolute;left:50%;top:50%;width:22px;height:22px;margin:-11px;border:1px solid #fffc;border-radius:50%}
+#osd .x::after{content:"";position:absolute;left:50%;top:50%;width:3px;height:3px;margin:-1.5px;background:#fff;border-radius:50%}
+#osd .l,#osd .r{position:absolute;top:calc(env(safe-area-inset-top,0px) + 34%)}
+#osd .l{left:max(14px,env(safe-area-inset-left,0px))}#osd .r{right:max(14px,env(safe-area-inset-right,0px));text-align:right}
+#osd .t{position:absolute;top:calc(env(safe-area-inset-top,0px) + 12px);left:50%;transform:translateX(-50%);font-size:12px;opacity:.85}
+#osd span{opacity:.7}
+body.fpv.compact .top,body.fpv.compact .read,body.fpv.compact #map{display:none}
+body.fpv.compact #osd .l,body.fpv.compact #osd .r{top:calc(env(safe-area-inset-top,0px) + 70px)}
 #load{position:fixed;inset:0;display:grid;place-items:center;background:var(--spruce);z-index:5;text-align:center;padding:0 16px}
 #load h2{font:700 44px/1 var(--display);text-transform:uppercase;margin:0 0 8px;letter-spacing:.02em}
 #load p{margin:0;color:var(--needle);font:400 13px var(--mono)}
@@ -60,11 +71,17 @@ input[type=range]{accent-color:var(--maple);width:120px}
 <div class="read" id="read"><b id="rkm">0.00 km</b><span id="rinfo"></span></div>
 <div id="joy" hidden aria-label="Move: push to fly forward, back or sideways"><div id="knob"></div></div>
 <div id="rise" hidden><button data-u="1" aria-label="Up">&#9650;</button><button data-u="-1" aria-label="Down">&#9660;</button></div>
+<div id="osd" hidden aria-hidden="true">
+  <i class="g v" style="left:33.333%"></i><i class="g v" style="left:66.666%"></i><i class="g h" style="top:33.333%"></i><i class="g h" style="top:66.666%"></i><i class="x"></i>
+  <div class="t">FPV &middot; AL'S PLAYGROUND</div>
+  <div class="l"><div><span>ALT </span><b id="oAlt">0</b></div><div><span>SPD </span><b id="oSpd">0</b></div><div><span>TIM </span><b id="oTim">00:00</b></div></div>
+  <div class="r"><div><b id="oHdg">000</b><span> HDG</span></div><div><b id="oDst">0.00</b><span> STG</span></div><div><b id="oOff">0</b><span> OFF</span></div></div>
+</div>
 <div id="toast" role="status" hidden></div>
 <canvas id="map" width="300" height="440" aria-label="Stage map; click to jump"></canvas>
 <div class="bar">
   <div class="grp" role="group" aria-label="Mode">
-    <button id="mRide" aria-pressed="true">Ride</button><button id="mFly" aria-pressed="false">Fly</button>
+    <button id="mRide" aria-pressed="true">Ride</button><button id="mFly" aria-pressed="false">Fly</button><button id="fpv" aria-pressed="false" hidden title="FPV drone view (G)">FPV</button>
     <button id="play" aria-pressed="false">Play</button>
     <button id="units" title="Switch between metric and imperial">km</button>
     <button id="fs" title="Full screen">Full screen</button>
@@ -99,7 +116,7 @@ engine.setHardwareScalingLevel(1/Math.min(window.devicePixelRatio||1,1.5));
 const scene=new BABYLON.Scene(engine);
 const SKY=new BABYLON.Color3(0.70,0.76,0.80);
 scene.clearColor=new BABYLON.Color4(SKY.r,SKY.g,SKY.b,1);
-scene.skipPointerMovePicking=true; scene.autoClear=true;
+scene.skipPointerMovePicking=true;scene.skipPointerDownPicking=true;scene.skipPointerUpPicking=true; scene.autoClear=true;
 
 // ---- shader (matches the stage's Blender/RBR look: unlit texture x baked vertex colour)
 BABYLON.Effect.ShadersStore.alsVertexShader=`precision highp float;
@@ -175,7 +192,7 @@ async function loadTile(t){
       const m=new BABYLON.Mesh(t.id+'_'+mi,scene);
       m.setVerticesData('position',pos,false);m.setVerticesData('uv',uv,false);if(uv2)m.setVerticesData('uv2',uv2,false);
       m.setVerticesBuffer(new BABYLON.VertexBuffer(engine,col,'color',false,false,4,false,0,4,BABYLON.VertexBuffer.UNSIGNED_BYTE,true));
-      m.setIndices(idx);m.material=mat(mi);m.isPickable=false;m.freezeWorldMatrix();m.doNotSyncBoundingInfo=true;
+      m.setIndices(idx);m.material=mat(mi);m.isPickable=!!md.ground;m.freezeWorldMatrix();m.doNotSyncBoundingInfo=true;
       t.meshes.push(m);
     }
     t.state=2;
@@ -197,7 +214,7 @@ function atDist(d){d=Math.max(0,Math.min(LEN,d));let lo=0,hi=L.length-1;
   while(hi-lo>1){const mid=(lo+hi)>>1;if(L[mid][3]<=d)lo=mid;else hi=mid;}
   const a=L[lo],b=L[hi],f=(b[3]-a[3])>0?(d-a[3])/(b[3]-a[3]):0;
   return [a[0]+(b[0]-a[0])*f,a[1]+(b[1]-a[1])*f,a[2]+(b[2]-a[2])*f];}
-function nearest(x,y){let best=1e18,bi=0;for(let i=0;i<L.length;i++){const dx=L[i][0]-x,dy=L[i][1]-y,q=dx*dx+dy*dy;if(q<best){best=q;bi=i;}}return {d:L[bi][3],off:Math.sqrt(best)};}
+function nearest(x,y){let best=1e18,bi=0;for(let i=0;i<L.length;i++){const dx=L[i][0]-x,dy=L[i][1]-y,q=dx*dx+dy*dy;if(q<best){best=q;bi=i;}}return {d:L[bi][3],off:Math.sqrt(best),z:L[bi][2]};}
 
 // ---- cameras
 const ride=new BABYLON.FreeCamera('ride',BABYLON.Vector3.Zero(),scene);
@@ -206,7 +223,13 @@ const fly=new BABYLON.UniversalCamera('fly',new BABYLON.Vector3(0,30,0),scene);
 fly.inputs.removeByType('FreeCameraGamepadInput');
 const isTouch=matchMedia('(pointer:coarse)').matches;
 if(isTouch){fly.inputs.removeByType('FreeCameraTouchInput');fly.inputs.removeByType('FreeCameraMouseInput');}
-let tmove={f:0,s:0,u:0};fly.minZ=0.3;fly.fov=1.0;fly.speed=1.2;fly.angularSensibility=1600;fly.inertia=0.8;
+let tmove={f:0,s:0,u:0};
+let gY=null,gAcc=1;const DOWN=new BABYLON.Vector3(0,-1,0);
+function probeGround(p){const h=scene.pickWithRay(new BABYLON.Ray(new BABYLON.Vector3(p.x,p.y+400,p.z),DOWN,1500),m=>m.isPickable);gY=h&&h.hit?h.pickedPoint.y:null;}
+let fpv=false,fpvT0=0,bank=0,vs=0,vh=0,vz=0,lastP=null;
+function setFPV(on){fpv=on;$('fpv').setAttribute('aria-pressed',on);$('osd').hidden=!on;
+  document.body.classList.toggle('fpv',on);document.body.classList.toggle('compact',on&&(isTouch||innerWidth<900));
+  fly.fov=on?1.6:1.0;if(!on){fly.rotation.z=0;bank=0;}fpvT0=performance.now();lastP=null;}fly.minZ=0.3;fly.fov=1.0;fly.speed=1.2;fly.angularSensibility=1600;fly.inertia=0.8;
 fly.keysUp=[87,38];fly.keysDown=[83,40];fly.keysLeft=[65,37];fly.keysRight=[68,39];fly.keysUpward=[69];fly.keysDownward=[81];
 let mode='ride', dist=0, playing=false, yaw=0, pitch=-0.05, kmh=90;
 const cam=()=>mode==='ride'?ride:fly;
@@ -226,14 +249,14 @@ canvas.addEventListener('pointermove',e=>{if(!drag)return;
   yaw=drag.yaw+(e.clientX-drag.x)*0.005;pitch=Math.max(-1.2,Math.min(1.2,drag.pitch-(e.clientY-drag.y)*0.005));});
 canvas.addEventListener('pointerup',()=>{drag=null;});
 canvas.addEventListener('dblclick',()=>{yaw=0;pitch=-0.05;});
-let shift=false;window.addEventListener('keydown',e=>{if(e.key==='Shift')shift=true;if(e.key===' '&&mode==='ride'){e.preventDefault();setPlay(!playing);}});
+let shift=false;window.addEventListener('keydown',e=>{if(e.key==='Shift')shift=true;if(e.key===' '&&mode==='ride'){e.preventDefault();setPlay(!playing);}if((e.key==='g'||e.key==='G')&&mode==='fly'&&e.target.tagName!=='INPUT')setFPV(!fpv);});
 window.addEventListener('keyup',e=>{if(e.key==='Shift')shift=false;});
 
 function setMode(m){
   if(m===mode)return;
   if(m==='fly'){fly.position=ride.position.add(new BABYLON.Vector3(0,6,0));fly.rotation=ride.rotation.clone();ride.detachControl();scene.activeCamera=fly;fly.attachControl(canvas,true);setPlay(false);}
   else{fly.detachControl();const p=fly.position;dist=nearest(p.x+O[0],p.z+O[1]).d;yaw=0;pitch=-0.05;scene.activeCamera=ride;}
-  mode=m;setHelp();$('joy').hidden=$('rise').hidden=!(isTouch&&m==='fly');$('spd').closest('label').hidden=m==='fly';placePad();tmove={f:0,s:0,u:0};$('mRide').setAttribute('aria-pressed',m==='ride');$('mFly').setAttribute('aria-pressed',m==='fly');$('play').disabled=m!=='ride';
+  mode=m;setHelp();$('fpv').hidden=m!=='fly';if(m!=='fly')setFPV(false);$('joy').hidden=$('rise').hidden=!(isTouch&&m==='fly');$('spd').closest('label').hidden=m==='fly';placePad();tmove={f:0,s:0,u:0};$('mRide').setAttribute('aria-pressed',m==='ride');$('mFly').setAttribute('aria-pressed',m==='fly');$('play').disabled=m!=='ride';
   canvas.focus();
 }
 const touch=matchMedia('(pointer:coarse)').matches;
@@ -241,10 +264,11 @@ function setHelp(){
   $('help').innerHTML=mode==='ride'
     ?(touch?'<b>Ride</b> follows the road at driver eye height. Tap Play to drive, drag to look around, slide Road or tap the map to jump.'
            :'<b>Ride</b> follows the road at driver eye height. Space or Play to drive, drag to look around, double-click to look ahead again. Slide Road, use the buttons or click the map to jump.')
-    :(touch?'<b>Fly</b> moves freely. Left stick to fly forward, back and sideways; &#9650; &#9660; to climb and drop; drag anywhere else to look. Tap Ride to drop back onto the road.'
-           :'<b>Fly</b> moves freely. W A S D or arrows to move, E up, Q down, hold Shift to go fast, drag to look. Gamepad: left stick move, right stick look, triggers down/up, RB fast. Ride drops you back onto the road.');
+    :(touch?'<b>Fly</b> moves freely. Left stick to fly forward, back and sideways; &#9650; &#9660; to climb and drop; drag anywhere else to look. FPV turns on the drone view. Tap Ride to drop back onto the road.'
+           :'<b>Fly</b> moves freely. W A S D or arrows to move, E up, Q down, hold Shift to go fast, drag to look. Gamepad: left stick move, right stick look, triggers down/up, RB fast. FPV or G for the drone view. Ride drops you back onto the road.');
 }
 function setPlay(v){playing=v&&mode==='ride';$('play').setAttribute('aria-pressed',playing);$('play').textContent=playing?'Pause':'Play';}
+$('fpv').onclick=()=>setFPV(!fpv);
 $('mRide').onclick=()=>setMode('ride');$('mFly').onclick=()=>setMode('fly');$('play').onclick=()=>setPlay(!playing);
 $('d').oninput=e=>{dist=+e.target.value;if(mode!=='ride')setMode('ride');};
 $('spd').oninput=e=>{kmh=+e.target.value;$('spk').textContent=fmtSpd(kmh);};
@@ -312,13 +336,24 @@ let last=performance.now(),acc=0,uiAcc=0;
 scene.onBeforeRenderObservable.add(()=>{
   const now=performance.now(),dt=Math.min(0.1,(now-last)/1000);last=now;
   if(mode==='ride'){if(playing){dist+=kmh/3.6*dt;if(dist>=LEN){dist=LEN;setPlay(false);}}placeRide();}
-  else{fly.speed=(shift?4.5:1.2)*Math.max(0.6,fog[1]/700);padFly(dt);if(tmove.f||tmove.s||tmove.u){const v=22*Math.max(0.6,fog[1]/700)*dt;fly.position.addInPlace(fly.getDirection(BABYLON.Axis.Z).scale(tmove.f*v)).addInPlace(fly.getDirection(BABYLON.Axis.X).scale(tmove.s*v));fly.position.y+=tmove.u*v;}}
+  else{fly.speed=(shift?4.5:1.2)*Math.max(0.6,fog[1]/700);padFly(dt);if(tmove.f||tmove.s||tmove.u){const v=22*Math.max(0.6,fog[1]/700)*dt;fly.position.addInPlace(fly.getDirection(BABYLON.Axis.Z).scale(tmove.f*v)).addInPlace(fly.getDirection(BABYLON.Axis.X).scale(tmove.s*v));fly.position.y+=tmove.u*v;}
+    gAcc+=dt;if(gAcc>0.1){gAcc=0;probeGround(fly.position);}
+    if(gY!==null&&fly.position.y<gY+1.5)fly.position.y=gY+1.5;
+    if(fpv&&dt>0){const P=fly.position.clone();
+      if(lastP){const d=P.subtract(lastP).scale(1/dt),r=fly.getDirection(BABYLON.Axis.X);
+        const k=Math.min(1,dt*6);vh+=(Math.hypot(d.x,d.y,d.z)-vh)*k;vs+=(BABYLON.Vector3.Dot(d,r)-vs)*k;}
+      lastP=P;const target=Math.max(-0.4,Math.min(0.4,-vs/30));bank+=(target-bank)*Math.min(1,dt*4);fly.rotation.z=bank;}}
   acc+=dt;if(acc>0.25){acc=0;stream();}
   uiAcc+=dt;if(uiAcc>0.15){uiAcc=0;
     const p=cam().position,x=p.x+O[0],y=p.z+O[1];const n=mode==='ride'?{d:dist,off:0}:nearest(x,y);
     $('rkm').textContent=fmtDist(n.d);
     $('rinfo').textContent=mode==='ride'?(playing?fmtSpd(kmh):'paused'):`${fmtLen(n.off)} from road · ${fmtLen(p.y+O[2])} elev`;
     if(document.activeElement!==$('d')){$('d').value=Math.round(n.d);}$('dk').textContent=fmtDist(n.d);
+    if(fpv){const nn=mode==='fly'?n:nearest(x,y);
+      $('oAlt').textContent=fmtLen(Math.max(0,gY!==null?p.y-gY:p.y+O[2]-nn.z));$('oSpd').textContent=fmtSpd(Math.round(vh*3.6));
+      const t=Math.floor((performance.now()-fpvT0)/1000);$('oTim').textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
+      let h=Math.round(((fly.rotation.y*180/Math.PI)%360+360)%360);$('oHdg').textContent=String(h).padStart(3,'0');
+      $('oDst').textContent=fmtDist(nn.d);$('oOff').textContent=fmtLen(nn.off);}
     drawMap(x,y);}
 });
 // first view: wait until nearby tiles are in before revealing
