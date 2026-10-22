@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "109652la",
+  "stage": "als-playground",
+  "driver": "Voksy",
+  "car_id": "hyundai-i20-coupe-wrc-2017",
+  "car_name": "Hyundai i20 Coupe WRC 2017",
+  "cp1_ms": 110500,
+  "cp2_ms": 266200,
+  "finish_ms": 342389,
+  "entered": {
+    "cp1": "1:50.5",
+    "cp2": "4:26.2",
+    "finish": "5:42.389"
+  },
+  "uploaded_at": "2026-10-22T05:34:26.701Z",
+  "screenshot": "screenshots/2026/109652la.webp",
+  "status": "published"
+}
