@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "kt6e5ufv",
+  "stage": "als-playground",
+  "driver": "Jacob Halfman",
+  "car_id": "skoda-fabia-rs-rally2",
+  "car_name": "Skoda Fabia RS Rally2",
+  "cp1_ms": 122400,
+  "cp2_ms": 286200,
+  "finish_ms": 365412,
+  "entered": {
+    "cp1": "2:02.4",
+    "cp2": "4:46.2",
+    "finish": "6:05.412"
+  },
+  "uploaded_at": "2026-10-23T00:41:09.855Z",
+  "screenshot": "screenshots/2026/kt6e5ufv.webp",
+  "status": "published"
+}
