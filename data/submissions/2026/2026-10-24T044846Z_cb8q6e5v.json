@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "cb8q6e5v",
+  "stage": "als-playground",
+  "driver": "Voksy",
+  "car_id": "toyota-gr-yaris-rally2",
+  "car_name": "Toyota GR Yaris Rally2",
+  "cp1_ms": 115800,
+  "cp2_ms": 277100,
+  "finish_ms": 358753,
+  "entered": {
+    "cp1": "1:55.8",
+    "cp2": "4:37.1",
+    "finish": "5:58.753"
+  },
+  "uploaded_at": "2026-10-24T04:48:46.139Z",
+  "screenshot": "screenshots/2026/cb8q6e5v.webp",
+  "tune": {
+    "file": "tunes/2026/cb8q6e5v.lsp",
+    "name": "GRYaris_Setup_Gravel_Smooth"
+  },
+  "status": "published"
+}
