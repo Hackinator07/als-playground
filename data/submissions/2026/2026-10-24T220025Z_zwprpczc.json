@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "zwprpczc",
+  "stage": "als-playground",
+  "driver": "Ethan Foster",
+  "car_id": "hyundai-i20-coupe-wrc-2017",
+  "car_name": "Hyundai i20 Coupe WRC 2017",
+  "cp1_ms": 113800,
+  "cp2_ms": 275500,
+  "finish_ms": 353914,
+  "entered": {
+    "cp1": "1:53.8",
+    "cp2": "4:35.5",
+    "finish": "5:53.914"
+  },
+  "uploaded_at": "2026-10-24T22:00:25.072Z",
+  "screenshot": "screenshots/2026/zwprpczc.webp",
+  "status": "published"
+}
