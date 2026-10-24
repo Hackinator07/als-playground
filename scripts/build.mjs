@@ -16,6 +16,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkStoredRun } from '../shared/rules.js';
 import { parseTune } from '../shared/tune.js';
+import { injectSocial } from './social.mjs';
 import { renderLibrary, renderTunePage, renderComparePage } from './tunes.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
@@ -167,6 +168,15 @@ fs.writeFileSync(
   path.join(out, 'results.json'),
   JSON.stringify({ generated_at: new Date().toISOString(), runs }) + '\n',
 );
+// link-preview tags on every built page
+(function addSocial(dir) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) { if (e.name !== 'screenshots') addSocial(full); continue; }
+    if (e.name !== 'index.html') continue;
+    fs.writeFileSync(full, injectSocial(fs.readFileSync(full, 'utf8'), path.relative(out, full).split(path.sep).join('/')));
+  }
+})(out);
 fs.writeFileSync(path.join(out, '.nojekyll'), '');
 
 console.log(`Built _site: ${runs.length} published, ${hidden} hidden, ${skipped} skipped, ${tunes.length} tunes.`);
