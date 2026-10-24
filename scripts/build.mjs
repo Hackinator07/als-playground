@@ -16,7 +16,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { checkStoredRun } from '../shared/rules.js';
 import { parseTune } from '../shared/tune.js';
-import { renderLibrary, renderTunePage } from './tunes.mjs';
+import { renderLibrary, renderTunePage, renderComparePage } from './tunes.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const out = path.join(root, '_site');
@@ -138,6 +138,7 @@ fs.cpSync(path.join(root, 'site'), out, { recursive: true });
 fs.mkdirSync(path.join(out, 'shared'), { recursive: true });
 fs.copyFileSync(path.join(root, 'shared/rules.js'), path.join(out, 'shared/rules.js'));
 fs.copyFileSync(path.join(root, 'shared/tune.js'), path.join(out, 'shared/tune.js'));
+fs.copyFileSync(path.join(root, 'shared/tune-diff.js'), path.join(out, 'shared/tune-diff.js'));
 fs.copyFileSync(path.join(root, 'shared/ld.js'), path.join(out, 'shared/ld.js'));
 fs.mkdirSync(path.join(out, 'data'), { recursive: true });
 fs.copyFileSync(path.join(root, 'data/stage.json'), path.join(out, 'data/stage.json'));
@@ -151,6 +152,11 @@ if (fs.existsSync(path.join(root, 'screenshots'))) {
 // vehicle tunes: /tunes/ (library), /tunes/<id>/ (page) and the untouched .lsp beside each page
 fs.mkdirSync(path.join(out, 'tunes'), { recursive: true });
 fs.writeFileSync(path.join(out, 'tunes/index.html'), renderLibrary(tunes.map((t) => t.meta), cars.groups));
+fs.mkdirSync(path.join(out, 'tunes/compare'), { recursive: true });
+fs.writeFileSync(path.join(out, 'tunes/compare/index.html'), renderComparePage());
+fs.writeFileSync(path.join(out, 'tunes/tunes.json'), JSON.stringify({
+  tunes: tunes.map((t) => ({ id: t.meta.id, driver: t.meta.driver, car_name: t.meta.car_name, tune_name: t.meta.tune_name, file_name: t.meta.file_name })),
+}) + '\n');
 for (const t of tunes) {
   const dir = path.join(out, 'tunes', t.meta.id);
   fs.mkdirSync(dir, { recursive: true });

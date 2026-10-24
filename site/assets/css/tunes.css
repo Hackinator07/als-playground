@@ -73,3 +73,13 @@
 }
 
 .tunes-board .btn-back { display: inline-block; text-decoration: none; font-weight: 600; padding: 8px 14px; }
+
+/* compare page */
+.compare-controls { align-items: end; flex-wrap: wrap; }
+.compare-controls select { max-width: min(26rem, 100%); }
+.control-check { flex-direction: row; align-items: center; gap: .4rem; }
+.values.compare td.differs { background: #FBE9DA; font-weight: 600; }
+.values.compare .delta { color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.values.compare tbody th { font-weight: 400; word-break: break-word; }
+.guide-body h2, #c-out h2 { margin: 1.2rem 0 .4rem; }
+.values.compare thead th { white-space: normal; word-break: break-word; border-bottom: 0; box-shadow: none; }

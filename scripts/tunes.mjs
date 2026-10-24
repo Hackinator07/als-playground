@@ -333,6 +333,7 @@ export function renderTunePage(meta, tune, rawText) {
         <a class="btn-submit" href="${esc(meta.file_name)}" download>Download .lsp</a>
         <a class="btn-plain" href="../../">Back to stage times</a>
         <a class="btn-plain" href="../">All vehicle tunes</a>
+        <a class="btn-plain" href="../compare/?a=${esc(meta.id)}">Compare with another tune</a>
         <a class="btn-plain" href="../../guide/">Setup guide</a>
       </div>
       <div class="guide-layout">
@@ -378,6 +379,7 @@ export function renderLibrary(tunes, groups) {
       <div class="controls">
         <a class="btn-submit" href="../submit/">Submit a time</a>
         <a class="btn-plain btn-back" href="../">Back to stage times</a>
+        <a class="btn-plain" href="compare/">Compare two tunes</a>
         <label class="control">
           <span class="control-label">Drivetrain</span>
           <select id="t-group"><option value="">All drivetrains</option>${options}</select>
@@ -405,5 +407,31 @@ ${rows}
     title: "Vehicle tune library · Al's Playground",
     description: "Browse car setups other drivers have shared for Al's Playground in Richard Burns Rally. Preview every setting and download the .lsp file.",
     up: '../', css: ['guide.css', 'tunes.css'], body, scripts: ['tunes.js'],
+  });
+}
+
+/** The compare page: the script fills in the two pickers and the table from tunes.json and the .lsp files. */
+export function renderComparePage() {
+  const body = `    <section class="board guide tune-page" aria-labelledby="page-title">
+      <div class="band"><h1 id="page-title">Compare Tunes</h1></div>
+      <div class="controls compare-controls">
+        <label class="control"><span class="control-label">Tune A</span><select id="c-a"></select></label>
+        <button type="button" class="btn-plain" id="c-swap" title="Swap A and B">Swap</button>
+        <label class="control"><span class="control-label">Tune B</span><select id="c-b"></select></label>
+        <label class="control control-check"><input type="checkbox" id="c-only" checked> <span>Only show differences</span></label>
+        <a class="btn-plain" href="../">All vehicle tunes</a>
+      </div>
+      <p class="tune-count" id="c-status" aria-live="polite">Loading tunes…</p>
+      <div id="c-out"></div>
+      <noscript><p class="empty">Comparing tunes needs JavaScript.</p></noscript>
+    </section>
+
+    <footer class="footer">
+      <p><a href="../">All vehicle tunes</a> &middot; <a href="../../">Stage times</a> &middot; <a href="../../guide/">Car setup guide</a></p>
+    </footer>`;
+  return shell({
+    title: "Compare tunes · Al's Playground",
+    description: "Put two shared car setups for Al's Playground side by side and see which settings differ.",
+    up: '../../', css: ['guide.css', 'tunes.css'], body, scripts: ['tune-compare.js'],
   });
 }
