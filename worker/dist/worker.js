@@ -290,6 +290,33 @@ function rankRuns(runs, options = {}) {
   };
 }
 
+/**
+ * Reorders ranked rows for a column sort. Positions and gaps stay as the finish ranking made them.
+ * key: 'finish' (the ranking itself), 'cp1', 'cp2', 'uploaded' or 'driver'; dir: 'asc' or 'desc'.
+ * Rows with no value in that column go last whichever way it runs; ties keep finish order.
+ */
+const SORT_KEYS = ['finish', 'cp1', 'cp2', 'uploaded', 'driver'];
+const SORT_DEFAULT_DIR = { finish: 'asc', cp1: 'asc', cp2: 'asc', uploaded: 'desc', driver: 'asc' };
+function sortRows(rows, key = 'finish', dir = 'asc') {
+  if (!SORT_KEYS.includes(key)) return rows;
+  const value = (r) => {
+    if (key === 'finish') return r.run.finish_ms;
+    if (key === 'cp1') return r.run.cp1_ms ?? null;
+    if (key === 'cp2') return r.run.cp2_ms ?? null;
+    if (key === 'uploaded') return Date.parse(r.run.uploaded_at) || null;
+    return driverKey(r.run.driver);
+  };
+  const sign = dir === 'desc' ? -1 : 1;
+  const indexed = rows.map((r, i) => ({ r, i, v: value(r) }));
+  indexed.sort((a, b) => {
+    const am = a.v === null; const bm = b.v === null;
+    if (am || bm) return am === bm ? a.i - b.i : am ? 1 : -1;
+    const c = typeof a.v === 'string' ? a.v.localeCompare(b.v) : a.v - b.v;
+    return c !== 0 ? sign * c : a.i - b.i;
+  });
+  return indexed.map((x) => x.r);
+}
+
 /** Sector times from cumulative checkpoints: [S1, S2, S3]. */
 function sectorsOf(run) {
   if (run.cp1_ms === null || run.cp1_ms === undefined) return [null, null, run.finish_ms - run.cp2_ms];   // only checkpoint 2 was published
