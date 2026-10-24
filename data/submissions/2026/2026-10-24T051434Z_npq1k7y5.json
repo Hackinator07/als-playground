@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "npq1k7y5",
+  "stage": "als-playground",
+  "driver": "Voksy",
+  "car_id": "bmw-m1-grpb",
+  "car_name": "BMW M1 GrpB",
+  "cp1_ms": 121000,
+  "cp2_ms": 280700,
+  "finish_ms": 375153,
+  "entered": {
+    "cp1": "2:01.0",
+    "cp2": "4:40.7",
+    "finish": "6:15.153"
+  },
+  "uploaded_at": "2026-10-24T05:14:34.421Z",
+  "screenshot": "screenshots/2026/npq1k7y5.webp",
+  "status": "published"
+}
