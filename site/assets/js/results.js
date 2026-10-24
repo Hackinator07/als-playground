@@ -1,6 +1,6 @@
 // Results page: loads the data, ranks it with shared/rules.js and draws the table.
 import {
-  rankRuns, sortRows, SORT_KEYS, SORT_DEFAULT_DIR, formatTime, formatDiff, zonedStamp, driverKey, runTag, inSource, realPlacings, theoreticalBest, carKey,
+  rankRuns, formatTime, formatDiff, zonedStamp, driverKey, runTag, inSource, realPlacings, theoreticalBest, carKey,
 } from '../../shared/rules.js';
 
 const SAMPLES = [
@@ -18,14 +18,6 @@ const SOURCE_NAME = { virtual: 'virtual', lspr2024: 'LSPR 2024', lspr2026: 'LSPR
 const LSPR_YEARS = ['2024', '2026'];
 // ?view=car opens Best per car and ?car=<car id> picks a car (shareable links).
 const VIEWS = ['best', 'car', 'all'];
-// ?sort=cp1 sorts a column (fastest first); ?sort=-cp1 reverses it. No sort means finish order.
-const SORT_LABEL = { finish: 'Finish', cp1: 'Chkpoint 1', cp2: 'Chkpoint 2', uploaded: 'Uploaded', driver: 'Driver' };
-function parseSort(v) {
-  const desc = (v || '').startsWith('-');
-  const key = (v || '').replace(/^-/, '');
-  if (!SORT_KEYS.includes(key)) return { key: 'finish', dir: 'asc' };
-  return { key, dir: desc ? 'desc' : 'asc' };
-}
 
 const state = {
   stage: null,
@@ -42,7 +34,6 @@ const state = {
   group: '',
   search: '',
   showAll: false,
-  sort: parseSort(params.get('sort')),
   open: new Set(),     // ids of expanded rows
 };
 
@@ -186,8 +177,6 @@ function syncUrl() {
   const url = new URL(location.href);
   if (state.view === 'best') url.searchParams.delete('view'); else url.searchParams.set('view', state.view);
   if (state.car) url.searchParams.set('car', state.car); else url.searchParams.delete('car');
-  const isDefaultSort = state.sort.key === 'finish' && state.sort.dir === 'asc';
-  if (isDefaultSort) url.searchParams.delete('sort'); else url.searchParams.set('sort', (state.sort.dir === 'desc' ? '-' : '') + state.sort.key);
   history.replaceState(null, '', url);
 }
 
@@ -199,13 +188,11 @@ function render() {
   });
 
   const q = driverKey(state.search);
-  const sorted = sortRows(rows, state.sort.key, state.sort.dir);
-  let shown = q ? sorted.filter((r) => driverKey(r.run.driver).includes(q)) : sorted;
+  let shown = q ? rows.filter((r) => driverKey(r.run.driver).includes(q)) : rows;
   const limit = state.stage?.rows_before_show_all || 100;
   const truncated = !q && !state.showAll && shown.length > limit;
   if (truncated) shown = shown.slice(0, limit);
 
-  renderSortHeaders();
   renderSummary(rows);
   renderTheory();
   renderMine();
@@ -294,50 +281,6 @@ function pendingNote() {
   return ' · <span class="pending">Your time is being published. The board refreshes by itself in a minute or two.</span>';
 }
 
-// ------------------------------------------------------------ column sorting
-
-document.querySelectorAll('th[data-sort]').forEach((th) => {
-  const key = th.dataset.sort;
-  const b = document.createElement('button');
-  b.type = 'button';
-  b.className = 'sort-btn';
-  b.dataset.sortKey = key;
-  b.innerHTML = '<span class="sort-ind" aria-hidden="true">↕</span>';
-  th.append(b);
-});
-
-function renderSortHeaders() {
-  document.querySelectorAll('th[data-sort]').forEach((th) => {
-    const key = th.dataset.sort;
-    const active = state.sort.key === key;
-    const b = th.querySelector('.sort-btn');
-    const dir = state.sort.dir;
-    th.setAttribute('aria-sort', active ? (dir === 'asc' ? 'ascending' : 'descending') : 'none');
-    b.classList.toggle('active', active);
-    b.querySelector('.sort-ind').textContent = active ? (dir === 'asc' ? '▲' : '▼') : '↕';
-    const next = nextSort(key);
-    b.setAttribute('aria-label', `Sort by ${SORT_LABEL[key]}${active ? `, now ${dir === 'asc' ? 'ascending' : 'descending'}` : ''}`);
-    b.title = next.key === 'finish' && next.dir === 'asc' && key !== 'finish' ? 'Back to finish order' : `Sort by ${SORT_LABEL[key]}`;
-  });
-}
-
-// First click: the column's natural order (fastest first, newest first, A to Z). Second: reversed. Third: back to finish order.
-function nextSort(key) {
-  const natural = SORT_DEFAULT_DIR[key];
-  const cur = state.sort;
-  if (cur.key !== key) return { key, dir: natural };
-  if (cur.dir === natural) return { key, dir: natural === 'asc' ? 'desc' : 'asc' };
-  return { key: 'finish', dir: 'asc' };
-}
-
-document.querySelector('thead').addEventListener('click', (e) => {
-  const b = e.target.closest('.sort-btn');
-  if (!b) return;
-  state.sort = nextSort(b.dataset.sortKey);
-  syncUrl();
-  render();
-});
-
 function rowHtml(row, i, ctx) {
   const { run, pos, diffPrev, diffFirst, driverRuns, ownGap } = row;
   // Best per car and All runs: how far this run is behind the same driver's fastest run on the board (within the
@@ -391,7 +334,7 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     : '';
   const runsNote = historyHtml(run, driverRuns);
   const shot = run.screenshot
-    ? `<div class="detail-shot"><h3>Screenshot</h3><a href="${esc(run.screenshot)}" target="_blank" rel="noopener" data-stop><img src="${esc(run.screenshot)}" alt="Screenshot of ${esc(run.driver)}'s run" width="240" height="135" loading="lazy" decoding="async"></a></div>`
+    ? `<div class="detail-shot"><h3>Screenshot</h3><a href="${esc(run.screenshot)}" target="_blank" rel="noopener" data-stop><img src="${esc(run.screenshot)}" alt="Screenshot of ${esc(run.driver)}'s run" loading="lazy"></a></div>`
     : '';
   return `<tr class="detail" data-detail-for="${esc(run.id)}"><td colspan="${cols()}"><div class="detail-grid">
     ${sector(0, 'Sector 1 · start to chkpt 1')}

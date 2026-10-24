@@ -328,11 +328,3 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   .shot-preview { flex-direction: column; align-items: flex-start; }
   .actions .btn-submit { flex: 1 1 100%; }
 }
-
-/* column sort buttons in the board header */
-.results th[data-sort] { white-space: nowrap; }
-.sort-btn { font: inherit; background: none; border: 0; padding: 2px 3px; margin-left: 3px; color: inherit; opacity: .55; cursor: pointer; border-radius: 3px; line-height: 1; }
-.sort-btn:hover, .sort-btn:focus-visible { opacity: 1; background: rgba(255,255,255,.14); }
-.sort-btn.active { opacity: 1; }
-.sort-ind { font-size: 11px; }
-.detail-shot img { aspect-ratio: 16 / 9; object-fit: contain; background: var(--line); }

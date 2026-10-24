@@ -354,7 +354,7 @@ ${sections.map((s) => `          <section class="gsec" id="${s.id}" aria-labelle
   return shell({
     title: `${meta.tune_name} · ${meta.car_name} tune · Al's Playground`,
     description: `${meta.driver}'s ${meta.car_name} setup for Al's Playground in Richard Burns Rally, broken down by differentials, suspension, geometry, anti-roll bars, tyres, brakes and gearbox.`,
-    up: '../../', css: ['guide.css', 'tunes.css'], body, scripts: ['page-nav.js'],
+    up: '../../', css: ['guide.css', 'tunes.css'], body,
   });
 }
 
