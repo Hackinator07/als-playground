@@ -210,3 +210,19 @@ test('car filter accepts a real LSPR car by its carKey', async () => {
   const runs = [mk('a', '2015 Subaru WRX', 400000), mk('b', '2018 Subaru STi', 410000), mk('c', '2015 Subaru WRX', 420000)];
   assert.deepEqual(rankRuns(runs, { view: 'all', car: carKey(runs[0]) }).rows.map((x) => x.run.id), ['a', 'c']);
 });
+
+test('sortRows reorders by a column, keeps positions, and puts missing values last', async () => {
+  const { sortRows } = await import('../shared/rules.js');
+  const mk = (id, finish, cp1, up, driver) => ({ pos: 0, run: { id, finish_ms: finish, cp1_ms: cp1, cp2_ms: null, uploaded_at: up, driver } });
+  const rows = [
+    mk('a', 400000, 130000, '2026-10-01T00:00:00Z', 'Zed'),
+    mk('b', 410000, null, '2026-10-03T00:00:00Z', 'Amy'),
+    mk('c', 420000, 120000, '2026-10-02T00:00:00Z', 'Bob'),
+  ];
+  assert.deepEqual(sortRows(rows, 'cp1', 'asc').map((r) => r.run.id), ['c', 'a', 'b']);
+  assert.deepEqual(sortRows(rows, 'cp1', 'desc').map((r) => r.run.id), ['a', 'c', 'b']);
+  assert.deepEqual(sortRows(rows, 'uploaded', 'desc').map((r) => r.run.id), ['b', 'c', 'a']);
+  assert.deepEqual(sortRows(rows, 'driver', 'asc').map((r) => r.run.id), ['b', 'c', 'a']);
+  assert.deepEqual(sortRows(rows, 'cp2', 'asc').map((r) => r.run.id), ['a', 'b', 'c']);
+  assert.equal(sortRows(rows, 'nope', 'asc'), rows);
+});

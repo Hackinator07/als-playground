@@ -69,3 +69,12 @@ kbd { font: 600 12.5px/1 var(--font); padding: 2px 6px; border: 1px solid #BDB8A
   .effects { font-size: 10pt; }
   .effects thead th, .callout, .effects tbody th { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
 }
+
+/* reading progress bar and the current section in "On this page" */
+.read-progress { position: fixed; top: 0; left: 0; right: 0; height: 4px; z-index: 50; background: rgba(0,0,0,.08); opacity: 0; transition: opacity .25s; pointer-events: none; }
+.read-progress.on { opacity: 1; }
+.read-progress-fill { height: 100%; width: 0; background: var(--maple); }
+.guide-toc a.is-current { color: var(--maple-dark); font-weight: 700; border-left-color: var(--maple); }
+@media (max-width: 860px) { .guide-toc a.is-current { border-color: var(--maple); background: var(--row-open); } }
+@media (prefers-reduced-motion: reduce) { .read-progress { transition: none; } }
+@media print { .read-progress { display: none !important; } }
