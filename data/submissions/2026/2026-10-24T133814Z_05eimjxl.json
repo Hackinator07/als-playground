@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "05eimjxl",
+  "stage": "als-playground",
+  "driver": "Eli Goethel",
+  "car_id": "subaru-impreza-gc8-555-grpa",
+  "car_name": "Subaru Impreza GC8 555 GrpA",
+  "cp1_ms": 174045,
+  "cp2_ms": 294045,
+  "finish_ms": 414045,
+  "entered": {
+    "cp1": "2:54.045",
+    "cp2": "4:54.045",
+    "finish": "6:54.045"
+  },
+  "uploaded_at": "2026-10-24T13:38:14.710Z",
+  "screenshot": "screenshots/2026/05eimjxl.webp",
+  "status": "published"
+}
