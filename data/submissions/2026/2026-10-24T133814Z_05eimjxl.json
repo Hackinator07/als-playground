@@ -5,15 +5,16 @@
   "driver": "Eli Goethel",
   "car_id": "subaru-impreza-gc8-555-grpa",
   "car_name": "Subaru Impreza GC8 555 GrpA",
-  "cp1_ms": 174045,
-  "cp2_ms": 294045,
+  "cp1_ms": 133900,
+  "cp2_ms": 317200,
   "finish_ms": 414045,
   "entered": {
-    "cp1": "2:54.045",
-    "cp2": "4:54.045",
+    "cp1": "2:13.9",
+    "cp2": "5:17.2",
     "finish": "6:54.045"
   },
   "uploaded_at": "2026-10-24T13:38:14.710Z",
   "screenshot": "screenshots/2026/05eimjxl.webp",
-  "status": "published"
+  "status": "published",
+  "note": "Checkpoint 1 and 2 estimated from the finish time (submitted splits were entered incorrectly)"
 }
