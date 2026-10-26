@@ -115,7 +115,7 @@ function renderSampleBar() {
 
 function renderStage() {
   const s = state.stage;
-  document.title = `${s.name} stage times`;
+  document.title = `${s.name} Stage Times`;
   $('stage-name').textContent = s.name;
   const meta = $('stage-meta');
   const place = [s.location, `${s.length_km} km`, s.surface].filter(Boolean).join(' · ');
@@ -198,7 +198,7 @@ function render() {
   renderMine();
 
   if (state.runs.length === 0) {
-    setMessage(`<strong>No times yet. Be the first.</strong>Drive ${esc(state.stage?.name || 'the stage')}, then post your checkpoint and finish times.<br><a class="btn-submit" href="submit/">Submit a time</a>`);
+    setMessage(`<strong>No times yet. Be the first.</strong>Drive ${esc(state.stage?.name || 'the stage')}, then post your checkpoint and finish times.<br><a class="btn-submit" href="submit/">Submit a Time</a>`);
     return;
   }
   if (rows.length === 0 && state.car) {

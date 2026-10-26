@@ -290,7 +290,7 @@ ${css.map((c) => `  <link rel="stylesheet" href="${base}assets/css/${c}">`).join
 <body>
   <header class="titlebar">
     <div class="wrap titlebar-inner">
-      <a class="titlebar-name titlebar-link" href="${base}">Al's Playground stage times</a>
+      <a class="titlebar-name titlebar-link" href="${base}">Al's Playground Stage Times</a>
       <span class="titlebar-game">Richard Burns Rally</span>
       ${CLOCK}
     </div>
@@ -377,7 +377,7 @@ export function renderLibrary(tunes, groups) {
       <div class="band"><h1 id="page-title">Vehicle Tune Library</h1></div>
       <p class="stage-meta">Setups shared by drivers &middot; ${tunes.length} ${tunes.length === 1 ? 'tune' : 'tunes'}</p>
       <div class="controls">
-        <a class="btn-submit" href="../submit/">Submit a time</a>
+        <a class="btn-submit" href="../submit/">Submit a Time</a>
         <a class="btn-plain btn-back" href="../">Back to stage times</a>
         <a class="btn-plain" href="compare/">Compare two tunes</a>
         <label class="control">
