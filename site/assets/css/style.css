@@ -72,7 +72,15 @@ a:focus-visible, button:focus-visible, select:focus-visible, input:focus-visible
 .stage-meta .meta-event.meta-2026 { border-left-color: var(--pine); background: var(--lspr26-bg); }
 .stage-meta .meta-event.meta-2026 b { color: var(--lspr26-text); }
 .stage-meta .meta-place { display: block; }
-.stage-meta .meta-viewer { color: var(--maple-dark); font-weight: 600; white-space: nowrap; }
+.stage-meta .btn-3d { display: inline-flex; align-items: center; gap: 12px; margin: 10px auto 4px; padding: 9px 20px 9px 16px; border-radius: 6px; background: #1E3A2B; color: #fff; text-decoration: none; text-align: left; box-shadow: 0 2px 0 rgba(0,0,0,.18); border-bottom: 3px solid var(--maple); transition: background .15s, transform .15s; }
+.stage-meta .btn-3d:hover { background: #2A4F3B; transform: translateY(-1px); }
+.stage-meta .btn-3d:focus-visible { outline: 3px solid var(--maple); outline-offset: 2px; }
+.stage-meta .btn-3d .icon-3d-cta { flex: none; width: 20px; height: 20px; color: #F2A25C; fill: none; stroke: currentColor; }
+.stage-meta .btn-3d-text { display: flex; flex-direction: column; line-height: 1.2; }
+.stage-meta .btn-3d-text b { font-size: 16px; font-weight: 700; color: #fff; }
+.stage-meta .btn-3d-text small { font-size: 12px; color: #C9D6CD; font-weight: 400; }
+.stage-meta { text-align: center; }
+@media (max-width: 640px) { .stage-meta .btn-3d { display: flex; justify-content: center; margin: 10px 4px 2px; } .stage-meta .btn-3d-text small { font-size: 11.5px; } }
 
 .controls { display: flex; flex-direction: column; gap: 10px; padding: 12px; border-bottom: 1px solid var(--line); }
 .controls-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; }
