@@ -13,6 +13,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import crypto from 'node:crypto';
 import { fileURLToPath } from 'node:url';
 import { checkStoredRun } from '../shared/rules.js';
 import { parseTune } from '../shared/tune.js';
@@ -167,6 +168,22 @@ fs.writeFileSync(
   path.join(out, 'results.json'),
   JSON.stringify({ generated_at: new Date().toISOString(), runs }) + '\n',
 );
+// Version the local stylesheets and scripts (?v=<hash of the file>) so a page never loads a cached copy that is older
+// than the page itself (GitHub Pages lets browsers keep files for about ten minutes).
+(function version(dir) {
+  for (const e of fs.readdirSync(dir, { withFileTypes: true })) {
+    const full = path.join(dir, e.name);
+    if (e.isDirectory()) { if (e.name !== 'screenshots') version(full); continue; }
+    if (e.name !== 'index.html') continue;
+    const html = fs.readFileSync(full, 'utf8').replace(/(href|src)="((?:\.\.?\/)*assets\/(?:css|js)\/[^"?]+\.(?:css|js))"/g, (m, attr, ref) => {
+      const file = path.join(out, ref.replace(/^(\.\.?\/)+/, ''));
+      if (!fs.existsSync(file)) return m;
+      const v = crypto.createHash('sha1').update(fs.readFileSync(file)).digest('hex').slice(0, 8);
+      return `${attr}="${ref}?v=${v}"`;
+    });
+    fs.writeFileSync(full, html);
+  }
+})(out);
 fs.writeFileSync(path.join(out, '.nojekyll'), '');
 
 console.log(`Built _site: ${runs.length} published, ${hidden} hidden, ${skipped} skipped, ${tunes.length} tunes.`);
