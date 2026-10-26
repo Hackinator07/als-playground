@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "gvd7itor",
+  "stage": "als-playground",
+  "driver": "Jack LaValley",
+  "car_id": "ford-fiesta-rally3-evo",
+  "car_name": "Ford Fiesta rally3 evo",
+  "cp1_ms": 141600,
+  "cp2_ms": 339500,
+  "finish_ms": 435941,
+  "entered": {
+    "cp1": "2:21.6",
+    "cp2": "5:39.5",
+    "finish": "7:15.941"
+  },
+  "uploaded_at": "2026-10-26T21:55:45.418Z",
+  "screenshot": "screenshots/2026/gvd7itor.webp",
+  "status": "published"
+}
