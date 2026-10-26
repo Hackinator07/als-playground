@@ -281,6 +281,13 @@ function pendingNote() {
   return ' · <span class="pending">Your time is being published. The board refreshes by itself in a minute or two.</span>';
 }
 
+// A gap behind another time: "+7.918", "+1:06.308", or a dash for no gap (the leader, or a tie).
+function gap(ms) {
+  const t = Math.round(ms);
+  if (t <= 0) return '—';
+  return t < 60000 ? `+${(t / 1000).toFixed(3)}` : `+${formatTime(t)}`;
+}
+
 function rowHtml(row, i, ctx) {
   const { run, pos, diffPrev, diffFirst, driverRuns, ownGap } = row;
   // Best per car and All runs: how far this run is behind the same driver's fastest run on the board (within the
@@ -300,16 +307,16 @@ function rowHtml(row, i, ctx) {
   const shot = run.screenshot
     ? `<a class="shot-link" href="${esc(run.screenshot)}" target="_blank" rel="noopener" title="Open screenshot" aria-label="Screenshot of ${esc(run.driver)}'s run" data-stop><svg aria-hidden="true"><use href="#i-camera"/></svg></a>`
     : '';
-  const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
+  const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${pos <= 3 ? ` podium pod${pos}` : ''}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
     <td class="c-pos">${pos}</td>
     <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind} label-${t.key}">${esc(t.text)}</span>`; })()}${own}<span class="car-sub">${esc(run.car_name)}</span></td>
-    <td class="c-car">${esc(run.car_name)}${tag}</td>
+    <td class="c-car"><div class="car-cell"><span class="car-name" title="${esc(run.car_name)}">${esc(run.car_name)}</span>${tag}</div></td>
     <td class="c-time${fast1}">${run.cp1_ms === null ? '—' : formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
     <td class="c-time c-finish finish">${formatTime(run.finish_ms)}</td>
-    <td class="c-diff c-prev">${formatDiff(diffPrev)}</td>
-    <td class="c-diff">${formatDiff(diffFirst)}</td>
-    <td class="c-up" title="${up.zone} (${up.offset}) · ${up.utc}"><span class="up-date">${up.date}</span><span class="up-time">${up.time}</span></td>
+    <td class="c-diff c-prev">${gap(diffPrev)}</td>
+    <td class="c-diff">${gap(diffFirst)}</td>
+    <td class="c-up" title="${up.date} ${up.time} ${up.zone} (${up.offset}) · ${up.utc}"><span class="up-date">${up.date}</span><span class="up-time">${up.time}</span></td>
     <td class="c-shot">${shot}</td>
   </tr>`;
   return open ? main + detailHtml(row, ctx, up, group, driverRuns) : main;
@@ -322,7 +329,7 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     if (t === null) return `<div><h3>${label}</h3><div class="val">—</div></div>`;
     const best = ctx.fastestSectors[s];
     const isBest = t === best;
-    return `<div><h3>${label}</h3><div class="val${isBest ? ' fastest' : ''}">${formatTime(t)}<span class="gap">${isBest ? 'fastest' : '+' + formatDiff(t - best)}</span></div></div>`;
+    return `<div><h3>${label}</h3><div class="val${isBest ? ' fastest' : ''}">${formatTime(t)}<span class="gap">${isBest ? 'fastest' : gap(t - best)}</span></div></div>`;
   };
   const vsReal = runTag(run, tz()).kind === 'virtual'
     ? LSPR_YEARS.map((year) => {
@@ -341,7 +348,7 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     ${sector(1, 'Sector 2 · chkpt 1 to 2')}
     ${sector(2, 'Sector 3 · chkpt 2 to finish')}
     <div class="only-phone"><h3>Car</h3><div class="val">${esc(run.car_name)}${group ? ` <span class="tag">${esc(state.groupTag.get(group) || group)}</span>` : ''}</div></div>
-    <div class="only-phone"><h3>Diff. Prev</h3><div class="val">${formatDiff(diffPrev)}</div></div>
+    <div class="only-phone"><h3>Diff. Prev</h3><div class="val">${gap(diffPrev)}</div></div>
     <div><h3>Uploaded</h3><div class="val">${up.date} ${up.time} ${up.zone}<span class="gap">${up.utc}</span></div></div>
     ${vsReal}
     ${runsNote}

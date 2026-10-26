@@ -30,35 +30,40 @@
       <p class="stage-meta" id="stage-meta"><span class="meta-events"><span class="meta-event meta-2024"><b>LSPR 2024</b> SS1 / SS10</span><span class="meta-event meta-2026"><b>LSPR 2026</b> SS12 / SS14 / SS16</span></span><span class="meta-place">Baraga County, Michigan · 12.5 km · Gravel · <a class="meta-viewer" href="viewer/">Ride the stage in 3D</a></span></p>
 
       <div class="controls">
-        <a class="btn-submit" href="submit/">Submit a time</a>
-        <label class="control">
-          <span class="control-label">Drivetrain</span>
-          <select id="f-class"><option value="">All drivetrains</option></select>
-        </label>
-        <label class="control">
-          <span class="control-label">Car</span>
-          <select id="f-car"><option value="">All cars</option></select>
-        </label>
-        <div class="seg seg-source" role="group" aria-label="Which times to show">
-          <button type="button" data-source="" aria-pressed="true">All</button>
-          <button type="button" data-source="virtual" aria-pressed="false">Virtual</button>
-          <button type="button" data-source="lspr2024" aria-pressed="false">LSPR 2024</button>
-          <button type="button" data-source="lspr2026" aria-pressed="false">LSPR 2026</button>
+        <div class="controls-row">
+          <a class="btn-submit" href="submit/">Submit a time</a>
+          <div class="seg seg-source" role="group" aria-label="Which times to show">
+            <button type="button" data-source="" aria-pressed="true">All</button>
+            <button type="button" data-source="virtual" aria-pressed="false">Virtual</button>
+            <button type="button" data-source="lspr2024" aria-pressed="false">LSPR 2024</button>
+            <button type="button" data-source="lspr2026" aria-pressed="false">LSPR 2026</button>
+          </div>
+          <div class="seg seg-view" role="group" aria-label="Which runs to show">
+            <button type="button" data-view="best" aria-pressed="true">Best per driver</button>
+            <button type="button" data-view="car" aria-pressed="false">Best per car</button>
+            <button type="button" data-view="all" aria-pressed="false">All runs</button>
+          </div>
+          <label class="control control-search">
+            <span class="visually-hidden">Find a driver</span>
+            <input id="f-search" type="search" placeholder="Find a driver" autocomplete="off">
+          </label>
         </div>
-        <div class="seg" role="group" aria-label="Which runs to show">
-          <button type="button" data-view="best" aria-pressed="true">Best per driver</button>
-          <button type="button" data-view="car" aria-pressed="false">Best per car</button>
-          <button type="button" data-view="all" aria-pressed="false">All runs</button>
+        <div class="controls-row controls-filters">
+          <label class="control">
+            <span class="control-label">Drivetrain</span>
+            <select id="f-class"><option value="">All drivetrains</option></select>
+          </label>
+          <label class="control">
+            <span class="control-label">Car</span>
+            <select id="f-car"><option value="">All cars</option></select>
+          </label>
         </div>
-        <label class="control control-search">
-          <span class="visually-hidden">Find a driver</span>
-          <input id="f-search" type="search" placeholder="Find a driver" autocomplete="off">
-        </label>
       </div>
 
       <p id="summary" class="summary" role="status" aria-live="polite"></p>
       <p id="mine-banner" class="mine-banner" role="status" hidden></p>
       <p id="theory" class="theory" hidden></p>
+      <p class="legend" aria-label="Colour key"><span class="legend-item"><i class="sw sw-fast"></i>Fastest time on the board</span><span class="legend-item"><span class="label label-virtual">RBR</span>Driven in the sim</span><span class="legend-item"><span class="label label-lspr2026">LSPR</span>Real-world result</span></p>
 
       <div class="table-wrap">
         <table class="results" id="results">
@@ -67,9 +72,9 @@
               <th class="c-pos" scope="col">Pos</th>
               <th class="c-driver" scope="col">Driver</th>
               <th class="c-car" scope="col">Car</th>
-              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d4827" title="See this spot in the 3D stage viewer"><span class="long">Chkpoint 1 Time</span><span class="short">Chkpt 1</span></a></th>
-              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d9657" title="See this spot in the 3D stage viewer"><span class="long">Chkpoint 2 Time</span><span class="short">Chkpt 2</span></a></th>
-              <th class="c-time c-finish" scope="col"><a class="th-viewer" href="viewer/#d12642" title="See this spot in the 3D stage viewer"><span class="long">Finish Time</span><span class="short">Finish</span></a></th>
+              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d4827" title="See this spot in the 3D stage viewer"><span class="long">Checkpoint 1</span><span class="short">Chkpt 1</span></a></th>
+              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d9657" title="See this spot in the 3D stage viewer"><span class="long">Checkpoint 2</span><span class="short">Chkpt 2</span></a></th>
+              <th class="c-time c-finish" scope="col"><a class="th-viewer" href="viewer/#d12642" title="See this spot in the 3D stage viewer"><span class="long">Finish</span><span class="short">Finish</span></a></th>
               <th class="c-diff c-prev" scope="col">Diff. Prev</th>
               <th class="c-diff" scope="col">Diff. First</th>
               <th class="c-up" scope="col">Uploaded</th>
