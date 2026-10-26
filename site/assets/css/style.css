@@ -20,7 +20,8 @@
   --text: #1C1C1A;
   --muted: #5F5E5A;           /* car names, diffs, timestamps */
   --line: #D9DDD3;
-  --fastest: #6B3FA0;         /* fastest checkpoint / sector */
+  --fastest: #6B3FA0;
+  --pb: #1E7A3C;         /* fastest checkpoint / sector */
   --page: #F6F4EE;
   --focus: #A9521A;
   --font: "Segoe UI", system-ui, -apple-system, Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -366,3 +367,19 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
 }
 
 @media (min-width: 641px) { .results tbody tr.run td { height: 38px; } }
+
+/* ---------- next polish: personal best, gap bars, softer rows, hover/focus, 3D cue */
+.results tbody tr.run.even { background: #F6F8F3; }
+.results tbody tr.run { transition: background-color .12s; }
+.results tbody tr.run:hover { background: #F4E6D6; }
+.results tbody tr.run:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.c-time.pb { color: var(--pb); font-weight: 600; }
+.c-time.finish.pb { color: var(--pb); }
+.sw-pb { background: var(--pb); }
+.c-first { position: relative; }
+.gap-bar { position: absolute; left: 6px; bottom: 3px; height: 2px; max-width: calc(100% - 20px); border-radius: 2px; background: var(--maple); opacity: .4; pointer-events: none; }
+.icon-3d { width: 11px; height: 11px; margin-left: 4px; vertical-align: -1px; opacity: .75; }
+.results th a.th-viewer:hover .icon-3d, .results th a.th-viewer:focus-visible .icon-3d { opacity: 1; }
+.icon-3d-key { width: 13px; height: 13px; margin: 0; color: var(--spruce); opacity: 1; }
+.footer .btn-download { margin-left: 4px; }
+@media (max-width: 640px) { .icon-3d { display: none; } .gap-bar { left: 2px; max-width: calc(100% - 8px); } }

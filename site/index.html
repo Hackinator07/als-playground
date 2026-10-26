@@ -63,7 +63,7 @@
       <p id="summary" class="summary" role="status" aria-live="polite"></p>
       <p id="mine-banner" class="mine-banner" role="status" hidden></p>
       <p id="theory" class="theory" hidden></p>
-      <p class="legend" aria-label="Colour key"><span class="legend-item"><i class="sw sw-fast"></i>Fastest time on the board</span><span class="legend-item"><span class="label label-virtual">RBR</span>Driven in the sim</span><span class="legend-item"><span class="label label-lspr2026">LSPR</span>Real-world result</span></p>
+      <p class="legend" aria-label="Key"><span class="legend-item"><i class="sw sw-fast"></i>Fastest on the board</span><span class="legend-item legend-pb" hidden><i class="sw sw-pb"></i>Driver’s own best</span><span class="legend-item"><span class="label label-virtual">RBR</span>Driven in the sim</span><span class="legend-item"><span class="label label-lspr2026">LSPR</span>Real-world result</span><span class="legend-item"><svg class="icon-3d icon-3d-key" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg>Column headers open that spot in 3D</span></p>
 
       <div class="table-wrap">
         <table class="results" id="results">
@@ -72,9 +72,9 @@
               <th class="c-pos" scope="col">Pos</th>
               <th class="c-driver" scope="col">Driver</th>
               <th class="c-car" scope="col">Car</th>
-              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d4827" title="See this spot in the 3D stage viewer"><span class="long">Checkpoint 1</span><span class="short">Chkpt 1</span></a></th>
-              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d9657" title="See this spot in the 3D stage viewer"><span class="long">Checkpoint 2</span><span class="short">Chkpt 2</span></a></th>
-              <th class="c-time c-finish" scope="col"><a class="th-viewer" href="viewer/#d12642" title="See this spot in the 3D stage viewer"><span class="long">Finish</span><span class="short">Finish</span></a></th>
+              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d4827" title="See this spot in the 3D stage viewer"><span class="long">Checkpoint 1</span><span class="short">Chkpt 1</span><svg class="icon-3d" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg></a></th>
+              <th class="c-time" scope="col"><a class="th-viewer" href="viewer/#d9657" title="See this spot in the 3D stage viewer"><span class="long">Checkpoint 2</span><span class="short">Chkpt 2</span><svg class="icon-3d" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg></a></th>
+              <th class="c-time c-finish" scope="col"><a class="th-viewer" href="viewer/#d12642" title="See this spot in the 3D stage viewer"><span class="long">Finish</span><span class="short">Finish</span><svg class="icon-3d" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg></a></th>
               <th class="c-diff c-prev" scope="col">Diff. Prev</th>
               <th class="c-diff" scope="col">Diff. First</th>
               <th class="c-up" scope="col">Uploaded</th>
@@ -93,7 +93,7 @@
     </section>
 
     <footer class="footer">
-      <p class="footer-get"><a class="btn-submit" href="https://www.mediafire.com/file/r56ylnyn5ciypdo/AlsPlaygroundv3.0.42.zip/file" target="_blank" rel="noopener">Download Al's Playground for RBR</a> <a class="btn-plain btn-guide" href="guide/">Car setup guide</a> <a class="btn-plain btn-guide" href="tunes/">Vehicle tunes</a> <a class="btn-plain btn-guide" href="telemetry/">Telemetry viewer</a> <a class="btn-plain btn-guide" href="viewer/">Stage viewer</a></p>
+      <p class="footer-get"><a class="btn-submit" href="submit/">Submit a Time</a> <a class="btn-submit btn-download" href="https://www.mediafire.com/file/r56ylnyn5ciypdo/AlsPlaygroundv3.0.42.zip/file" target="_blank" rel="noopener">Download Al's Playground for RBR</a> <a class="btn-plain btn-guide" href="guide/">Car setup guide</a> <a class="btn-plain btn-guide" href="tunes/">Vehicle tunes</a> <a class="btn-plain btn-guide" href="telemetry/">Telemetry viewer</a> <a class="btn-plain btn-guide" href="viewer/">Stage viewer</a></p>
       <p class="footer-links"><a href="https://rallysimfans.hu/rbr/index.php" target="_blank" rel="noopener">Rallysimfans</a> · <a href="https://www.lakesuperiorperformancerally.com/" target="_blank" rel="noopener">Official LSPR website</a> · <a href="https://www.instagram.com/thats.rally.jason/" target="_blank" rel="noopener">@thats.rally.jason (Instagram)</a> &middot; <a href="https://www.instagram.com/redsmedia58/" target="_blank" rel="noopener">@redsmedia58 (Instagram)</a> &middot; <a href="https://wanoo.us/liv" target="_blank" rel="noopener">deanshekonte liveries</a></p>
       <p>Times are entered by drivers. They're checked for format and plausibility, not verified. A <svg class="icon-inline" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-camera"/></svg> means the driver added a screenshot.</p>
       <p>Uploaded times are US Central time (CT). Purple marks the fastest time at each checkpoint. Click a row for sector times.</p>
@@ -103,6 +103,7 @@
   </main>
 
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-cube" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round" d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3zM4 7.5l8 4.5 8-4.5M12 12v9"/></symbol>
     <symbol id="i-camera" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M4 8h3l2-3h6l2 3h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/></symbol>
   </svg>
 

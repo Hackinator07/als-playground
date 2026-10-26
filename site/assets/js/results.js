@@ -193,6 +193,7 @@ function render() {
   const truncated = !q && !state.showAll && shown.length > limit;
   if (truncated) shown = shown.slice(0, limit);
 
+  document.querySelector('.legend-pb').hidden = state.view === 'best';
   renderSummary(rows);
   renderTheory();
   renderMine();
@@ -218,7 +219,20 @@ function render() {
     return;
   }
 
-  const ctx = { fastestCp1, fastestCp2, fastestSectors };
+  // each driver's own best checkpoint and finish across all their runs (marked green when it isn't the board's fastest)
+  const pbs = new Map();
+  for (const r of state.runs) {
+    if (r.label) continue; // real LSPR runs are different stages and years, so their times can't be compared with each other
+    const k = driverKey(r.driver);
+    const e = pbs.get(k) || { cp1: Infinity, cp2: Infinity, fin: Infinity, n: 0 };
+    if (r.cp1_ms !== null && r.cp1_ms < e.cp1) e.cp1 = r.cp1_ms;
+    if (r.cp2_ms !== null && r.cp2_ms < e.cp2) e.cp2 = r.cp2_ms;
+    if (r.finish_ms < e.fin) e.fin = r.finish_ms;
+    e.n += 1;
+    pbs.set(k, e);
+  }
+  const maxDiff = shown.reduce((m, r) => Math.max(m, r.diffFirst), 0);
+  const ctx = { fastestCp1, fastestCp2, fastestSectors, pbs, maxDiff };
   $('rows').innerHTML = shown.map((row, i) => rowHtml(row, i, ctx)).join('');
 
   const wrap = $('show-all-wrap');
@@ -300,22 +314,28 @@ function rowHtml(row, i, ctx) {
   const group = state.carGroup.get(run.car_id);
   const tag = group ? `<span class="tag" title="${esc(group)}">${esc(state.groupTag.get(group) || group)}</span>` : '';
   const up = zonedStamp(run.uploaded_at, tz());
-  const fast1 = run.cp1_ms === ctx.fastestCp1 ? ' fastest' : '';
-  const fast2 = run.cp2_ms === ctx.fastestCp2 ? ' fastest' : '';
+  const mine = ctx.pbs.get(driverKey(run.driver));
+  // Best per driver shows each driver's best run, so green there would mark almost every cell; it only helps when runs differ.
+  const multi = !!mine && mine.n > 1 && !run.label && state.view !== 'best';
+  const fast1 = run.cp1_ms === ctx.fastestCp1 ? ' fastest' : (multi && run.cp1_ms !== null && run.cp1_ms === mine.cp1 ? ' pb' : '');
+  const fast2 = run.cp2_ms === ctx.fastestCp2 ? ' fastest' : (multi && run.cp2_ms !== null && run.cp2_ms === mine.cp2 ? ' pb' : '');
+  const finPb = multi && run.finish_ms === mine.fin ? ' pb' : '';
+  // thin bar under the gap to first; the square root keeps small gaps visible next to the slow runs
+  const bar = diffFirst > 0 && ctx.maxDiff > 0 ? `<i class="gap-bar" style="width:${Math.max(4, Math.round(Math.sqrt(diffFirst / ctx.maxDiff) * 100))}%"></i>` : '';
   const open = state.open.has(run.id);
-  const mine = run.id === highlightId ? ' mine' : '';
+  const isMine = run.id === highlightId ? ' mine' : '';
   const shot = run.screenshot
     ? `<a class="shot-link" href="${esc(run.screenshot)}" target="_blank" rel="noopener" title="Open screenshot" aria-label="Screenshot of ${esc(run.driver)}'s run" data-stop><svg aria-hidden="true"><use href="#i-camera"/></svg></a>`
     : '';
-  const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${pos <= 3 ? ` podium pod${pos}` : ''}${mine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
+  const main = `<tr class="run ${i % 2 ? 'even' : 'odd'}${pos <= 3 ? ` podium pod${pos}` : ''}${isMine}" data-id="${esc(run.id)}" tabindex="0" aria-expanded="${open}">
     <td class="c-pos">${pos}</td>
     <td class="c-driver"><span class="driver-name">${esc(run.driver)}</span>${(() => { const t = runTag(run, tz()); return ` <span class="label label-${t.kind} label-${t.key}">${esc(t.text)}</span>`; })()}${own}<span class="car-sub">${esc(run.car_name)}</span></td>
     <td class="c-car"><div class="car-cell"><span class="car-name" title="${esc(run.car_name)}">${esc(run.car_name)}</span>${tag}</div></td>
     <td class="c-time${fast1}">${run.cp1_ms === null ? '—' : formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
-    <td class="c-time c-finish finish">${formatTime(run.finish_ms)}</td>
+    <td class="c-time c-finish finish${finPb}">${formatTime(run.finish_ms)}</td>
     <td class="c-diff c-prev">${gap(diffPrev)}</td>
-    <td class="c-diff">${gap(diffFirst)}</td>
+    <td class="c-diff c-first">${gap(diffFirst)}${bar}</td>
     <td class="c-up" title="${up.date} ${up.time} ${up.zone} (${up.offset}) · ${up.utc}"><span class="up-date">${up.date}</span><span class="up-time">${up.time}</span></td>
     <td class="c-shot">${shot}</td>
   </tr>`;
