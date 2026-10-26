@@ -168,6 +168,15 @@ fs.writeFileSync(
   path.join(out, 'results.json'),
   JSON.stringify({ generated_at: new Date().toISOString(), runs }) + '\n',
 );
+// One download link to maintain: the footer button (id="download-link") is the source for every data-download link.
+{
+  const file = path.join(out, 'index.html');
+  let html = fs.readFileSync(file, 'utf8');
+  const m = /id="download-link" href="([^"]+)"/.exec(html);
+  if (!m) throw new Error('index.html has no #download-link');
+  html = html.replace(/(<a [^>]*data-download[^>]*href=")#download(")/g, `$1${m[1]}$2`);
+  fs.writeFileSync(file, html);
+}
 // Version the local stylesheets and scripts (?v=<hash of the file>) so a page never loads a cached copy that is older
 // than the page itself (GitHub Pages lets browsers keep files for about ten minutes).
 (function version(dir) {

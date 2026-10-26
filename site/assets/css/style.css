@@ -383,3 +383,14 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
 .icon-3d-key { width: 13px; height: 13px; margin: 0; color: var(--spruce); opacity: 1; }
 .footer .btn-download { margin-left: 4px; }
 @media (max-width: 640px) { .icon-3d { display: none; } .gap-bar { left: 2px; max-width: calc(100% - 8px); } }
+
+/* ---------- download button: in the title bar on wide screens, under the stage details on phones */
+.titlebar-download { display: inline-flex; align-items: center; gap: 7px; background: var(--maple); color: #fff; text-decoration: none; font-weight: 700; font-size: 13.5px; padding: 7px 14px; border-radius: 4px; white-space: nowrap; box-shadow: 0 1px 0 rgba(0,0,0,.25); }
+.titlebar-download:hover { background: var(--maple-dark); }
+.titlebar-game { margin-left: auto; }
+.titlebar-download { margin-left: 4px; }
+.hero-download { display: none; margin: 0; padding: 0 8px 12px; }
+.btn-download-hero { display: flex; align-items: center; justify-content: center; gap: 8px; background: var(--maple); color: #fff; text-decoration: none; font-weight: 700; font-size: 15px; padding: 11px 16px; border-radius: 4px; }
+.btn-download-hero:hover { background: var(--maple-dark); }
+.icon-dl { flex: none; }
+@media (max-width: 640px) { .titlebar-download { display: none; } .hero-download { display: block; } }
