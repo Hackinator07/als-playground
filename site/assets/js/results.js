@@ -113,7 +113,6 @@ function renderSampleBar() {
   bar.hidden = false;
 }
 
-const cta = '<a class="btn-3d" href="viewer/"><svg class="icon-3d-cta" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg><span class="btn-3d-text"><b>Ride the stage in 3D</b><small>Fly the whole route and jump to any checkpoint</small></span></a>';
 function renderStage() {
   const s = state.stage;
   document.title = `${s.name} Stage Times`;
@@ -121,9 +120,9 @@ function renderStage() {
   const meta = $('stage-meta');
   const place = [s.location, `${s.length_km} km`, s.surface].filter(Boolean).join(' · ');
   if (Array.isArray(s.events) && s.events.length) {
-    meta.innerHTML = `<span class="meta-events">${s.events.map((e) => `<span class="meta-event meta-${esc(e.year)}"><b>${esc(e.label)}</b> ${esc(e.stages)}</span>`).join('')}</span><span class="meta-place">${esc(place)}</span><a class="btn-3d" href="viewer/"><svg class="icon-3d-cta" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg><span class="btn-3d-text"><b>Ride the stage in 3D</b><small>Fly the whole route and jump to any checkpoint</small></span></a>`;
+    meta.innerHTML = `<span class="meta-events">${s.events.map((e) => `<span class="meta-event meta-${esc(e.year)}"><b>${esc(e.label)}</b> ${esc(e.stages)}</span>`).join('')}</span><span class="meta-place">${esc(place)}</span>`;
   } else {
-    meta.innerHTML = `<span class="meta-place">${esc([s.event, place].filter(Boolean).join(' · '))}</span>`+cta;
+    meta.innerHTML = `<span class="meta-place">${esc([s.event, place].filter(Boolean).join(' · '))}</span>`;
   }
   if (s.repo_url) $('repo-link').href = s.repo_url;
   if (state.generatedAt && !sample) {
