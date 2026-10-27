@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "xmhnh1ki",
+  "stage": "als-playground",
+  "driver": "Pat gruszka",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 123400,
+  "cp2_ms": 294100,
+  "finish_ms": 380445,
+  "entered": {
+    "cp1": "2:03.4",
+    "cp2": "4:54.1",
+    "finish": "6:20.445"
+  },
+  "uploaded_at": "2026-10-27T12:58:15.527Z",
+  "screenshot": null,
+  "status": "published"
+}
