@@ -52,7 +52,7 @@ html,body{height:100%;background:var(--spruce);color:var(--birch);font-family:va
 .cmp #dk::after{content:" \25BE"}
 .cmp #spdL,.cmp #vdL{display:none}
 .cmp .seg button,.cmp #play,.cmp #more{min-height:44px;padding:0 14px}
-.cmp #play{flex:1}
+.cmp #play{flex:1}.cmp #play:disabled{display:none}.cmp #more{flex:1}
 .cmp .sheet{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto}
 @media (min-width:561px){.cmp #dist{flex:1 1 0;order:0}.cmp #more{margin-left:0}}
 .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
