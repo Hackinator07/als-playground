@@ -26,7 +26,7 @@ html,body{height:100%;background:var(--spruce);color:var(--birch);font-family:va
 .read{position:fixed;top:calc(env(safe-area-inset-top,0px) + 92px);left:max(16px,env(safe-area-inset-left,0px));font:400 12px/1.5 var(--mono);color:var(--birch);background:#16271fcc;padding:6px 10px;border-radius:4px;pointer-events:none;font-variant-numeric:tabular-nums}
 .read b{font:700 22px var(--display);color:var(--maple);display:block;letter-spacing:.03em}
 #map{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:max(16px,env(safe-area-inset-right,0px));width:150px;height:220px;background:#16271fcc;border:1px solid var(--line);border-radius:4px;cursor:crosshair}
-.bar{position:fixed;left:0;right:0;bottom:0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,#16271fee 30%);display:flex;flex-direction:column;gap:8px;transition:opacity .35s}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,#16271fee 30%);display:flex;flex-direction:column;gap:8px;transition:opacity .35s;z-index:4}
 .bar.faded{opacity:0;pointer-events:none}
 .r1,.r2{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
 .r1 #dist{flex:1 1 240px;min-width:0}.r2 .sp{flex:1}
@@ -65,7 +65,7 @@ input[type=range]{accent-color:var(--maple);width:120px}
 #dist{flex:1 1 260px;min-width:0}
 #dist input{width:100%}
 .km{font:400 12px var(--mono);color:var(--birch);min-width:62px;text-align:right}
-#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(120px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--spruce-2);border:1px solid var(--maple);border-radius:4px;padding:8px 12px;font:400 12px var(--mono);color:var(--birch);user-select:all;overflow-wrap:anywhere;z-index:4}
+#toast{z-index:6;position:fixed;left:50%;transform:translateX(-50%);bottom:calc(120px + env(safe-area-inset-bottom,0px));max-width:calc(100% - 32px);background:var(--spruce-2);border:1px solid var(--maple);border-radius:4px;padding:8px 12px;font:400 12px var(--mono);color:var(--birch);user-select:all;overflow-wrap:anywhere;z-index:4}
 #joy,#rise{position:fixed;z-index:3;touch-action:none;user-select:none;-webkit-user-select:none}
 #joy{left:max(20px,env(safe-area-inset-left,0px));width:128px;height:128px;border-radius:50%;background:#16271f99;border:2px solid var(--needle)}
 #joy::before{content:"";position:absolute;inset:50% auto auto 50%;width:6px;height:6px;margin:-3px;border-radius:50%;background:var(--needle)}
