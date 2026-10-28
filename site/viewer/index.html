@@ -86,6 +86,7 @@ body.fpv.compact #osd .l,body.fpv.compact #osd .r{top:calc(env(safe-area-inset-t
     <button id="units" title="Switch between metric and imperial">km</button>
     <button id="fs" title="Full screen">Full screen</button>
     <button id="share" title="Copy a link to this point on the road">Share this spot</button>
+    <button id="photo" title="Save a picture of the stage view, without the buttons (P)">Photo</button>
   </div>
   <div class="grp" id="jumps" aria-label="Jump to"></div>
   <label id="dist">Road <input id="d" type="range" min="0" max="12680" step="1" value="0"><span class="km" id="dk">0.00 km</span></label>
@@ -287,6 +288,31 @@ $('share').onclick=()=>{
   const show=ok=>toast((ok?'Link copied for ':'Copy this link for ')+fmtDist(d)+':<br>'+url);
   try{navigator.clipboard.writeText(url).then(()=>show(true),()=>show(false));}catch(e){show(false);}
 };
+// Photo: re-renders the current view off-screen (only the 3D scene, never the HTML overlays) and saves it.
+let photoBusy=false;
+async function takePhoto(){
+  if(photoBusy)return;photoBusy=true;$('photo').disabled=true;
+  try{
+    const dpr=Math.min(window.devicePixelRatio||1,2),w=Math.min(3840,Math.round(canvas.clientWidth*dpr)),h=Math.round(w*canvas.clientHeight/canvas.clientWidth);
+    const data=await BABYLON.Tools.CreateScreenshotUsingRenderTargetAsync(engine,scene.activeCamera,{width:w,height:h},'image/jpeg',4,true,undefined,undefined,undefined,undefined,0.92);
+    const blob=await (await fetch(data)).blob();
+    const p=cam().position,d=Math.round(mode==='ride'?dist:nearest(p.x+O[0],p.z+O[1]).d);
+    const name=`als-playground-${man.version}-${fmtDist(d).replace(' ','')}.jpg`;
+    const file=new File([blob],name,{type:'image/jpeg'});
+    if(isTouch&&navigator.canShare&&navigator.canShare({files:[file]})){
+      try{await navigator.share({files:[file],title:"Al's Playground"});toast('Photo ready: '+name);}
+      catch(e){if(e&&e.name!=='AbortError')download(blob,name);}
+    }else download(blob,name);
+  }catch(e){console.error(e);toast('The photo could not be saved. Try again, or use your device screenshot.');}
+  finally{photoBusy=false;$('photo').disabled=false;}
+}
+function download(blob,name){
+  if(/claude|usercontent|anthropic/.test(location.hostname)){toast('Photo saving works on the live viewer at hackinator07.github.io/als-playground/viewer/.');return;}
+  const u=URL.createObjectURL(blob),a=document.createElement('a');a.href=u;a.download=name;document.body.appendChild(a);a.click();a.remove();
+  setTimeout(()=>URL.revokeObjectURL(u),4000);toast('Photo saved: '+name);
+}
+$('photo').onclick=takePhoto;
+window.addEventListener('keydown',e=>{if((e.key==='p'||e.key==='P')&&e.target.tagName!=='INPUT'&&!e.ctrlKey&&!e.metaKey)takePhoto();});
 if(!document.fullscreenEnabled){$('fs').hidden=true;}
 $('fs').onclick=()=>{(document.fullscreenElement?document.exitFullscreen():document.documentElement.requestFullscreen()).catch(()=>{$('fs').hidden=true;});};
 document.addEventListener('fullscreenchange',()=>{$('fs').textContent=document.fullscreenElement?'Exit full screen':'Full screen';setTimeout(()=>engine.resize(),50);});
