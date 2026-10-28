@@ -88,7 +88,7 @@ body.fpv.compact #osd .l,body.fpv.compact #osd .r{top:calc(env(safe-area-inset-t
 #load h2{font:700 44px/1 var(--display);text-transform:uppercase;margin:0 0 8px;letter-spacing:.02em}
 #load p{margin:0;color:var(--needle);font:400 13px var(--mono)}
 .help{flex-basis:100%;font:400 11px var(--mono);color:var(--needle)}.help b{font-weight:400}
-@media (max-width:560px){#map{width:96px;height:140px}.top{max-width:calc(100% - 96px - 48px)}.read{top:calc(env(safe-area-inset-top,0px) + 106px)}.top h1{font-size:20px}input[type=range]{width:90px}.cmp input[type=range]{width:auto}}
+@media (max-width:560px){#map{width:96px;height:140px}.top{box-sizing:border-box;max-width:calc(100% - 96px - 16px - 28px)}.read{top:calc(env(safe-area-inset-top,0px) + 106px)}.top h1{font-size:20px}input[type=range]{width:90px}.cmp input[type=range]{width:auto}}
 </style>
 
 </head>
@@ -463,11 +463,11 @@ function layout(){
   cmp=cmpQ.matches;bar.classList.toggle('cmp',cmp);
   const r1=$('r1'),more=$('more');
   if(cmp){
-    $('moreSl').append($('spdL'),$('vdL'));$('moreBtns').prepend($('share'));$('moreSheet').append($('help'));
+    $('moreSl').append($('spdL'),$('vdL'));$('moreBtns').append($('share'),$('photo'),$('fs'),$('units'));$('moreSheet').append($('help'));more.hidden=false;
     $('goSheet').insertBefore($('goBox'),$('goHint'));
     $('dk').setAttribute('role','button');$('dk').tabIndex=0;$('dk').setAttribute('aria-label','Go to a spot');
   }else{
-    r1.insertBefore($('spdL'),more);r1.insertBefore($('vdL'),more);$('r2').append($('share'));bar.append($('help'));
+    r1.insertBefore($('spdL'),more);r1.insertBefore($('vdL'),more);$('r2').append($('share'),$('photo'),$('fs'),$('units'));bar.append($('help'));more.hidden=true;
     $('goSlot').append($('goBox'));closeSheets();
     $('dk').removeAttribute('role');$('dk').removeAttribute('tabindex');$('dk').removeAttribute('aria-label');
   }
