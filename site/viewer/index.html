@@ -28,6 +28,7 @@ html,body{height:100%;background:var(--spruce);color:var(--birch);font-family:va
 #map{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:max(16px,env(safe-area-inset-right,0px));width:150px;height:220px;background:#16271fcc;border:1px solid var(--line);border-radius:4px;cursor:crosshair}
 .bar{position:fixed;left:0;right:0;bottom:0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,#16271fee 30%);display:flex;flex-direction:column;gap:8px;transition:opacity .35s;z-index:4}
 .bar.faded{opacity:0;pointer-events:none}
+body.sheetopen #joy,body.sheetopen #rise{visibility:hidden}
 .r1,.r2{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
 .r1 #dist{flex:1 1 240px;min-width:0}.r2 .sp{flex:1}
 .seg{gap:0}.seg button{border-radius:0}.seg button:first-child{border-radius:3px 0 0 3px}.seg button:last-child{border-radius:0 3px 3px 0}.seg button+button{margin-left:-1px}
@@ -473,8 +474,8 @@ function layout(){
   }
   placePad();wake();
 }
-function closeSheets(){$('goSheet').hidden=$('moreSheet').hidden=true;$('more').setAttribute('aria-expanded','false');placePad();wake();}
-function toggleSheet(id){const sh=$(id),open=sh.hidden;closeSheets();if(open){sh.hidden=false;if(id==='moreSheet')$('more').setAttribute('aria-expanded','true');else{syncGo(true);setTimeout(()=>{$('goIn').focus();$('goIn').select();},0);}}wake();}
+function closeSheets(){document.body.classList.remove('sheetopen');$('goSheet').hidden=$('moreSheet').hidden=true;$('more').setAttribute('aria-expanded','false');placePad();wake();}
+function toggleSheet(id){const sh=$(id),open=sh.hidden;closeSheets();if(open){sh.hidden=false;document.body.classList.add('sheetopen');if(id==='moreSheet')$('more').setAttribute('aria-expanded','true');else{syncGo(true);setTimeout(()=>{$('goIn').focus();$('goIn').select();},0);}}wake();}
 $('more').onclick=()=>toggleSheet('moreSheet');
 $('dk').addEventListener('click',()=>{if(cmp)toggleSheet('goSheet');});
 $('dk').addEventListener('keydown',e=>{if(cmp&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggleSheet('goSheet');}});
