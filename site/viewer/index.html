@@ -26,7 +26,35 @@ html,body{height:100%;background:var(--spruce);color:var(--birch);font-family:va
 .read{position:fixed;top:calc(env(safe-area-inset-top,0px) + 92px);left:max(16px,env(safe-area-inset-left,0px));font:400 12px/1.5 var(--mono);color:var(--birch);background:#16271fcc;padding:6px 10px;border-radius:4px;pointer-events:none;font-variant-numeric:tabular-nums}
 .read b{font:700 22px var(--display);color:var(--maple);display:block;letter-spacing:.03em}
 #map{position:fixed;top:calc(env(safe-area-inset-top,0px) + 12px);right:max(16px,env(safe-area-inset-right,0px));width:150px;height:220px;background:#16271fcc;border:1px solid var(--line);border-radius:4px;cursor:crosshair}
-.bar{position:fixed;left:0;right:0;bottom:0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,#16271fee 30%);display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.bar{position:fixed;left:0;right:0;bottom:0;padding:10px max(16px,env(safe-area-inset-right,0px)) calc(10px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));background:linear-gradient(transparent,#16271fee 30%);display:flex;flex-direction:column;gap:8px;transition:opacity .35s}
+.bar.faded{opacity:0;pointer-events:none}
+.r1,.r2{display:flex;align-items:center;gap:8px 12px;flex-wrap:wrap}
+.r1 #dist{flex:1 1 240px;min-width:0}.r2 .sp{flex:1}
+.seg{gap:0}.seg button{border-radius:0}.seg button:first-child{border-radius:3px 0 0 3px}.seg button:last-child{border-radius:0 3px 3px 0}.seg button+button{margin-left:-1px}
+#play{border-color:var(--maple);color:var(--birch)}#play[aria-pressed="true"],#play:hover{background:var(--maple);color:#1a0d05}#play:disabled{opacity:.45}
+.sheet{position:absolute;left:max(16px,env(safe-area-inset-left,0px));right:max(16px,env(safe-area-inset-right,0px));bottom:100%;margin-bottom:4px;background:#16271ffa;border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:10px;box-shadow:0 6px 24px #000a;z-index:4}
+.sheet[hidden]{display:none}
+@media (min-width:641px){.sheet{left:auto;width:min(420px,calc(100% - 32px))}#goSheet{display:none!important}}
+.mbtns,#goJumps{display:flex;gap:6px;flex-wrap:wrap}.mbtns button,#goJumps button{flex:1 1 0;padding:11px 8px;white-space:nowrap}
+.msl{display:flex;flex-direction:column;gap:10px}.msl label{width:100%}.msl input[type=range]{flex:1;width:auto}
+.go{display:flex;align-items:stretch;border:1px solid var(--needle);border-radius:3px;background:#0f1c15;overflow:hidden}
+.go input{font:400 14px var(--mono);color:#fff;background:transparent;border:0;width:7ch;min-width:0;padding:6px 8px;text-align:right;outline-offset:-2px}
+.go .u,.go .b{border:0;border-radius:0;padding:6px 9px}.go .u{background:transparent;color:var(--needle);padding-left:2px}
+.go .b{background:var(--maple);color:#1a0d05;font-weight:700}
+.hint{font:400 12px var(--mono);color:var(--needle)}
+#goSheet .go{width:100%}#goSheet .go input{flex:1;text-align:left;font-size:16px;padding:10px}#goSheet .go .b,#goSheet .go .u{padding:10px 14px}
+.gslot .go{display:flex}
+.cmp #r2,.cmp .help{display:none}
+.cmp .gslot{display:none}
+.cmp .r1{gap:8px}.cmp #dist{order:-1;flex:1 1 100%}.cmp #dist .lbl{display:none}
+.cmp #dist input{flex:1;width:auto;height:30px;margin:0}
+.cmp #dk{cursor:pointer;border:1px solid var(--needle);border-radius:3px;padding:6px 8px;min-width:0;white-space:nowrap}
+.cmp #dk::after{content:" \25BE"}
+.cmp #spdL,.cmp #vdL{display:none}
+.cmp .seg button,.cmp #play,.cmp #more{min-height:44px;padding:0 14px}
+.cmp #play{flex:1}
+.cmp .sheet{left:max(10px,env(safe-area-inset-left,0px));right:max(10px,env(safe-area-inset-right,0px));width:auto}
+@media (min-width:561px){.cmp #dist{flex:1 1 0;order:0}.cmp #more{margin-left:0}}
 .grp{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
 button{font:600 14px var(--display);letter-spacing:.08em;text-transform:uppercase;color:var(--birch);background:var(--spruce-2);border:1px solid var(--line);border-radius:3px;padding:7px 11px;cursor:pointer}
 button:hover{border-color:var(--needle)}
@@ -60,7 +88,7 @@ body.fpv.compact #osd .l,body.fpv.compact #osd .r{top:calc(env(safe-area-inset-t
 #load h2{font:700 44px/1 var(--display);text-transform:uppercase;margin:0 0 8px;letter-spacing:.02em}
 #load p{margin:0;color:var(--needle);font:400 13px var(--mono)}
 .help{flex-basis:100%;font:400 11px var(--mono);color:var(--needle)}.help b{font-weight:400}
-@media (max-width:560px){#map{width:96px;height:140px}.top{max-width:calc(100% - 96px - 48px)}.read{top:calc(env(safe-area-inset-top,0px) + 106px)}.top h1{font-size:20px}input[type=range]{width:90px}}
+@media (max-width:560px){#map{width:96px;height:140px}.top{max-width:calc(100% - 96px - 48px)}.read{top:calc(env(safe-area-inset-top,0px) + 106px)}.top h1{font-size:20px}input[type=range]{width:90px}.cmp input[type=range]{width:auto}}
 </style>
 
 </head>
@@ -79,19 +107,36 @@ body.fpv.compact #osd .l,body.fpv.compact #osd .r{top:calc(env(safe-area-inset-t
 </div>
 <div id="toast" role="status" hidden></div>
 <canvas id="map" width="300" height="440" aria-label="Stage map; click to jump"></canvas>
-<div class="bar">
-  <div class="grp" role="group" aria-label="Mode">
-    <button id="mRide" aria-pressed="true">Ride</button><button id="mFly" aria-pressed="false">Fly</button><button id="fpv" aria-pressed="false" hidden title="FPV drone view (G)">FPV</button>
-    <button id="play" aria-pressed="false">Play</button>
-    <button id="units" title="Switch between metric and imperial">km</button>
-    <button id="fs" title="Full screen">Full screen</button>
-    <button id="share" title="Copy a link to this point on the road">Share this spot</button>
-    <button id="photo" title="Save a picture of the stage view, without the buttons (P)">Photo</button>
+<div class="bar" id="bar">
+  <div class="sheet" id="goSheet" hidden role="dialog" aria-label="Go to a spot">
+    <div class="grp" id="goJumps" aria-label="Jump to"></div>
+    <form class="go" id="goBox" autocomplete="off"><input id="goIn" type="text" inputmode="decimal" enterkeyhint="go" aria-label="Go to distance along the stage" placeholder="0.00"><button type="button" id="goUnit" class="u" title="Switch between miles and kilometres">mi</button><button type="submit" class="b">Go</button></form>
+    <span class="hint" id="goHint">Type a distance and press Go.</span>
   </div>
-  <div class="grp" id="jumps" aria-label="Jump to"></div>
-  <label id="dist">Road <input id="d" type="range" min="0" max="12680" step="1" value="0"><span class="km" id="dk">0.00 km</span></label>
-  <label>Speed <input id="spd" type="range" min="20" max="200" step="5" value="90"><span class="km" id="spk">90 km/h</span></label>
-  <label>View <input id="vd" type="range" min="250" max="1500" step="50" value="700"><span class="km" id="vdk">700 m</span></label>
+  <div class="sheet" id="moreSheet" hidden role="dialog" aria-label="More controls">
+    <div class="mbtns" id="moreBtns">
+      <button id="photo" title="Save a picture of the stage view, without the buttons (P)">Photo</button>
+      <button id="fs" title="Full screen">Full screen</button>
+      <button id="units" title="Switch between metric and imperial">km</button>
+    </div>
+    <div class="msl" id="moreSl"></div>
+  </div>
+  <div class="r1" id="r1">
+    <label id="dist"><span class="lbl">Road</span> <input id="d" type="range" min="0" max="12680" step="1" value="0"><span class="km" id="dk">0.00 km</span></label>
+    <div class="grp seg" role="group" aria-label="Mode" id="modeGrp">
+      <button id="mRide" aria-pressed="true">Ride</button><button id="mFly" aria-pressed="false">Fly</button><button id="fpv" aria-pressed="false" hidden title="FPV drone view (G)">FPV</button>
+    </div>
+    <button id="play" aria-pressed="false">&#9654; Play</button>
+    <span class="gslot" id="goSlot"></span>
+    <label id="spdL">Speed <input id="spd" type="range" min="20" max="200" step="5" value="90"><span class="km" id="spk">90 km/h</span></label>
+    <label id="vdL">View <input id="vd" type="range" min="250" max="1500" step="50" value="700"><span class="km" id="vdk">700 m</span></label>
+    <button id="more" aria-expanded="false" aria-controls="moreSheet" title="More controls">More &#8943;</button>
+  </div>
+  <div class="r2" id="r2">
+    <div class="grp" id="jumps" aria-label="Jump to"></div>
+    <span class="sp"></span>
+    <button id="share" title="Copy a link to this point on the road">Share this spot</button>
+  </div>
   <span class="help" id="help">Ride: Space play/pause, drag to look, double-click to recentre · Fly: WASD / arrows, Q/E down/up, Shift fast, drag to look</span>
 </div>
 
@@ -255,14 +300,14 @@ canvas.addEventListener('pointermove',e=>{if(!drag)return;
   yaw=drag.yaw+(e.clientX-drag.x)*0.005;pitch=Math.max(-1.2,Math.min(1.2,drag.pitch-(e.clientY-drag.y)*0.005));});
 canvas.addEventListener('pointerup',()=>{drag=null;});
 canvas.addEventListener('dblclick',()=>{yaw=0;pitch=-0.05;});
-let shift=false;window.addEventListener('keydown',e=>{if(e.key==='Shift')shift=true;if(e.key===' '&&mode==='ride'){e.preventDefault();setPlay(!playing);}if((e.key==='g'||e.key==='G')&&mode==='fly'&&e.target.tagName!=='INPUT')setFPV(!fpv);});
+let shift=false;window.addEventListener('keydown',e=>{if(e.key==='Shift')shift=true;if(e.key===' '&&mode==='ride'&&e.target.tagName!=='INPUT'){e.preventDefault();setPlay(!playing);}if((e.key==='g'||e.key==='G')&&mode==='fly'&&e.target.tagName!=='INPUT')setFPV(!fpv);});
 window.addEventListener('keyup',e=>{if(e.key==='Shift')shift=false;});
 
 function setMode(m){
   if(m===mode)return;
   if(m==='fly'){fly.position=ride.position.add(new BABYLON.Vector3(0,6,0));fly.rotation=ride.rotation.clone();ride.detachControl();scene.activeCamera=fly;fly.attachControl(canvas,true);setPlay(false);}
   else{fly.detachControl();const p=fly.position;dist=nearest(p.x+O[0],p.z+O[1]).d;yaw=0;pitch=-0.05;scene.activeCamera=ride;}
-  mode=m;setHelp();$('fpv').hidden=m!=='fly';if(m!=='fly')setFPV(false);$('joy').hidden=$('rise').hidden=!(isTouch&&m==='fly');$('spd').closest('label').hidden=m==='fly';placePad();tmove={f:0,s:0,u:0};$('mRide').setAttribute('aria-pressed',m==='ride');$('mFly').setAttribute('aria-pressed',m==='fly');$('play').disabled=m!=='ride';
+  mode=m;setHelp();$('fpv').hidden=m!=='fly';if(m!=='fly')setFPV(false);$('joy').hidden=$('rise').hidden=!(isTouch&&m==='fly');$('spdL').hidden=m==='fly';placePad();tmove={f:0,s:0,u:0};$('mRide').setAttribute('aria-pressed',m==='ride');$('mFly').setAttribute('aria-pressed',m==='fly');$('play').disabled=m!=='ride';
   canvas.focus();
 }
 const touch=matchMedia('(pointer:coarse)').matches;
@@ -273,12 +318,12 @@ function setHelp(){
     :(touch?'<b>Fly</b> moves freely. Left stick to fly forward, back and sideways; &#9650; &#9660; to climb and drop; drag anywhere else to look. FPV turns on the drone view. Tap Ride to drop back onto the road.'
            :'<b>Fly</b> moves freely. W A S D or arrows to move, E up, Q down, hold Shift to go fast, drag to look. Gamepad: left stick move, right stick look, triggers down/up, RB fast. FPV or G for the drone view. Ride drops you back onto the road.');
 }
-function setPlay(v){playing=v&&mode==='ride';$('play').setAttribute('aria-pressed',playing);$('play').textContent=playing?'Pause':'Play';}
+function setPlay(v){playing=v&&mode==='ride';$('play').setAttribute('aria-pressed',playing);$('play').textContent=playing?'\u275A\u275A Pause':'\u25B6 Play';wake();}
 $('fpv').onclick=()=>setFPV(!fpv);
 $('mRide').onclick=()=>setMode('ride');$('mFly').onclick=()=>setMode('fly');$('play').onclick=()=>setPlay(!playing);
 $('d').oninput=e=>{dist=+e.target.value;if(mode!=='ride')setMode('ride');};
 $('spd').oninput=e=>{kmh=+e.target.value;$('spk').textContent=fmtSpd(kmh);};
-function setUnits(){$('units').textContent=imp?'mi':'km';$('spk').textContent=fmtSpd(kmh);$('vdk').textContent=fmtLen(fog[1]);try{localStorage.setItem('alsUnits',imp?'mi':'km');}catch(e){}}
+function setUnits(){$('units').textContent='Units: '+(imp?'mi':'km');$('goUnit').textContent=imp?'mi':'km';if(typeof syncGo==='function')syncGo(true);$('spk').textContent=fmtSpd(kmh);$('vdk').textContent=fmtLen(fog[1]);try{localStorage.setItem('alsUnits',imp?'mi':'km');}catch(e){}}
 $('units').onclick=()=>{imp=!imp;setUnits();};
 const SHARE_BASE=/claude|usercontent|anthropic/.test(location.hostname)?'https://claude.ai/artifact/5NJ2ZXTW9aC8D3oGnMtSW3':location.origin+location.pathname;
 let toastT=0;function toast(html){const t=$('toast');t.innerHTML=html;t.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{t.hidden=true;},6000);}
@@ -338,7 +383,8 @@ $('vd').oninput=e=>setView(+e.target.value);setView(700);setUnits();
 const labels={'START':'Start','SPLIT 1':'Split 1','SPLIT 2':'Split 2','FINISH':'Finish'};
 man.markers.filter(m=>labels[m.name]).sort((a,b)=>a.dist-b.dist).forEach(m=>{
   const b=document.createElement('button');b.textContent=labels[m.name];b.title=fmtDist(m.dist);
-  b.onclick=()=>{setMode('ride');dist=Math.max(0,m.dist-(m.name==='START'?0:40));yaw=0;pitch=-0.05;};$('jumps').appendChild(b);});
+  b.onclick=()=>{setMode('ride');dist=Math.max(0,m.dist-(m.name==='START'?0:40));yaw=0;pitch=-0.05;};$('jumps').appendChild(b);
+  const b2=document.createElement('button');b2.textContent=labels[m.name];b2.onclick=()=>{b.onclick();closeSheets();};$('goJumps').appendChild(b2);});
 
 // ---- minimap
 const mc=$('map'),mx=mc.getContext('2d');
@@ -379,7 +425,7 @@ scene.onBeforeRenderObservable.add(()=>{
     const p=cam().position,x=p.x+O[0],y=p.z+O[1];const n=mode==='ride'?{d:dist,off:0}:nearest(x,y);
     $('rkm').textContent=fmtDist(n.d);
     $('rinfo').textContent=mode==='ride'?(playing?fmtSpd(kmh):'paused'):`${fmtLen(n.off)} from road · ${fmtLen(p.y+O[2])} elev`;
-    if(document.activeElement!==$('d')){$('d').value=Math.round(n.d);}$('dk').textContent=fmtDist(n.d);
+    if(document.activeElement!==$('d')){$('d').value=Math.round(n.d);}$('dk').textContent=fmtDist(n.d);syncGo(false,n.d);
     if(fpv){const nn=mode==='fly'?n:nearest(x,y);
       $('oAlt').textContent=fmtLen(Math.max(0,gY!==null?p.y-gY:p.y+O[2]-nn.z));$('oSpd').textContent=fmtSpd(Math.round(vh*3.6));
       const t=Math.floor((performance.now()-fpvT0)/1000);$('oTim').textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0');
@@ -410,7 +456,47 @@ document.querySelectorAll('#rise button').forEach(b=>{const v=+b.dataset.u;
  const end=e=>{if(e.pointerId!==jid)return;jid=null;K.style.transform='';tmove.f=tmove.s=0;};
  J.addEventListener('pointerup',end);J.addEventListener('pointercancel',end);}
 window.__als={scene,engine,tiles,setMode,go:d=>{dist=d;},setView};
+// ---- control bar: compact (phone) vs wide layout, go-to box, sheets, auto-fade while playing
+var bar=$('bar'),cmpQ=matchMedia('(max-width:640px), (pointer:coarse) and (max-height:500px)');
+var cmp=false,fadeT=0,lastD=0;
+function layout(){
+  cmp=cmpQ.matches;bar.classList.toggle('cmp',cmp);
+  const r1=$('r1'),more=$('more');
+  if(cmp){
+    $('moreSl').append($('spdL'),$('vdL'));$('moreBtns').prepend($('share'));$('moreSheet').append($('help'));
+    $('goSheet').insertBefore($('goBox'),$('goHint'));
+    $('dk').setAttribute('role','button');$('dk').tabIndex=0;$('dk').setAttribute('aria-label','Go to a spot');
+  }else{
+    r1.insertBefore($('spdL'),more);r1.insertBefore($('vdL'),more);$('r2').append($('share'));bar.append($('help'));
+    $('goSlot').append($('goBox'));closeSheets();
+    $('dk').removeAttribute('role');$('dk').removeAttribute('tabindex');$('dk').removeAttribute('aria-label');
+  }
+  placePad();wake();
+}
+function closeSheets(){$('goSheet').hidden=$('moreSheet').hidden=true;$('more').setAttribute('aria-expanded','false');placePad();wake();}
+function toggleSheet(id){const sh=$(id),open=sh.hidden;closeSheets();if(open){sh.hidden=false;if(id==='moreSheet')$('more').setAttribute('aria-expanded','true');else{syncGo(true);setTimeout(()=>{$('goIn').focus();$('goIn').select();},0);}}wake();}
+$('more').onclick=()=>toggleSheet('moreSheet');
+$('dk').addEventListener('click',()=>{if(cmp)toggleSheet('goSheet');});
+$('dk').addEventListener('keydown',e=>{if(cmp&&(e.key==='Enter'||e.key===' ')){e.preventDefault();toggleSheet('goSheet');}});
+window.addEventListener('keydown',e=>{if(e.key==='Escape')closeSheets();});
+window.addEventListener('pointerdown',e=>{if(!e.target.closest('.sheet,#more,#dk'))closeSheets();wake();},true);
+// go to a typed distance (in the unit shown; "2.5 km" or "1.5 mi" also work)
+function syncGo(force,d){if(d!==undefined)lastD=d;if(!force&&document.activeElement===$('goIn'))return;$('goIn').value=(imp?lastD/1609.344:lastD/1000).toFixed(2);}
+function parseGo(t){const m=t.trim().toLowerCase().replace(',','.').match(/^(\d*\.?\d+)\s*(mi|miles?|km|k|m)?$/);if(!m)return NaN;const v=parseFloat(m[1]),u=m[2]||(imp?'mi':'km');return /^mi/.test(u)?v*1609.344:u==='m'?v:v*1000;}
+$('goIn').addEventListener('focus',()=>$('goIn').select());
+$('goUnit').onclick=()=>{imp=!imp;setUnits();};
+$('goBox').addEventListener('submit',e=>{
+  e.preventDefault();const m=parseGo($('goIn').value);
+  if(!(m>=0&&m<=LEN)){const msg='Enter 0 to '+(imp?(LEN/1609.344).toFixed(2)+' mi':(LEN/1000).toFixed(2)+' km');$('goHint').textContent=msg;toast(msg);return;}
+  setMode('ride');dist=m;yaw=0;pitch=-0.05;$('goHint').textContent='Type a distance and press Go.';
+  $('goIn').blur();closeSheets();if(!isTouch)canvas.focus();
+});
+// phones: hide the bar a few seconds into Play; any tap or key brings it back
+function wake(){bar.classList.remove('faded');clearTimeout(fadeT);if(cmp&&playing&&$('goSheet').hidden&&$('moreSheet').hidden)fadeT=setTimeout(()=>bar.classList.add('faded'),3500);}
+cmpQ.addEventListener('change',layout);layout();
+
 })().catch(e=>{document.getElementById('lmsg').textContent='The stage could not load: '+e.message;console.error(e);});
+
 </script>
 
 </body>
