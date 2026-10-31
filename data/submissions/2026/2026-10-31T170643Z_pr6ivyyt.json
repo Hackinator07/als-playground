@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "pr6ivyyt",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "bmw-m3-e36-grpa",
+  "car_name": "BMW M3 E36 GrpA",
+  "cp1_ms": 441293,
+  "cp2_ms": 441294,
+  "finish_ms": 441295,
+  "entered": {
+    "cp1": "7:21.293",
+    "cp2": "7:21.294",
+    "finish": "7:21.295"
+  },
+  "uploaded_at": "2026-10-31T17:06:43.041Z",
+  "screenshot": null,
+  "status": "published"
+}
