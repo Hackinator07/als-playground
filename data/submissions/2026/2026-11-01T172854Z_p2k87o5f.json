@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "p2k87o5f",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "toyota-gr-yaris-rally2",
+  "car_name": "Toyota GR Yaris Rally2",
+  "cp1_ms": 130100,
+  "cp2_ms": 311200,
+  "finish_ms": 400654,
+  "entered": {
+    "cp1": "2:10.1",
+    "cp2": "5:11.2",
+    "finish": "6:40.654"
+  },
+  "uploaded_at": "2026-11-01T17:28:54.101Z",
+  "screenshot": null,
+  "status": "published"
+}
