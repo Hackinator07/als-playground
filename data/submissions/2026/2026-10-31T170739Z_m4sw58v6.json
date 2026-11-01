@@ -5,15 +5,16 @@
   "driver": "Santiago Iglesias",
   "car_id": "toyota-gr-yaris-rally2",
   "car_name": "Toyota GR Yaris Rally2",
-  "cp1_ms": 403016,
-  "cp2_ms": 403017,
+  "cp1_ms": 130100,
+  "cp2_ms": 311600,
   "finish_ms": 403018,
   "entered": {
-    "cp1": "6:43.016",
-    "cp2": "6:43.017",
+    "cp1": "2:10.1",
+    "cp2": "5:11.6",
     "finish": "6:43.018"
   },
   "uploaded_at": "2026-10-31T17:07:39.879Z",
   "screenshot": null,
-  "status": "published"
+  "status": "published",
+  "note": "Checkpoint 1 and 2 estimated from the finish time (submitted splits were entered incorrectly)"
 }

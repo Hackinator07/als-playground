@@ -5,15 +5,16 @@
   "driver": "Santiago Iglesias",
   "car_id": "bmw-m3-e36-grpa",
   "car_name": "BMW M3 E36 GrpA",
-  "cp1_ms": 441293,
-  "cp2_ms": 441294,
+  "cp1_ms": 142800,
+  "cp2_ms": 340400,
   "finish_ms": 441295,
   "entered": {
-    "cp1": "7:21.293",
-    "cp2": "7:21.294",
+    "cp1": "2:22.8",
+    "cp2": "5:40.4",
     "finish": "7:21.295"
   },
   "uploaded_at": "2026-10-31T17:06:43.041Z",
   "screenshot": null,
-  "status": "published"
+  "status": "published",
+  "note": "Checkpoint 1 and 2 estimated from the finish time (submitted splits were entered incorrectly)"
 }
