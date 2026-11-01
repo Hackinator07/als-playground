@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "ffxdv958",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "hyundai-i20-coupe-wrc-2021",
+  "car_name": "Hyundai i20 Coupe WRC 2021",
+  "cp1_ms": 121900,
+  "cp2_ms": 294100,
+  "finish_ms": 385639,
+  "entered": {
+    "cp1": "2:01.9",
+    "cp2": "4:54.1",
+    "finish": "6:25.639"
+  },
+  "uploaded_at": "2026-11-01T17:42:57.457Z",
+  "screenshot": null,
+  "status": "published"
+}
