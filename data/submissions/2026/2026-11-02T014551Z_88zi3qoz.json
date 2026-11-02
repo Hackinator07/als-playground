@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "88zi3qoz",
+  "stage": "als-playground",
+  "driver": "Bryce Murphy",
+  "car_id": "toyota-celica-tct-ta64-grpb",
+  "car_name": "Toyota Celica TCT (TA64) GrpB",
+  "cp1_ms": 163600,
+  "cp2_ms": 383800,
+  "finish_ms": 499958,
+  "entered": {
+    "cp1": "2:43.6",
+    "cp2": "6:23.8",
+    "finish": "8:19.958"
+  },
+  "uploaded_at": "2026-11-02T01:45:51.406Z",
+  "screenshot": null,
+  "status": "published"
+}
