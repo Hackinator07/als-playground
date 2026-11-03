@@ -32,9 +32,10 @@
 
       <div class="hero-actions"><a class="btn-3d" href="viewer/"><svg class="icon-3d-cta" width="20" height="20" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg><span class="btn-3d-text"><b><span class="t-long">Ride the stage in 3D</span><span class="t-short">Ride in 3D</span></b><small>Fly the whole route and jump to any checkpoint</small></span></a><a class="btn-download-hero" data-download href="#download" target="_blank" rel="noopener"><svg class="icon-dl" width="16" height="16" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-download"/></svg><span class="t-long">Download Al's Playground for RBR</span><span class="t-short">Download Stage</span></a></div>
 
-      <div class="controls">
+      <div class="controls" id="controls">
         <div class="controls-row">
           <a class="btn-submit" href="submit/">Submit a Time</a>
+          <span class="phone-actions"><a class="btn-icon" href="viewer/" aria-label="Ride the stage in 3D"><svg width="18" height="18" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg><span>3D</span></a><a class="btn-icon" data-download href="#download" target="_blank" rel="noopener" aria-label="Download the stage"><svg width="18" height="18" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-download"/></svg><span>Get</span></a></span>
           <div class="seg seg-source" role="group" aria-label="Which times to show">
             <button type="button" data-source="" aria-pressed="true">All</button>
             <button type="button" data-source="virtual" aria-pressed="false">Virtual</button>
@@ -50,23 +51,27 @@
             <span class="visually-hidden">Find a driver</span>
             <input id="f-search" type="search" placeholder="Find a driver" autocomplete="off">
           </label>
+          <button type="button" class="btn-filters" id="filters-btn" aria-expanded="false" aria-controls="filters-panel">Filters<span class="badge" id="filters-badge" hidden>0</span></button>
         </div>
-        <div class="controls-row controls-filters">
-          <label class="control">
+        <div class="controls-row controls-filters" id="filters-panel">
+          <label class="control control-class">
             <span class="control-label">Drivetrain</span>
             <select id="f-class"><option value="">All drivetrains</option></select>
           </label>
-          <label class="control">
+          <div class="chips-wrap"><span class="control-label">Drivetrain</span><div class="chips" id="class-chips" role="group" aria-label="Drivetrain"></div></div>
+          <label class="control control-car">
             <span class="control-label">Car</span>
             <select id="f-car"><option value="">All cars</option></select>
           </label>
+          <button type="button" class="btn-link filters-clear" id="filters-clear">Clear all</button>
         </div>
+        <div class="active-filters" id="active-filters" hidden></div>
       </div>
 
       <p id="summary" class="summary" role="status" aria-live="polite"></p>
       <p id="mine-banner" class="mine-banner" role="status" hidden></p>
       <p id="theory" class="theory" hidden></p>
-      <p class="legend" aria-label="Key"><span class="legend-item"><i class="sw sw-fast"></i>Fastest on the board</span><span class="legend-item legend-pb" hidden><i class="sw sw-pb"></i>Driver’s own best</span><span class="legend-item"><span class="label label-virtual">RBR</span>Driven in the sim</span><span class="legend-item"><span class="label label-lspr2026">LSPR</span>Real-world result</span><span class="legend-item"><svg class="icon-3d icon-3d-key" width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg>Column headers open that spot in 3D</span></p>
+      <p class="legend" aria-label="Key"><span class="legend-item"><i class="sw sw-fast"></i>Fastest on the board</span><span class="legend-item legend-pb" hidden><i class="sw sw-pb"></i>Driver’s own best</span><span class="legend-item legend-extra"><span class="label label-virtual">RBR</span>Driven in the sim</span><span class="legend-item legend-extra"><span class="label label-lspr2026">LSPR</span>Real-world result</span><span class="legend-item legend-extra"><svg class="icon-3d icon-3d-key" width="13" height="13" aria-hidden="true" viewBox="0 0 24 24"><use href="#i-cube"/></svg>Column headers open that spot in 3D</span></p>
 
       <div class="table-wrap">
         <table class="results" id="results">

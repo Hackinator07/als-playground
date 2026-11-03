@@ -140,7 +140,34 @@ function renderClassOptions() {
     .map((g) => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
   sel.value = used.has(keep) ? keep : '';
   state.group = sel.value;
+  $('class-chips').innerHTML = [['', 'All'], ...state.groups.filter((g) => used.has(g.name)).map((g) => [g.name, g.name])]
+    .map(([v, t]) => `<button type="button" data-group="${esc(v)}" aria-pressed="false">${esc(t)}</button>`).join('');
   renderCarOptions();
+}
+
+/** Drivetrain from the select, the phone chips or a removable filter chip. */
+function setGroup(value) {
+  state.group = value;
+  $('f-class').value = value;
+  renderCarOptions();
+  syncUrl();
+  render();
+}
+
+/** Phone toolbar: count badge on Filters, pressed Drivetrain chips, and a removable chip for each active filter. */
+function renderFilterUi() {
+  const active = [];
+  if (state.group) active.push(['group', state.group]);
+  if (state.car) active.push(['car', state.carName.get(state.car) || 'Selected car']);
+  const badge = $('filters-badge');
+  badge.textContent = String(active.length);
+  badge.hidden = active.length === 0;
+  $('filters-btn').setAttribute('aria-label', active.length ? `Filters, ${active.length} active` : 'Filters');
+  $('filters-clear').hidden = active.length === 0;
+  document.querySelectorAll('#class-chips [data-group]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.group === state.group)));
+  const bar = $('active-filters');
+  bar.hidden = active.length === 0;
+  bar.innerHTML = active.map(([k, t]) => `<button type="button" class="fchip" data-clear="${k}" aria-label="Remove filter ${esc(t)}">${esc(t)}<span aria-hidden="true"> ✕</span></button>`).join('');
 }
 
 /**
@@ -193,6 +220,7 @@ function render() {
   if (truncated) shown = shown.slice(0, limit);
 
   document.querySelector('.legend-pb').hidden = state.view === 'best';
+  renderFilterUi();
   renderSummary(rows);
   renderTheory();
   renderMine();
@@ -415,7 +443,7 @@ $('rows').addEventListener('click', (e) => {
   if (action === 'all-runs') { setView('all'); return; }
   if (action === 'all-sources') { setSource(''); return; }
   if (action === 'all-cars') { state.car = ''; renderCarOptions(); syncUrl(); render(); return; }
-  if (action === 'all-classes') { $('f-class').value = ''; state.group = ''; render(); return; }
+  if (action === 'all-classes') { setGroup(''); return; }
   if (action === 'clear-search') { $('f-search').value = ''; state.search = ''; render(); return; }
   const tr = e.target.closest('tr.run');
   if (tr) toggleRow(tr);
@@ -448,7 +476,18 @@ function setSource(source, { draw = true } = {}) {
 document.querySelectorAll('[data-source]').forEach((b) => b.addEventListener('click', () => setSource(b.dataset.source)));
 setSource(state.source, { draw: false });
 
-$('f-class').addEventListener('change', (e) => { state.group = e.target.value; renderCarOptions(); syncUrl(); render(); });
+$('f-class').addEventListener('change', (e) => setGroup(e.target.value));
+$('class-chips').addEventListener('click', (e) => { const b = e.target.closest('[data-group]'); if (b) setGroup(b.dataset.group); });
+$('filters-btn').addEventListener('click', () => {
+  const open = !$('controls').classList.contains('filters-open');
+  $('controls').classList.toggle('filters-open', open);
+  $('filters-btn').setAttribute('aria-expanded', String(open));
+});
+$('filters-clear').addEventListener('click', () => { state.car = ''; setGroup(''); });
+$('active-filters').addEventListener('click', (e) => {
+  const k = e.target.closest('[data-clear]')?.dataset.clear;
+  if (k === 'car') { state.car = ''; renderCarOptions(); syncUrl(); render(); } else if (k === 'group') setGroup('');
+});
 $('f-car').addEventListener('change', (e) => { state.car = e.target.value; syncUrl(); render(); });
 document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
 $('f-search').addEventListener('input', (e) => { state.search = e.target.value; render(); });
