@@ -454,7 +454,7 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   /* toolbar: Submit + 3D + Get / Search + Filters / source pills / view switch */
   .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 12px 10px; border-bottom: 0; }
   .controls-row, .phone-actions { display: contents; }
-  .btn-submit { order: 0; flex: 1 1 auto; min-width: 0; padding: 0 12px; min-height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .controls .btn-submit { order: 0; flex: 1 1 auto; min-width: 0; padding: 0 12px; min-height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
   .btn-icon { order: 0; flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 0 12px; border: 1px solid #B9C0B2; border-radius: 4px; background: #fff; color: var(--spruce); text-decoration: none; font-weight: 700; font-size: 13.5px; }
   .btn-icon:active { background: var(--row-alt); }
   .control-search { order: 1; flex: 1 1 calc(100% - 112px); min-width: 0; margin: 0; }
@@ -545,4 +545,11 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   }
   #f-class { width: 150px; }
   #f-car { width: 170px; }
+}
+
+/* footer on phones: one stack of evenly spaced buttons; Submit is the only solid one */
+@media (max-width: 600px) {
+  .footer .footer-get { display: flex; flex-direction: column; gap: 8px; }
+  .footer .btn-submit, .footer .btn-guide { margin: 0; padding: 11px 16px; text-align: center; }
+  .footer .btn-download { background: #fff; color: var(--spruce); border: 1px solid var(--spruce); }
 }
