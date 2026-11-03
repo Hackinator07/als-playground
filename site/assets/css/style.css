@@ -517,3 +517,32 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   .results tbody tr.run.pod2:hover, .results tbody tr.run.pod3:hover { background: var(--row-hover); }
   .results tbody tr.run.podium[aria-expanded="true"] { background: var(--row-open); }
 }
+
+/* ---------- desktop: dark forest band, Submit and 3D at its two ends, one toolbar row */
+.band-submit { display: none; }
+@media (min-width: 641px) {
+  .band { background: var(--spruce); color: var(--spruce-text); min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 0 12px; }
+  .band-submit { display: inline-block; position: absolute; top: 6px; left: 12px; z-index: 2; background: #B85A1B; padding: 0 16px; line-height: 36px; box-shadow: 0 1px 0 rgba(0,0,0,.3); }
+  .band-submit:hover { background: #9C4A14; }
+  .hero-actions { height: 48px; }
+  .controls-row > .btn-submit { display: none; }
+
+  /* download in the title bar becomes an outline so Submit is the only orange button */
+  .titlebar-download { background: transparent; box-shadow: inset 0 0 0 1.5px rgba(241,238,228,.7); }
+  .titlebar-download:hover { background: rgba(255,255,255,.14); }
+
+  .controls { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+  .controls-row, .controls-filters { display: contents; }
+  .seg-source { order: 1; }
+  .seg-view { order: 2; }
+  .control-class { order: 3; }
+  .control-car { order: 4; }
+  .control-search { order: 5; flex: 1 1 130px; max-width: 240px; margin-left: auto; }
+  .control-search input { width: 100%; }
+  .seg button { padding: 7px 9px; }
+  .control-class .control-label, .control-car .control-label {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  #f-class { width: 150px; }
+  #f-car { width: 170px; }
+}
