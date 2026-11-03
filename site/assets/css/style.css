@@ -428,3 +428,121 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   .hero-actions .btn-3d-text small { display: none; }
   .hero-actions .btn-3d-text b { font-size: 14px; }
 }
+
+/* ---------- colour scheme A: one accent (maple) for the one main action.
+   Dark forest = chrome and selected states, purple = fastest, green = personal best, tags neutral. */
+.btn-submit { background: var(--maple-dark); }
+.btn-submit:hover { background: #8F4515; }
+.label, .label-lspr2026, .label-virtual { background: #E8EBE3; color: #3A4A40; }
+.stage-meta .meta-event, .stage-meta .meta-event.meta-2026 { border-left: 0; background: #F1F2EC; }
+.stage-meta .meta-event b, .stage-meta .meta-event.meta-2026 b { color: var(--text); }
+.stage-meta .meta-event::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: var(--maple); vertical-align: 0; }
+.stage-meta .meta-event.meta-2026::before { background: var(--spruce); }
+
+/* phone-only pieces are hidden on wide screens */
+.phone-actions, .btn-filters, .chips-wrap, .active-filters, .filters-clear { display: none; }
+
+@media (max-width: 640px) {
+  /* header: plain card instead of the orange band; place first, events under it */
+  .band { background: transparent; color: var(--text); text-align: left; padding: 10px 12px 0; }
+  .band h1 { font-size: 22px; }
+  .stage-meta { display: flex; flex-direction: column-reverse; align-items: flex-start; text-align: left; padding: 2px 12px 8px; gap: 6px; }
+  .stage-meta .meta-events { flex-direction: column; align-items: flex-start; gap: 5px; margin: 0; }
+  .stage-meta .meta-event { flex: none; }
+  .hero-actions { display: none; }
+
+  /* toolbar: Submit + 3D + Get / Search + Filters / source pills / view switch */
+  .controls { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; padding: 6px 12px 10px; border-bottom: 0; }
+  .controls-row, .phone-actions { display: contents; }
+  .btn-submit { order: 0; flex: 1 1 auto; min-width: 0; padding: 0 12px; min-height: 44px; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+  .btn-icon { order: 0; flex: none; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 44px; padding: 0 12px; border: 1px solid #B9C0B2; border-radius: 4px; background: #fff; color: var(--spruce); text-decoration: none; font-weight: 700; font-size: 13.5px; }
+  .btn-icon:active { background: var(--row-alt); }
+  .control-search { order: 1; flex: 1 1 calc(100% - 112px); min-width: 0; margin: 0; }
+  .control-search input { width: 100%; min-height: 40px; }
+  .btn-filters { order: 1; flex: none; display: inline-flex; align-items: center; gap: 7px; min-height: 40px; padding: 0 14px; font: inherit; font-size: 14px; font-weight: 600; color: var(--spruce); background: #fff; border: 1px solid #B9C0B2; border-radius: 4px; cursor: pointer; }
+  .controls.filters-open .btn-filters { border-color: var(--spruce); box-shadow: inset 0 0 0 1px var(--spruce); }
+  .badge { display: inline-block; min-width: 18px; padding: 0 5px; border-radius: 9px; background: var(--maple-dark); color: #fff; font-size: 11px; font-weight: 700; line-height: 18px; text-align: center; }
+
+  .controls-filters { order: 2; display: none; flex: 1 1 100%; flex-direction: column; align-items: stretch; gap: 12px; padding: 12px; margin: 0; background: #F1F2EC; border: 1px solid var(--line); border-radius: 6px; }
+  .controls.filters-open .controls-filters { display: flex; }
+  .control-class { display: none; }
+  .chips-wrap { display: block; }
+  .control-label { display: block; margin-bottom: 5px; font-size: 11.5px; font-weight: 700; letter-spacing: .4px; text-transform: uppercase; color: var(--muted); }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chips button, .seg-source button { font: inherit; font-size: 13.5px; }
+  .chips button { min-height: 38px; padding: 0 14px; border: 1px solid #B9C0B2; border-radius: 999px; background: #fff; color: var(--spruce); cursor: pointer; }
+  .chips button[aria-pressed="true"] { background: var(--spruce); border-color: var(--spruce); color: var(--spruce-text); font-weight: 600; }
+  .controls-filters .control, .controls-filters .control-car { order: 0; display: block; }
+  .controls-filters .control-car select { width: 100%; min-height: 40px; }
+  .filters-clear { display: inline-block; align-self: flex-start; min-height: 32px; font-size: 13.5px; }
+
+  .active-filters { order: 2; flex: 1 1 100%; display: flex; flex-wrap: wrap; gap: 6px; }
+  .active-filters[hidden], .controls.filters-open .active-filters { display: none; }
+  .fchip { font: inherit; font-size: 12.5px; font-weight: 600; min-height: 30px; padding: 0 10px; border: 1px solid var(--spruce); border-radius: 999px; background: #fff; color: var(--spruce); cursor: pointer; }
+
+  .seg-source { order: 3; flex: 1 1 100%; display: flex; gap: 6px; border: 0; border-radius: 0; overflow: visible; }
+  .seg-source button { flex: 1 1 0; min-height: 38px; padding: 0 4px; border: 1px solid #B9C0B2 !important; border-radius: 999px; background: #fff; color: var(--spruce); white-space: nowrap; }
+  .seg-source button[aria-pressed="true"] { background: var(--spruce); border-color: var(--spruce) !important; color: var(--spruce-text); font-weight: 600; }
+  .seg-view { order: 4; flex: 1 1 100%; display: flex; }
+  .seg-view button { min-height: 38px; font-size: 13px; padding: 0 4px; }
+
+  .summary { padding: 2px 12px 8px; }
+  .legend-extra { display: none; }
+}
+
+/* summary pieces: wide screens get the long wording, phones the short one with the theoretical best on the same line */
+.s-short, .s-theory, .fin-sub { display: none; }
+@media (max-width: 640px) {
+  .s-long, .theory, .legend { display: none; }
+  .s-short, .s-theory { display: inline; }
+  .summary { font-size: 13px; padding: 2px 12px 10px; }
+  .summary .s-theory strong { color: var(--fastest); }
+
+  /* table: Pos / Driver (tag + car) / Finish (+ gap to first). Checkpoints and the rest are in the tap-open row. */
+  .results { table-layout: fixed; }
+  .c-time:not(.c-finish), .c-diff { display: none; }
+  .c-pos { width: 34px; font-size: 13px; color: var(--muted); }
+  .c-finish { width: 98px; }
+  .results th.c-finish { text-align: right; padding-right: 12px; }
+  .results th.c-driver { text-align: left; padding-left: 4px; }
+  .results td { padding: 10px 4px; }
+  .results td.c-finish { padding-right: 12px !important; font-size: 17px; line-height: 1.25; }
+  .results td.c-finish.fin-lead { color: var(--fastest); }
+  .fin-sub { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
+  .driver-name { font-size: 15px; }
+  .car-sub { font-size: 12.5px; margin-top: 2px; }
+  .results tbody tr.run.pod1 { --pod: var(--maple); background: var(--row-mine); }
+  .results tbody tr.run.pod2 { --pod: transparent; background: #F6F8F3; }
+  .results tbody tr.run.pod3 { --pod: transparent; background: var(--row); }
+  .results tbody tr.run.pod2:hover, .results tbody tr.run.pod3:hover { background: var(--row-hover); }
+  .results tbody tr.run.podium[aria-expanded="true"] { background: var(--row-open); }
+}
+
+/* ---------- desktop: dark forest band, Submit and 3D at its two ends, one toolbar row */
+.band-submit { display: none; }
+@media (min-width: 641px) {
+  .band { background: var(--spruce); color: var(--spruce-text); min-height: 48px; display: flex; align-items: center; justify-content: center; padding: 0 12px; }
+  .band-submit { display: inline-block; position: absolute; top: 6px; left: 12px; z-index: 2; background: #B85A1B; padding: 0 16px; line-height: 36px; box-shadow: 0 1px 0 rgba(0,0,0,.3); }
+  .band-submit:hover { background: #9C4A14; }
+  .hero-actions { height: 48px; }
+  .controls-row > .btn-submit { display: none; }
+
+  /* download in the title bar becomes an outline so Submit is the only orange button */
+  .titlebar-download { background: transparent; box-shadow: inset 0 0 0 1.5px rgba(241,238,228,.7); }
+  .titlebar-download:hover { background: rgba(255,255,255,.14); }
+
+  .controls { flex-direction: row; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
+  .controls-row, .controls-filters { display: contents; }
+  .seg-source { order: 1; }
+  .seg-view { order: 2; }
+  .control-class { order: 3; }
+  .control-car { order: 4; }
+  .control-search { order: 5; flex: 1 1 130px; max-width: 240px; margin-left: auto; }
+  .control-search input { width: 100%; }
+  .seg button { padding: 7px 9px; }
+  .control-class .control-label, .control-car .control-label {
+    position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap;
+  }
+  #f-class { width: 150px; }
+  #f-car { width: 170px; }
+}

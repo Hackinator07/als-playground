@@ -56,10 +56,10 @@ function placingText(p) {
   return `${head}, between ${who(p.faster)} and ${who(p.slower)}`;
 }
 
-// Phones hide Car, Diff. Prev, Uploaded and the camera column, so full-width
-// cells must span 6 columns there (spanning hidden columns breaks the layout).
+// Phones show only Pos, Driver and Finish (checkpoints, gaps and Car move into the tap row), so full-width
+// cells must span 3 columns there (spanning hidden columns breaks the layout).
 const phone = window.matchMedia('(max-width: 640px)');
-const cols = () => (phone.matches ? 6 : 10);
+const cols = () => (phone.matches ? 3 : 10);
 
 // ------------------------------------------------------------ loading
 
@@ -140,7 +140,34 @@ function renderClassOptions() {
     .map((g) => `<option value="${esc(g.name)}">${esc(g.name)}</option>`).join('');
   sel.value = used.has(keep) ? keep : '';
   state.group = sel.value;
+  $('class-chips').innerHTML = [['', 'All'], ...state.groups.filter((g) => used.has(g.name)).map((g) => [g.name, g.name])]
+    .map(([v, t]) => `<button type="button" data-group="${esc(v)}" aria-pressed="false">${esc(t)}</button>`).join('');
   renderCarOptions();
+}
+
+/** Drivetrain from the select, the phone chips or a removable filter chip. */
+function setGroup(value) {
+  state.group = value;
+  $('f-class').value = value;
+  renderCarOptions();
+  syncUrl();
+  render();
+}
+
+/** Phone toolbar: count badge on Filters, pressed Drivetrain chips, and a removable chip for each active filter. */
+function renderFilterUi() {
+  const active = [];
+  if (state.group) active.push(['group', state.group]);
+  if (state.car) active.push(['car', state.carName.get(state.car) || 'Selected car']);
+  const badge = $('filters-badge');
+  badge.textContent = String(active.length);
+  badge.hidden = active.length === 0;
+  $('filters-btn').setAttribute('aria-label', active.length ? `Filters, ${active.length} active` : 'Filters');
+  $('filters-clear').hidden = active.length === 0;
+  document.querySelectorAll('#class-chips [data-group]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.group === state.group)));
+  const bar = $('active-filters');
+  bar.hidden = active.length === 0;
+  bar.innerHTML = active.map(([k, t]) => `<button type="button" class="fchip" data-clear="${k}" aria-label="Remove filter ${esc(t)}">${esc(t)}<span aria-hidden="true"> ✕</span></button>`).join('');
 }
 
 /**
@@ -193,6 +220,7 @@ function render() {
   if (truncated) shown = shown.slice(0, limit);
 
   document.querySelector('.legend-pb').hidden = state.view === 'best';
+  renderFilterUi();
   renderSummary(rows);
   renderTheory();
   renderMine();
@@ -247,11 +275,13 @@ function renderSummary(rows) {
   const runsWord = pool.length === 1 ? 'time' : 'times';
   const driversWord = drivers === 1 ? 'driver' : 'drivers';
   const kind = state.source ? `${SOURCE_NAME[state.source]} ` : '';
-  let text = `${pool.length} ${kind}${runsWord} from ${drivers} ${driversWord}`;
+  const long = `${pool.length} ${kind}${runsWord} from ${drivers} ${driversWord}`;
+  const short = `${pool.length} ${kind}${runsWord} · ${drivers} ${driversWord}`;
   const scope = state.car ? `the ${state.carName.get(state.car) || 'selected car'}` : state.group;
-  if (scope) text += ` · ${rows.length} ${state.view === 'all' ? (rows.length === 1 ? 'time' : 'times') : (rows.length === 1 ? 'driver' : 'drivers')} in ${scope}`;
-  text += state.view === 'best' ? ' · best time per driver' : state.view === 'car' ? (state.car ? ' · best time per driver in this car' : ' · best time per driver in each car') : ' · every run';
-  el.innerHTML = esc(text) + pendingNote();
+  const inScope = scope ? ` · ${rows.length} ${state.view === 'all' ? (rows.length === 1 ? 'time' : 'times') : (rows.length === 1 ? 'driver' : 'drivers')} in ${scope}` : '';
+  const tail = state.view === 'best' ? ' · best time per driver' : state.view === 'car' ? (state.car ? ' · best time per driver in this car' : ' · best time per driver in each car') : ' · every run';
+  // phones show the short form (the switch above already says which runs); wide screens the long one
+  el.innerHTML = `<span class="s-long">${esc(long)}</span><span class="s-short">${esc(short)}</span>${esc(inScope)}<span class="s-long">${esc(tail)}</span>` + pendingNote();
 }
 
 function renderTheory() {
@@ -263,6 +293,7 @@ function renderTheory() {
   el.innerHTML = `<span class="theory-head">Theoretical best <strong>${formatTime(t.total)}</strong></span>${names}`;
   el.title = 'The fastest sector 1, 2 and 3 in this selection, added together';
   el.hidden = false;
+  $('summary').insertAdjacentHTML('beforeend', ` <span class="s-theory">· Theoretical best <strong>${formatTime(t.total)}</strong></span>`);
 }
 
 /** After submitting: where the new time ranks among virtual times, and against 2024. */
@@ -332,7 +363,7 @@ function rowHtml(row, i, ctx) {
     <td class="c-car"><div class="car-cell"><span class="car-name" title="${esc(run.car_name)}">${esc(run.car_name)}</span>${tag}</div></td>
     <td class="c-time${fast1}">${run.cp1_ms === null ? '—' : formatTime(run.cp1_ms)}</td>
     <td class="c-time${fast2}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</td>
-    <td class="c-time c-finish finish${finPb}">${formatTime(run.finish_ms)}</td>
+    <td class="c-time c-finish finish${finPb}${pos === 1 && diffFirst === 0 ? ' fin-lead' : ''}">${formatTime(run.finish_ms)}<span class="fin-sub">${gap(diffFirst)}</span></td>
     <td class="c-diff c-prev">${gap(diffPrev)}</td>
     <td class="c-diff c-first">${gap(diffFirst)}${bar}</td>
     <td class="c-up" title="${up.date} ${up.time} ${up.zone} (${up.offset}) · ${up.utc}"><span class="up-date">${up.date}</span><span class="up-time">${up.time}</span></td>
@@ -366,6 +397,9 @@ function detailHtml(row, ctx, up, group, driverRuns) {
     ${sector(0, 'Sector 1 · start to chkpt 1')}
     ${sector(1, 'Sector 2 · chkpt 1 to 2')}
     ${sector(2, 'Sector 3 · chkpt 2 to finish')}
+    <div class="only-phone"><h3>Checkpoint 1</h3><div class="val${run.cp1_ms !== null && run.cp1_ms === ctx.fastestCp1 ? ' fastest' : ''}">${run.cp1_ms === null ? '—' : formatTime(run.cp1_ms)}</div></div>
+    <div class="only-phone"><h3>Checkpoint 2</h3><div class="val${run.cp2_ms !== null && run.cp2_ms === ctx.fastestCp2 ? ' fastest' : ''}">${run.cp2_ms === null ? '—' : formatTime(run.cp2_ms)}</div></div>
+    <div class="only-phone"><h3>Gap to first</h3><div class="val">${gap(row.diffFirst)}</div></div>
     <div class="only-phone"><h3>Car</h3><div class="val">${esc(run.car_name)}${group ? ` <span class="tag">${esc(state.groupTag.get(group) || group)}</span>` : ''}</div></div>
     <div class="only-phone"><h3>Diff. Prev</h3><div class="val">${gap(diffPrev)}</div></div>
     <div><h3>Uploaded</h3><div class="val">${up.date} ${up.time} ${up.zone}<span class="gap">${up.utc}</span></div></div>
@@ -415,7 +449,7 @@ $('rows').addEventListener('click', (e) => {
   if (action === 'all-runs') { setView('all'); return; }
   if (action === 'all-sources') { setSource(''); return; }
   if (action === 'all-cars') { state.car = ''; renderCarOptions(); syncUrl(); render(); return; }
-  if (action === 'all-classes') { $('f-class').value = ''; state.group = ''; render(); return; }
+  if (action === 'all-classes') { setGroup(''); return; }
   if (action === 'clear-search') { $('f-search').value = ''; state.search = ''; render(); return; }
   const tr = e.target.closest('tr.run');
   if (tr) toggleRow(tr);
@@ -448,7 +482,18 @@ function setSource(source, { draw = true } = {}) {
 document.querySelectorAll('[data-source]').forEach((b) => b.addEventListener('click', () => setSource(b.dataset.source)));
 setSource(state.source, { draw: false });
 
-$('f-class').addEventListener('change', (e) => { state.group = e.target.value; renderCarOptions(); syncUrl(); render(); });
+$('f-class').addEventListener('change', (e) => setGroup(e.target.value));
+$('class-chips').addEventListener('click', (e) => { const b = e.target.closest('[data-group]'); if (b) setGroup(b.dataset.group); });
+$('filters-btn').addEventListener('click', () => {
+  const open = !$('controls').classList.contains('filters-open');
+  $('controls').classList.toggle('filters-open', open);
+  $('filters-btn').setAttribute('aria-expanded', String(open));
+});
+$('filters-clear').addEventListener('click', () => { state.car = ''; setGroup(''); });
+$('active-filters').addEventListener('click', (e) => {
+  const k = e.target.closest('[data-clear]')?.dataset.clear;
+  if (k === 'car') { state.car = ''; renderCarOptions(); syncUrl(); render(); } else if (k === 'group') setGroup('');
+});
 $('f-car').addEventListener('change', (e) => { state.car = e.target.value; syncUrl(); render(); });
 document.querySelectorAll('[data-view]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.view === state.view)));
 $('f-search').addEventListener('input', (e) => { state.search = e.target.value; render(); });
