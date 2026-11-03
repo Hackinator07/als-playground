@@ -433,7 +433,6 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
    Dark forest = chrome and selected states, purple = fastest, green = personal best, tags neutral. */
 .btn-submit { background: var(--maple-dark); }
 .btn-submit:hover { background: #8F4515; }
-.label, .label-lspr2026, .label-virtual { background: #E8EBE3; color: #3A4A40; }
 .stage-meta .meta-event, .stage-meta .meta-event.meta-2026 { border-left: 0; background: #F1F2EC; }
 .stage-meta .meta-event b, .stage-meta .meta-event.meta-2026 b { color: var(--text); }
 .stage-meta .meta-event::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 7px; border-radius: 50%; background: var(--maple); vertical-align: 0; }
