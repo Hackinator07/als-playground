@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "w8wspddy",
+  "stage": "als-playground",
+  "driver": "Michael Winters",
+  "car_id": "toyota-gr-yaris-rally2",
+  "car_name": "Toyota GR Yaris Rally2",
+  "cp1_ms": 135300,
+  "cp2_ms": 317100,
+  "finish_ms": 413183,
+  "entered": {
+    "cp1": "2:15.3",
+    "cp2": "5:17.1",
+    "finish": "6:53.183"
+  },
+  "uploaded_at": "2026-11-03T03:09:59.011Z",
+  "screenshot": "screenshots/2026/w8wspddy.webp",
+  "status": "published"
+}
