@@ -489,3 +489,31 @@ code { font-family: Consolas, "SFMono-Regular", Menlo, monospace; font-size: 13p
   .summary { padding: 2px 12px 8px; }
   .legend-extra { display: none; }
 }
+
+/* summary pieces: wide screens get the long wording, phones the short one with the theoretical best on the same line */
+.s-short, .s-theory, .fin-sub { display: none; }
+@media (max-width: 640px) {
+  .s-long, .theory, .legend { display: none; }
+  .s-short, .s-theory { display: inline; }
+  .summary { font-size: 13px; padding: 2px 12px 10px; }
+  .summary .s-theory strong { color: var(--fastest); }
+
+  /* table: Pos / Driver (tag + car) / Finish (+ gap to first). Checkpoints and the rest are in the tap-open row. */
+  .results { table-layout: fixed; }
+  .c-time:not(.c-finish), .c-diff { display: none; }
+  .c-pos { width: 34px; font-size: 13px; color: var(--muted); }
+  .c-finish { width: 98px; }
+  .results th.c-finish { text-align: right; padding-right: 12px; }
+  .results th.c-driver { text-align: left; padding-left: 4px; }
+  .results td { padding: 10px 4px; }
+  .results td.c-finish { padding-right: 12px !important; font-size: 17px; line-height: 1.25; }
+  .results td.c-finish.fin-lead { color: var(--fastest); }
+  .fin-sub { display: block; font-size: 12px; font-weight: 400; color: var(--muted); }
+  .driver-name { font-size: 15px; }
+  .car-sub { font-size: 12.5px; margin-top: 2px; }
+  .results tbody tr.run.pod1 { --pod: var(--maple); background: var(--row-mine); }
+  .results tbody tr.run.pod2 { --pod: transparent; background: #F6F8F3; }
+  .results tbody tr.run.pod3 { --pod: transparent; background: var(--row); }
+  .results tbody tr.run.pod2:hover, .results tbody tr.run.pod3:hover { background: var(--row-hover); }
+  .results tbody tr.run.podium[aria-expanded="true"] { background: var(--row-open); }
+}
