@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "z42nvw0w",
+  "stage": "als-playground",
+  "driver": "George Daher",
+  "car_id": "skoda-fabia-rs-rally2",
+  "car_name": "Skoda Fabia RS Rally2",
+  "cp1_ms": 125600,
+  "cp2_ms": 299500,
+  "finish_ms": 388109,
+  "entered": {
+    "cp1": "2:05.6",
+    "cp2": "4:59.5",
+    "finish": "6:28.109"
+  },
+  "uploaded_at": "2026-11-04T06:22:16.562Z",
+  "screenshot": "screenshots/2026/z42nvw0w.webp",
+  "status": "published"
+}
