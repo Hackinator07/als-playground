@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "q21vw8y4",
+  "stage": "als-playground",
+  "driver": "Jack LaValley",
+  "car_id": "skoda-fabia-rs-rally2",
+  "car_name": "Skoda Fabia RS Rally2",
+  "cp1_ms": 127800,
+  "cp2_ms": 309600,
+  "finish_ms": 406000,
+  "entered": {
+    "cp1": "2:07.8",
+    "cp2": "5:09.6",
+    "finish": "6:46.000"
+  },
+  "uploaded_at": "2026-11-07T17:07:10.894Z",
+  "screenshot": "screenshots/2026/q21vw8y4.webp",
+  "status": "published"
+}
