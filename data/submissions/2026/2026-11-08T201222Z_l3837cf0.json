@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "l3837cf0",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "hyundai-i20-coupe-wrc-2017",
+  "car_name": "Hyundai i20 Coupe WRC 2017",
+  "cp1_ms": 120900,
+  "cp2_ms": 294300,
+  "finish_ms": 384144,
+  "entered": {
+    "cp1": "2:00.9",
+    "cp2": "4:54.3",
+    "finish": "6:24.144"
+  },
+  "uploaded_at": "2026-11-08T20:12:22.052Z",
+  "screenshot": null,
+  "status": "published"
+}
