@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "swytyzqd",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "lotus-exige-s-rgt",
+  "car_name": "Lotus Exige S RGT",
+  "cp1_ms": 139100,
+  "cp2_ms": 333500,
+  "finish_ms": 433265,
+  "entered": {
+    "cp1": "2:19.1",
+    "cp2": "5:33.5",
+    "finish": "7:13.265"
+  },
+  "uploaded_at": "2026-11-10T01:01:08.495Z",
+  "screenshot": null,
+  "status": "published"
+}
