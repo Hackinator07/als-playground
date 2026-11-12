@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "wwul64e7",
+  "stage": "als-playground",
+  "driver": "Santiago Iglesias",
+  "car_id": "volvo-240-turbo-grpa",
+  "car_name": "Volvo 240 Turbo GrpA",
+  "cp1_ms": 138800,
+  "cp2_ms": 327000,
+  "finish_ms": 423494,
+  "entered": {
+    "cp1": "2:18.8",
+    "cp2": "5:27.0",
+    "finish": "7:03.494"
+  },
+  "uploaded_at": "2026-11-12T01:40:24.007Z",
+  "screenshot": null,
+  "status": "published"
+}
