@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "uxwbwa8q",
+  "stage": "als-playground",
+  "driver": "Jack LaValley",
+  "car_id": "ford-fiesta-mk-vi-s2000",
+  "car_name": "Ford Fiesta Mk VI S2000",
+  "cp1_ms": 134600,
+  "cp2_ms": 309100,
+  "finish_ms": 402983,
+  "entered": {
+    "cp1": "2:14.6",
+    "cp2": "5:09.1",
+    "finish": "6:42.983"
+  },
+  "uploaded_at": "2026-11-12T08:02:23.480Z",
+  "screenshot": "screenshots/2026/uxwbwa8q.webp",
+  "status": "published"
+}
