@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "poerdrrc",
+  "stage": "als-playground",
+  "driver": "Mike Farrow",
+  "car_id": "toyota-yaris-wrc-2018",
+  "car_name": "Toyota Yaris WRC 2018",
+  "cp1_ms": 120230,
+  "cp2_ms": 297030,
+  "finish_ms": 401145,
+  "entered": {
+    "cp1": "2:00.23",
+    "cp2": "4:57.03",
+    "finish": "6:41.145"
+  },
+  "uploaded_at": "2026-11-14T18:12:23.241Z",
+  "screenshot": null,
+  "status": "published"
+}
