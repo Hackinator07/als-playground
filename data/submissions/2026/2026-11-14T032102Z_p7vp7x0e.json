@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "p7vp7x0e",
+  "stage": "als-playground",
+  "driver": "Casey Goethel",
+  "car_id": "citroen-xsara-kit-car",
+  "car_name": "Citroen Xsara Kit Car",
+  "cp1_ms": 132000,
+  "cp2_ms": 311600,
+  "finish_ms": 401041,
+  "entered": {
+    "cp1": "2:12.0",
+    "cp2": "5:11.6",
+    "finish": "6:41.041"
+  },
+  "uploaded_at": "2026-11-14T03:21:02.232Z",
+  "screenshot": "screenshots/2026/p7vp7x0e.webp",
+  "status": "published"
+}
