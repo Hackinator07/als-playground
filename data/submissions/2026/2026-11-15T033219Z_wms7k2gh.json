@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "wms7k2gh",
+  "stage": "als-playground",
+  "driver": "Mike Farrow",
+  "car_id": "hyundai-i20-coupe-wrc-2017",
+  "car_name": "Hyundai i20 Coupe WRC 2017",
+  "cp1_ms": 119500,
+  "cp2_ms": 289100,
+  "finish_ms": 375161,
+  "entered": {
+    "cp1": "1:59.5",
+    "cp2": "4:49.1",
+    "finish": "6:15.161"
+  },
+  "uploaded_at": "2026-11-15T03:32:19.717Z",
+  "screenshot": "screenshots/2026/wms7k2gh.webp",
+  "status": "published"
+}
