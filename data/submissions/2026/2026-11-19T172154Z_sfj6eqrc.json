@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "id": "sfj6eqrc",
+  "stage": "als-playground",
+  "driver": "Thibaut Damien",
+  "car_id": "hyundai-i20-n-rally2",
+  "car_name": "Hyundai i20 N Rally2",
+  "cp1_ms": 138800,
+  "cp2_ms": 327100,
+  "finish_ms": 425488,
+  "entered": {
+    "cp1": "2:18.8",
+    "cp2": "5:27.1",
+    "finish": "7:05.488"
+  },
+  "uploaded_at": "2026-11-19T17:21:54.249Z",
+  "screenshot": "screenshots/2026/sfj6eqrc.webp",
+  "status": "published"
+}
